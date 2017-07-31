@@ -2,14 +2,14 @@
 
 namespace App\Billing\Interfaces\Digifact;
 
-use App\Billing\Interfaces\TaxTransferredAbstract;
+use App\Billing\Interfaces\TaxTransferAbstract;
 
 /**
  * 
  *
  * @author Luis Josafat Heredia Contreras
  */
-class TaxTransferred extends TaxTransferredAbstract
+class TaxTransfer extends TaxTransferAbstract
 {
     
     public function format()

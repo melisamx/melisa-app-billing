@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Billing\Interfaces;
+namespace App\Billing\Interfaces\Invoice\v32;
 
 /**
  * Invoice abstract class
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class InvoiceInterface
+abstract class InvoiceAbstract
 {
     
-    protected $methodPayment = 'PUE';
+    protected $methodPayment = 'Pago en una sola exhibicion';
     protected $folio;
-    protected $paymentConditions = '';
     protected $date;
     protected $subtotal = 0;
     protected $total = 0;
     protected $series;
-    protected $voucherType = 'FA';
+    protected $voucherType = 'F';
     protected $expeditionPlace;
     protected $discount = 0;
     protected $coin = 'MXN';
     protected $exchangeRate = 0;
-    protected $itemsConcepts = [];
+    protected $concepts = [];
+    protected $taxes = [];
     protected $receiver;
-    protected $itemsTaxTransferred = [];
-    protected $itemsTaxDetained = [];
 
     public function __construct(
         ReceiverAbstract $receiver
@@ -40,10 +38,9 @@ abstract class InvoiceInterface
         return $this;
     }
     
-    public function setPaymentConditions($paymentConditions)
+    public function getFolio()
     {
-        $this->paymentConditions = $paymentConditions;
-        return $this;
+        return $this->folio;
     }
     
     public function setDate($date)
@@ -58,10 +55,20 @@ abstract class InvoiceInterface
         return $this;
     }
     
+    public function getMethodPayment()
+    {
+        return $this->methodPayment;
+    }
+    
     public function setSubtotal($subtotal)
     {
         $this->subtotal = $subtotal;
         return $this;
+    }
+    
+    public function getSubtotal()
+    {
+        return $this->subtotal;
     }
     
     public function setTotal($total)
@@ -70,16 +77,31 @@ abstract class InvoiceInterface
         return $this;
     }
     
+    public function getTotal()
+    {
+        return $this->total;
+    }
+    
     public function setSeries($series)
     {
         $this->series = $series;
         return $this;
     }
     
-    public function setVoucherType($voucherType = 'FA')
+    public function getSeries()
+    {
+        return $this->series;
+    }
+    
+    public function setVoucherType($voucherType)
     {
         $this->voucherType = $voucherType;
         return $this;
+    }
+    
+    public function getVoucherType()
+    {
+        return $this->voucherType;
     }
     
     public function setExpeditionPlace($expeditionPlace)
@@ -88,60 +110,47 @@ abstract class InvoiceInterface
         return $this;
     }
     
+    public function getExpeditionPlace()
+    {
+        return $this->expeditionPlace;
+    }
+    
     public function setCoin($coin = 'MXN')
     {
         $this->coin = $coin;
         return $this;
     }
     
+    public function getCoin()
+    {
+        return $this->coin;
+    }
+    
     public function getReceiver()
     {
-        return $this->receiver->format();
+        return $this->receiver;
     }
     
     public function addConcept(ConceptAbstract $concept)
     {
-        $this->itemsConcepts []= $concept;
+        $this->concepts []= $concept;
         return $this;    
     }
     
-    public function addTaxTransfer(TaxTransferAbstract $tax)
+    public function addTax(TaxAbstract $tax)
     {
-        $this->itemsTaxTransferred []= $tax;
-        return $this;
-    }
-    
-    public function addTaxRetention(TaxRetentionAbstract $tax)
-    {
-        $this->itemsTaxDetained []= $tax;
+        $this->taxes []= $tax;
         return $this;
     }
     
     public function getConcepts()
     {
-        $items = [];
-        foreach($this->itemsConcepts as $concept) {
-            $items []= $concept->format();
-        }
-        return $items;
+        return $this->concepts;
     }
     
-    public function getTaxTransferred()
+    public function getTaxes()
     {
-        $items = [];
-        foreach($this->itemsTaxTransferred as $tax) {
-            $items []= $tax->format();
-        }
-        return $items;
-    }
-    
-    public function getTaxDetained()
-    {
-        $items = [];
-        foreach($this->itemsTaxDetained as $tax) {
-            $items []= $tax->format();
-        }
-        return $items;
+        return $this->taxes;
     }
     
 }

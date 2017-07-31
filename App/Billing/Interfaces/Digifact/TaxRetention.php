@@ -2,14 +2,14 @@
 
 namespace App\Billing\Interfaces\Digifact;
 
-use App\Billing\Interfaces\TaxDetainedAbstract;
+use App\Billing\Interfaces\TaxRetentionAbstract;
 
 /**
  * 
  *
  * @author Luis Josafat Heredia Contreras
  */
-class TaxDetained extends TaxDetainedAbstract
+class TaxRetention extends TaxRetentionAbstract
 {
     
     protected $typeFactor = 'Tasa';

@@ -3,11 +3,11 @@
 namespace App\Billing\Interfaces;
 
 /**
- * Default tax transferred abstract class
+ * Default tax transfer abstract class
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class TaxTransferredAbstract implements FormatInterface
+abstract class TaxTransferAbstract implements FormatInterface
 {
     
     protected $base;

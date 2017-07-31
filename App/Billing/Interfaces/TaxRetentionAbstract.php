@@ -3,11 +3,11 @@
 namespace App\Billing\Interfaces;
 
 /**
- * Default tax detained abstract class
+ * Default tax retention abstract class
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class TaxDetainedAbstract extends TaxTransferredAbstract
+abstract class TaxRetentionAbstract extends TaxTransferAbstract
 {
     
     

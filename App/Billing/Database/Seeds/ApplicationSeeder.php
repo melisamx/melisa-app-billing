@@ -13,16 +13,14 @@ class ApplicationSeeder extends InstallSeeder
 {
     
     public function run()
-    {
-        
+    {        
         $this->installApplication('billing', [
             'name'=>'Billing',
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
             'version'=>'1.0.0'
-        ]);
-        
+        ]);        
     }
     
 }

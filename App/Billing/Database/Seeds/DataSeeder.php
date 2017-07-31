@@ -14,9 +14,10 @@ class DataSeeder extends InstallSeeder
     
     public function run()
     {
-        
-        //$this->call(Data\Seeder::class);
-        
+        $this->csvImportSimple([
+            'fiscalRegime',
+            'taxes',
+        ]);        
     }
     
 }
