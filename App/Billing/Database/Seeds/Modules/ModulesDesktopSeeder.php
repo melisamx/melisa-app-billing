@@ -14,7 +14,14 @@ class ModulesDesktopSeeder extends InstallSeeder
     
     public function run()
     {        
-        //$this->call(Desktop\::class);        
+        $this->invoice();        
+    }
+    
+    public function invoice()
+    {
+        $this->installModuleJson('Desktop/Invoice', [
+            'view',
+        ]);
     }
     
 }

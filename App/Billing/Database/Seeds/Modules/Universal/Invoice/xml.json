@@ -1,0 +1,15 @@
+{
+    "name": "Ver XML de factura",
+    "url": "/billing.php/invoice/xml/",
+    "description": "Módulo para ver XML de factura",
+    "task": {
+        "key": "task.billing.invoice.xml",
+        "name": "Acceso a ver XML de factura",
+        "description": "Permitir ver XML de factura",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.invoice.xml.success",
+        "description": "Acceso a ver XML de factura"
+    }
+}

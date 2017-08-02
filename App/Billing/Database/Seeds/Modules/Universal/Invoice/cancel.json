@@ -1,0 +1,15 @@
+{
+    "name": "Cancelar factura",
+    "url": "/billing.php/invoice/cancel/",
+    "description": "Módulo para cancelar factura",
+    "task": {
+        "key": "task.billing.invoice.cancel",
+        "name": "Acceso a cancelar factura",
+        "description": "Permitir cancelar factura",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.invoice.cancel.success",
+        "description": "Factura cancelada"
+    }
+}
