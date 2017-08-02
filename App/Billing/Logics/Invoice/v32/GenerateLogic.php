@@ -16,8 +16,13 @@ class GenerateLogic
     {
         $pac = $this->getPac();
         
-        $invoicePac = $this->getInvoicePac($pac, $invoice);
-        dd($invoicePac);
+        $result = $this->getInvoicePac($pac, $invoice);
+        
+        if( !$result) {
+            return false;
+        }
+        
+        return $result;
     }
     
     public function getInvoicePac($pac, $invoice)

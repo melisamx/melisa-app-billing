@@ -17,6 +17,7 @@ class DataSeeder extends InstallSeeder
         $this->csvImportSimple([
             'fiscalRegime',
             'taxes',
+            'invoiceStatus',
         ]);        
     }
     
