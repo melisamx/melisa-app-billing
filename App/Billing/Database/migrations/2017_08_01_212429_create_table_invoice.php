@@ -17,8 +17,8 @@ class CreateTableInvoice extends Migration
             $table->uuid('id')->primary();
             $table->char('idIdentityCreated', 36);
             $table->smallInteger('idInvoiceStatus');
-            $table->text('xml');
-            $table->text('pdf');
+            $table->char('idFileXml', 36);
+            $table->char('idFilePdf', 36);
             $table->uuid('uuid')->unique();
             $table->string('folio', 25);
             $table->char('date', 19);

@@ -8,6 +8,8 @@ use App\Billing\Interfaces\Digifact\v32\Invoice as InvoicePac;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
+use App\Drive\Interfaces\FileContent;
+use App\Drive\Logics\Files\StringCreateLogic;
 
 /* fake */
 require_once base_path() . '../../../nusoap/nusoap.php';
@@ -23,14 +25,17 @@ class InvoiceGenerate
     
     protected $repoInvoice;
     protected $readerXml;
+    protected $logicFile;
 
     public function __construct(
         InvoiceRepository $repoInvoice,
-        InvoiceXmlReader $readerXml
+        InvoiceXmlReader $readerXml,
+        StringCreateLogic $logicFile
     )
     {
         $this->repoInvoice = $repoInvoice;
         $this->readerXml = $readerXml;
+        $this->logicFile = $logicFile;
     }
     
     public function init(Invoice $invoice)
@@ -59,7 +64,13 @@ class InvoiceGenerate
             return false;
         }
         
-        $idInvoice = $this->createInvoice($xmlString, $dataXml);
+        $idFileXml = $this->saveFileXml($xmlString, $dataXml);
+        
+        if( !$idFileXml) {
+            return $this->error('Imposible guardar XML de la factura');
+        }
+        
+        $idInvoice = $this->createInvoice($idFileXml, $dataXml);
         
         if( !$idInvoice) {
             return $this->repoInvoice->rollback();
@@ -76,14 +87,48 @@ class InvoiceGenerate
         
         $this->repoInvoice->beginTransaction();
         
+        $idFilePdf = $this->saveFilePdf($pdfString, $dataXml);
+        
+        if( !$idFilePdf) {
+            return $this->error('Imposible guardar PDF de la factura');
+        }
+        
         if( !$this->updateInvoice($idInvoice, [
-            'pdf'=>$pdfString
+            'idFilePdf'=>$idFilePdf
         ])) {
             return $this->repoInvoice->rollback();
         }
         
         $this->repoInvoice->commit();        
-        return $idInvoice;
+        return [
+            'idInvoice'=>$idInvoice,
+            'idFilePdf'=>$idFilePdf,
+            'idFileXml'=>$idFileXml,
+        ];
+    }
+    
+    public function saveFilePdf(&$pdfString, &$xmlData)
+    {
+        $file = new FileContent();
+        $file
+            ->setName($xmlData['uuid'] . '.pdf')
+            ->setOriginalName($xmlData['uuid'])
+            ->setExtension('pdf')
+            ->setContent(base64_decode($pdfString));
+        
+        return $this->logicFile->init($file);
+    }
+    
+    public function saveFileXml(&$xmlBase64, &$xmlData)
+    {
+        $file = new FileContent();
+        $file
+            ->setName($xmlData['uuid'] . '.xml')
+            ->setOriginalName($xmlData['uuid'])
+            ->setExtension('xml')
+            ->setContent($xmlBase64);
+        
+        return $this->logicFile->init($file);
     }
     
     public function updateInvoice($idInvoice, $data)
@@ -125,13 +170,13 @@ class InvoiceGenerate
         return $result['GeneraCFDResult'];
     }
     
-    public function createInvoice(&$xmlString, &$dataXml)
+    public function createInvoice($idFileXml, &$dataXml)
     {        
         return $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
-            'xml'=>$xmlString,
-            'pdf'=>'',
+            'idFileXml'=>$idFileXml,
+            'idFilePdf'=>$idFileXml,
             'uuid'=>$dataXml['uuid'],
             'folio'=>$dataXml['folio'],
             'date'=>$dataXml['date'],

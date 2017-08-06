@@ -16,16 +16,16 @@
                 <td width="30%">
                     <table>
                         <tr>
-                            <th>Folio fiscal</th>
+                            <th>Folio</th>
                         </tr>
                         <tr>
-                            <td>{{ $report->folio }}</td>
+                            <td class="empty">Por generar</td>
                         </tr>
                         <tr>
-                            <th>Factura Número</th>
+                            <th>Número de factura</th>
                         </tr>
                         <tr>
-                            <td>{{ $report->folio }}</td>
+                            <td class="empty">Por generar</td>
                         </tr>
                     </table>
                 </td>
