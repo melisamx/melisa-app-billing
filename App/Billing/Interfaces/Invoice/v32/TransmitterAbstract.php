@@ -3,11 +3,11 @@
 namespace App\Billing\Interfaces\Invoice\v32;
 
 /**
- * Default receiver abstract class
+ * Default transmitter abstract class
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class ReceiverAbstract
+abstract class TransmitterAbstract
 {
     
     protected $rfc;

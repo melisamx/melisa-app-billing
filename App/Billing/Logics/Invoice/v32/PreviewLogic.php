@@ -13,7 +13,7 @@ class PreviewLogic
 {
     
     public function init(Invoice $invoice)
-    {        
+    {
         return json_decode(json_encode([
             'methodPayment'=>$invoice->getMethodPayment(),
             'folio'=>$invoice->getFolio(),
@@ -23,26 +23,26 @@ class PreviewLogic
             'coin'=>$invoice->getCoin(),
             'subTotal'=>$invoice->getSubtotal(),
             'total'=>$invoice->getTotal(),
-            'transmitter'=>$this->getFormatTransmitter(),
+            'transmitter'=>$this->getFormatTransmitter($invoice->getTransmitter()),
             'receiver'=>$this->getFormatReceiver($invoice->getReceiver()),
             'taxes'=>$this->getFormatTaxes($invoice->getTaxes()),
             'concepts'=>$this->getFormatConceps($invoice->getConcepts())
         ]));
     }
     
-    public function getFormatTransmitter()
+    public function getFormatTransmitter($transmitter)
     {
         return [
-            'rfc'=>'VIPM780109GW9',
-            'businessName'=>'Miriam Villa Preciado',
-            'address'=>'Felipe Carrillo Puerto',
-            'exteriorNumber'=>'327',
-            'interiorNumber'=>null,
-            'colony'=>'Centro',
-            'country'=>'MEXICO',
-            'state'=>'Colima',
-            'municiplaity'=>'Manzanillo',
-            'postalCode'=>'28200',
+            'rfc'=>$transmitter->getRfc(),
+            'businessName'=>$transmitter->getBusinessName(),
+            'address'=>$transmitter->getAddress(),
+            'exteriorNumber'=>$transmitter->getExteriorNumber(),
+            'interiorNumber'=>$transmitter->getInteriorNumber(),
+            'colony'=>$transmitter->getColony(),
+            'country'=>$transmitter->getCountry(),
+            'state'=>$transmitter->getState(),
+            'municiplaity'=>$transmitter->getMunicipality(),
+            'postalCode'=>$transmitter->getPostalCode(),
         ];
     }
     

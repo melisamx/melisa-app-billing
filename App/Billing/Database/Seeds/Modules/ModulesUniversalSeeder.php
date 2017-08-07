@@ -14,7 +14,7 @@ class ModulesUniversalSeeder extends InstallSeeder
     
     public function run()
     {        
-        $this->invoice();        
+        $this->invoice();
     }
     
     public function invoice()
@@ -25,6 +25,11 @@ class ModulesUniversalSeeder extends InstallSeeder
             'paging',
             'pdf',
             'xml',
+        ]);
+        
+        $this->installAssetCss('billing.invoice.preview', [
+            'name'=>'Billing invoice preview',
+            'path'=>'/billing/css/invoice-preview.min.css',
         ]);
     }
     

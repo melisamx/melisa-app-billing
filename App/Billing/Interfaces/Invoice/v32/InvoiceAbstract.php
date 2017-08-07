@@ -10,7 +10,7 @@ namespace App\Billing\Interfaces\Invoice\v32;
 abstract class InvoiceAbstract
 {
     
-    protected $methodPayment = 'Pago en una sola exhibicion';
+    protected $methodPayment = 'Pago en una sola exhibición';
     protected $folio;
     protected $date;
     protected $subtotal = 0;
@@ -24,12 +24,15 @@ abstract class InvoiceAbstract
     protected $concepts = [];
     protected $taxes = [];
     protected $receiver;
+    protected $transmitter;
 
     public function __construct(
-        ReceiverAbstract $receiver
+        ReceiverAbstract $receiver,
+        TransmitterAbstract $transmitter
     )
     {
         $this->receiver = $receiver;
+        $this->transmitter = $transmitter;
     }
     
     public function setFolio($folio)
@@ -129,6 +132,11 @@ abstract class InvoiceAbstract
     public function getReceiver()
     {
         return $this->receiver;
+    }
+    
+    public function getTransmitter()
+    {
+        return $this->transmitter;
     }
     
     public function addConcept(ConceptAbstract $concept)

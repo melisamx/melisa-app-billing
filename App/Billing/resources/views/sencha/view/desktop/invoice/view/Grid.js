@@ -53,12 +53,11 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             width: 30,
             widget: {
                 xtype: 'button',
-                iconCls: 'x-fa fa-file-pdf-o',
-                tooltip: 'Descargar PDF',
-                handler: 'onClickBtnDownloadPDF',
+                iconCls: 'x-fa fa-file-code-o',
+                tooltip: 'Descargar factura XML',
+                handler: 'onClickBtnDownloadInvoiceXml',
                 bind: {
-                    melisa: '{modules.pdf}',
-                    hidden: '{!modules.pdf.allowed}'
+                    disabled: '{record.idFileXml ? false : true}'
                 }
             }
         },
@@ -67,12 +66,11 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             width: 30,
             widget: {
                 xtype: 'button',
-                iconCls: 'x-fa fa-file-text-o',
-                tooltip: 'Descargar XML',
-                handler: 'onClickBtnDownloadXML',
+                iconCls: 'x-fa fa-file-pdf-o',
+                tooltip: 'Descargar factura PDF',
+                handler: 'onClickBtnDownloadInvoicePdf',
                 bind: {
-                    melisa: '{modules.xml}',
-                    hidden: '{!modules.xml.allowed}'
+                    disabled: '{record.idFilePdf ? false : true}'
                 }
             }
         }

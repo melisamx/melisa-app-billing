@@ -161,10 +161,14 @@ class InvoiceGenerate
     
     public function generateXml(&$client, $params)
     {
-        $result = $client->call('GeneraCFD', $params);
+        try {
+            $result = $client->call('GeneraCFD', $params);
+        } catch (Exception $ex) {
+            return $this->error(utf8_decode($ex->getMessage()));
+        }        
         
-        if( $client->fault) {
-            $this->error('Imposible conectar con Digifact');
+        if( $client->fault) {            
+            return $this->error(utf8_decode($client->getError()));
         }
         
         return $result['GeneraCFDResult'];

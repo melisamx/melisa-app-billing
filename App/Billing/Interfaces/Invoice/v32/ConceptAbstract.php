@@ -11,7 +11,7 @@ abstract class ConceptAbstract
 {
     
     protected $quantity;
-    protected $unit;
+    protected $unit = 'no aplica';
     protected $description;
     protected $price;
     protected $amount;

@@ -17,45 +17,24 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.WrapperController', {
         title: 'Factura'
     },
     
-    donwloadFile: function(blob, fileName) {
-        var downloadLink = document.createElement('a'),
-            URL = window.URL || window.webkitURL,
-            downloadUrl = URL.createObjectURL(blob);
-    
-        downloadLink.target   = '_blank';
-        downloadLink.download = fileName;
-        // set object URL as the anchor's href
-        downloadLink.href = downloadUrl;
-
-        // append the anchor to document body
-        document.body.appendChild(downloadLink);
-
-        // fire a click event on the anchor
-        downloadLink.click();
-
-        // cleanup: remove element and revoke object URL
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(downloadUrl);
+    onClickBtnDownloadInvoicePdf: function(button) {
+        this.downloadFile(button, 'idFilePdf');
     },
     
-    onClickBtnDownloadXML: function(button) {
-        var me = this,
-            record = button.getViewModel().get('record'),
-            data = record.get('xml'),
-            blob = new Blob([ data ], {
-                type: 'application/xml'
-            });
-    
-        me.donwloadFile(blob, record.get('uuid') + '.xml');
+    onClickBtnDownloadInvoiceXml: function(button) {
+        this.downloadFile(button, 'idFileXml');
     },
     
-    onClickBtnDownloadPDF: function(button) {
+    downloadFile: function(button, field) {
         var me = this,
-            record = button.getViewModel().get('record'),
-            data = record.get('pdf'),
-            blob = new Blob([ Ext.util.Base64.decode(data) ]);
-    
-        me.donwloadFile(blob, record.get('uuid') + '.pdf');
+            filesView = me.getViewModel().get('modules.filesView'),
+            record = button.getViewModel().get('record');
+        window.open([
+            filesView,
+            record.get(field),
+            '/?nc=',
+            new Date().toTimeString()
+        ].join(''), '__blank');
     }
     
 });
