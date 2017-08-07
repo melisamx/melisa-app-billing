@@ -14,19 +14,34 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             hidden: true
         },
         {
+            dataIndex: 'rfc',
+            text: 'RFC',
+            width: 130
+        },
+        {
+            dataIndex: 'name',
+            text: 'Razón social',
+            flex: 1
+        },
+        {
+            dataIndex: 'uuid',
+            text: 'UUID',
+            width: 280
+        },
+        {
             dataIndex: 'folio',
             text: 'Folio',
             width: 80
         },
         {
-            dataIndex: 'date',
-            text: 'Fecha',
-            flex: 1
+            dataIndex: 'serie',
+            text: 'Serie',
+            width: 80
         },
         {
             xtype: 'booleancolumn',
             dataIndex: 'active',
-            text: 'Activo',
+            text: 'Activa',
             width: 100
         },
         {

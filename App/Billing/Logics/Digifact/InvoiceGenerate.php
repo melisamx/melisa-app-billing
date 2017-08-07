@@ -21,7 +21,7 @@ require_once base_path() . '../../../nusoap/nusoap.php';
  */
 class InvoiceGenerate
 {
-    use LogicBusiness;
+    use LogicBusiness, Client;
     
     protected $repoInvoice;
     protected $readerXml;
@@ -70,7 +70,7 @@ class InvoiceGenerate
             return $this->error('Imposible guardar XML de la factura');
         }
         
-        $idInvoice = $this->createInvoice($idFileXml, $dataXml);
+        $idInvoice = $this->createInvoice($idFileXml, $dataXml, $invoice);
         
         if( !$idInvoice) {
             return $this->repoInvoice->rollback();
@@ -138,51 +138,38 @@ class InvoiceGenerate
     
     public function generatePdf($client, $params)
     {
-        $result = $client->call('GeneraPDF', $params);
+        $result = $this->runRequest($client, 'GeneraPDF', $params);
         
-        if( $client->fault) {
-            $this->error('Imposible generar PDF con Digifact');
+        if( !$result) {
+            return $this->error('Imposible generar PDF con Digifact');
         }
         
         return $result['GeneraPDFResult'];
     }
     
-    public function createClient()
-    {
-        $client = new \nusoap_client($this->getServer(), 'wsdl');
-        $error = $client->getError();
-        
-        if( $error) {
-            return $this->error('Error al crear cliente para concetar con Digifact');
-        }
-        
-        return $client;
-    }
-    
     public function generateXml(&$client, $params)
     {
-        try {
-            $result = $client->call('GeneraCFD', $params);
-        } catch (Exception $ex) {
-            return $this->error(utf8_decode($ex->getMessage()));
-        }        
+        $result = $this->runRequest($client, 'GeneraCFD', $params);
         
-        if( $client->fault) {            
-            return $this->error(utf8_decode($client->getError()));
+        if( !$result) {
+            return $this->error('Imposible generar XML con Digifact');
         }
         
         return $result['GeneraCFDResult'];
     }
     
-    public function createInvoice($idFileXml, &$dataXml)
+    public function createInvoice($idFileXml, &$dataXml, &$invoice)
     {        
         return $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
             'idFileXml'=>$idFileXml,
             'idFilePdf'=>$idFileXml,
+            'rfc'=>$invoice->getReceiver()->getRfc(),
+            'name'=>$invoice->getReceiver()->getBusinessName(),
             'uuid'=>$dataXml['uuid'],
             'folio'=>$dataXml['folio'],
+            'serie'=>$dataXml['serie'],
             'date'=>$dataXml['date'],
         ]);
     }
@@ -208,21 +195,6 @@ class InvoiceGenerate
         $formatInvoice ['Contrasena']= $this->getPass();
         $formatInvoice ['XMLAddenda']= '';
         return $formatInvoice;
-    }
-    
-    public function getUser()
-    {
-        return env('DIGIFACT_USER');
-    }
-    
-    public function getPass()
-    {
-        return env('DIGIFACT_PASSWORD');
-    }
-    
-    public function getServer()
-    {
-        return env('DIGIFACT_SERVER_SANDBOX');
     }
     
 }

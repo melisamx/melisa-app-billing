@@ -21,12 +21,18 @@ class CreateTableInvoice extends Migration
             $table->char('idFilePdf', 36);
             $table->uuid('uuid')->unique();
             $table->string('folio', 25);
+            $table->string('serie', 10)->nullable();
+            $table->string('rfc', 13);
+            $table->string('name', 150);
             $table->char('date', 19);
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('idIdentityUpdated', 36)->nullable();
             $table->dateTime('updatedAt')->nullable();
+            $table->dateTime('canceledAt')->nullable();
             
+            $table->index('name');
+            $table->index('rfc');
             $table->index('folio');
             $table->index('date');
             

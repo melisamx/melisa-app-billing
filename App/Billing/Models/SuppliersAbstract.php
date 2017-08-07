@@ -2,34 +2,30 @@
 
 namespace App\Billing\Models;
 
-use Melisa\Laravel\Models\BaseUuid;
+use Melisa\Laravel\Models\Base;
 
 /**
  * 
+ *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class InvoiceAbstract extends BaseUuid
+abstract class SuppliersAbstract extends Base
 {    
     protected $connection = 'billing';
-    protected $table = 'invoice';
+    protected $table = 'suppliers';
     public $timestamps = true;
-    /* incrementing */
+    public $incrementing = true;
     protected $fillable = [
         'id',
-        'uuid',
-        'idInvoiceStatus',
         'idIdentityCreated',
-        'idFileXml',
-        'idFilePdf',
-        'folio',
-        'serie',
-        'rfc',
         'name',
-        'date',
+        'key',
+        'isPac',
         'active',
+        'isDefault',
+        'enviromentProduction',
         'createdAt',
         'idIdentityUpdated',
-        'updatedAt',
-        'canceledAt'
+        'updatedAt'
     ];    
 }

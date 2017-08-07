@@ -25,6 +25,7 @@ class Invoice
     {
         $concepts = $this->invoice->getConcepts();
         $items = [];
+        
         foreach ($concepts as $concept) {
             $items []= new \soapval('Concepto', 'Concepto', [
                 'Cantidad'=>$concept->getQuantity(),

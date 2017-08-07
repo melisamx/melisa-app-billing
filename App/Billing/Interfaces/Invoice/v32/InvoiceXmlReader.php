@@ -14,16 +14,10 @@ class InvoiceXmlReader
     {
         $xmlString = str_replace(PHP_EOL, '', utf8_encode($xmlString));
         $xmlString = trim(preg_replace('/\t+/', '', $xmlString));
-//        $xml = new \SimpleXMLElement($xmlString);
-//        $xml->registerXPathNamespace("def", "http://www.sat.gob.mx/cfd/3");
-//        $this->normalize($xml, $data);
-//        $this->normalize($xml->xpath('cfdi:Complemento'), $data['UUID']);
-//        dd($data);
         $xml = simplexml_load_string($xmlString);
         $data = [];
         $this->normalize($xml, $data);
         preg_match('/UUID=\"(.*?)\"/i', $xmlString, $uuid);
-//        dd($data);
         return [
             'version'=>$data['version'],
             'folio'=>$data['folio'],
