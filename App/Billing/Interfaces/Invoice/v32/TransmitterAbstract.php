@@ -20,6 +20,18 @@ abstract class TransmitterAbstract
     protected $postalCode;
     protected $exteriorNumber;
     protected $interiorNumber;
+    protected $regime;
+    
+    public function setRegime($regime)
+    {
+        $this->regime = $regime;
+        return $this;
+    }
+    
+    public function getRegime()
+    {
+        return $this->regime;
+    }
     
     public function setInteriorNumber($interiorNumber)
     {

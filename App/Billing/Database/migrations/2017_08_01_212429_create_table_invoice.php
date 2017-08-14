@@ -19,6 +19,8 @@ class CreateTableInvoice extends Migration
             $table->smallInteger('idInvoiceStatus');
             $table->char('idFileXml', 36);
             $table->char('idFilePdf', 36);
+            $table->char('idFileCfdSeal', 36)->nullable();
+            $table->char('idFileCfdBeforeSeal', 36)->nullable();
             $table->uuid('uuid')->unique();
             $table->string('folio', 25);
             $table->string('serie', 10)->nullable();

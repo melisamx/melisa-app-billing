@@ -21,6 +21,8 @@ abstract class InvoiceAbstract extends BaseUuid
         'idIdentityCreated',
         'idFileXml',
         'idFilePdf',
+        'idFileCfdSeal',
+        'idFileCfdBeforeSeal',
         'folio',
         'serie',
         'rfc',

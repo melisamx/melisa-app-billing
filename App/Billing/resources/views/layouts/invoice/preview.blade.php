@@ -11,16 +11,44 @@
                 <td width="30%">
                     <table>
                         <tr>
-                            <th>Folio</th>
+                            <th>Folio Fiscal</th>
                         </tr>
                         <tr>
+                            @if( isset($report->bell))
+                            <td>{{ $report->bell->uuid }}</td>
+                            @else
                             <td class="empty">Por generar</td>
+                            @endif
                         </tr>
                         <tr>
-                            <th>Número de factura</th>
+                            <th>Factura Número</th>
                         </tr>
                         <tr>
+                            @if( isset($report->bell))
+                            <td>{{ $report->serie . ' '. $report->folio }}</td>
+                            @else
                             <td class="empty">Por generar</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <th>No. de serie del CSD del emisor</th>
+                        </tr>
+                        <tr>
+                            @if( isset($report->bell))
+                            <td>{{ $report->bell->numberCertificateSat }}</td>
+                            @else
+                            <td class="empty">Por generar</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <th>Fecha y Hora de emisión</th>
+                        </tr>
+                        <tr>
+                            @if( isset($report->bell))
+                            <td>{{ $report->bell->dateBell }}</td>
+                            @else
+                            <td class="empty">Por generar</td>
+                            @endif
                         </tr>
                     </table>
                 </td>
@@ -42,7 +70,7 @@
                     <td colspan="2">RFC: {{ $report->transmitter->rfc }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Calle y Número: {{ $report->transmitter->address . $report->transmitter->exteriorNumber }}</td>
+                    <td colspan="2">Calle y Número: {{ $report->transmitter->address . ' ' . $report->transmitter->exteriorNumber }}</td>
                     <td>Ciudad: {{ $report->transmitter->country }}</td>
                     <td>Colonia: {{ $report->transmitter->colony }}</td>
                 </tr>
@@ -102,10 +130,10 @@
     <br>
     
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             
         </div>        
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <table class="table">
                 <tr>
                     <th class="title section">Subtotal</th>
@@ -123,6 +151,52 @@
                 </tr>
             </table>
         </div>
+    </div>
+    
+    <br>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <tr>
+                    <th class="title section">Cadena original del complemento de certificación digital del SAT</th>
+                    <td rowspan="7" style="width: 30%">
+                        @if( isset($report->bell))
+                        <img src="https://timbrado.bwnet.mx/qr/{{ $report->bell->uuid }}.jpg" />
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    @if( isset($report->bell))
+                    <td class="text-center">{{ $report->bell->stringOriginal }}</td>
+                    @else
+                    <td class="empty">Por generar</td>
+                    @endif
+                </tr>
+                <tr>
+                    <th class="title section">Sello digital del emisor</th>
+                </tr>
+                <tr>
+                    @if( isset($report->bell))
+                    <td class="text-center">{{ $report->bell->sealCFD }}</td>
+                    @else
+                    <td class="empty">Por generar</td>
+                    @endif
+                </tr>
+                <tr>
+                    <th class="title section">Sello digital del SAT</th>
+                </tr>
+                <tr>
+                    @if( isset($report->bell))
+                    <td class="text-center">{{ $report->bell->sealSat }}</td>
+                    @else
+                    <td class="empty">Por generar</td>
+                    @endif
+                </tr>
+                <tr>
+                    <td class="text-center">Este documento es una representacion impresa de un CFDI</td>
+                </tr>
+            </table>
     </div>
 </div>
 @endsection
