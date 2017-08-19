@@ -25,6 +25,7 @@ abstract class InvoiceAbstract
     protected $taxes = [];
     protected $receiver;
     protected $transmitter;
+    protected $version = 3.2;
 
     public function __construct(
         ReceiverAbstract $receiver,
@@ -44,6 +45,11 @@ abstract class InvoiceAbstract
     public function getFolio()
     {
         return $this->folio;
+    }
+    
+    public function getVersion()
+    {
+        return $this->version;
     }
     
     public function setDate($date)

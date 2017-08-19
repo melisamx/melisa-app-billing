@@ -53,4 +53,13 @@ abstract class TaxAbstract
         return $this;
     }
     
+    public function toArray()
+    {
+        return [
+            'type'=>$this->getType(),
+            'rate'=>$this->getRate(),
+            'amount'=>$this->getAmount(),
+        ];
+    }
+    
 }

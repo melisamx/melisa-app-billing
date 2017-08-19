@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Billing\Logics\Digifact;
+namespace App\Billing\Logics\CI;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Interfaces\Invoice\v32\Invoice;
-use App\Billing\Interfaces\Digifact\v32\Invoice as InvoicePac;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
@@ -39,7 +38,7 @@ class InvoiceCancel
     }
     
     public function init($invoice)
-    {        
+    {        dd($invoice);
         $client = $this->createClient();
         
         if( !$client) {

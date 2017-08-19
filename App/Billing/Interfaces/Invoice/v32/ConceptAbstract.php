@@ -71,4 +71,15 @@ abstract class ConceptAbstract
         return $this;
     }
     
+    public function toArray()
+    {
+        return [
+            'quantity'=>$this->getQuantity(),
+            'price'=>$this->getPrice(),
+            'unit'=>$this->getUnit(),
+            'description'=>$this->getDescription(),
+            'amount'=>$this->getAmount(),
+        ];
+    }
+    
 }

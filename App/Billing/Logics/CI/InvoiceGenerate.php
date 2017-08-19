@@ -520,7 +520,14 @@ class InvoiceGenerate
         $dataBell, 
         $invoice
     )
-    {        
+    {
+        $taxes = array_map(function($tax) {
+            return $tax->toArray();
+        }, $invoice->getTaxes());
+        $concepts = array_map(function($concept) {
+            return $concept->toArray();
+        }, $invoice->getConcepts());
+        
         return $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
@@ -534,6 +541,14 @@ class InvoiceGenerate
             'folio'=>$invoice->getFolio(),
             'serie'=>$invoice->getSeries(),
             'date'=>$dataBell['dateBell'],
+            'version'=>$invoice->getVersion(),
+            'rfcTransmitter'=>$invoice->getTransmitter()->getRfc(),
+            'nameTransmitter'=>$invoice->getTransmitter()->getBusinessName(),
+            'receiver'=>json_encode($invoice->getReceiver()->toArray()),
+            'transmitter'=>json_encode($invoice->getTransmitter()->toArray()),
+            'concepts'=>json_encode($concepts),
+            'taxes'=>json_encode($taxes),
+            'total'=>$invoice->getTotal()
         ]);
     }
     

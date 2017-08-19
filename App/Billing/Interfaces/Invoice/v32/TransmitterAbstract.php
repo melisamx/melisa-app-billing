@@ -143,4 +143,21 @@ abstract class TransmitterAbstract
         return $this;
     }
     
+    public function toArray()
+    {
+        return [
+            'rfc'=>$this->getRfc(),
+            'businessName'=>$this->getBusinessName(),
+            'regime'=>$this->getRegime(),
+            'postalCode'=>$this->getPostalCode(),
+            'country'=>$this->getCountry(),
+            'municipality'=>$this->getMunicipality(),
+            'state'=>$this->getState(),
+            'address'=>$this->getAddress(),
+            'exteriorNumber'=>$this->getExteriorNumber(),
+            'interiorNumber'=>$this->getInteriorNumber(),
+            'colony'=>$this->getColony(),
+        ];
+    }
+    
 }
