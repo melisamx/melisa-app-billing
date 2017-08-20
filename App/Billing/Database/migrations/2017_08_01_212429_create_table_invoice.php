@@ -34,6 +34,9 @@ class CreateTableInvoice extends Migration
             $table->text('receiver');
             $table->text('concepts');
             $table->text('taxes');
+            $table->text('stringOriginal');
+            $table->text('sealCfd');
+            $table->text('sealSat');
             $table->decimal('total', 15, 2);
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -44,6 +47,7 @@ class CreateTableInvoice extends Migration
             $table->index('name');
             $table->index('rfc');
             $table->index('folio');
+            $table->index('serie');
             $table->index('date');
             
             $table->foreign('idInvoiceStatus')

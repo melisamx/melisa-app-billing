@@ -178,7 +178,7 @@
                 </tr>
                 <tr>
                     @if( isset($report->bell))
-                    <td class="text-center">{{ $report->bell->sealCFD }}</td>
+                    <td class="text-center">{{ $report->bell->sealCfd }}</td>
                     @else
                     <td class="empty">Por generar</td>
                     @endif

@@ -229,6 +229,18 @@ class InvoiceGenerate
         return $content;
     }
     
+    public function getStringOriginal(&$dataBell)
+    {
+        return implode('|', [
+            '||1.0',
+            $dataBell['uuid'],
+            $dataBell['dateBell'],
+            $dataBell['sealCfd'],
+            $dataBell['numberCertificateSat'],
+            '|'
+        ]);
+    }
+    
     public function createHtmlInvoice(&$invoice, &$dataBell)
     {        
         $data = app(PreviewLogic::class)->init($invoice);
@@ -236,10 +248,10 @@ class InvoiceGenerate
         $data->bell->uuid = $dataBell['uuid'];
         $data->bell->dateBell = $dataBell['dateBell'];
         $data->bell->numberCertificateSat = $dataBell['numberCertificateSat'];
-        $data->bell->stringOriginal = $this->stringOriginal;
-        $data->bell->sealCFD = $dataBell['sealCFD'];
+        $data->bell->stringOriginal = $this->getStringOriginal($dataBell);
+        $data->bell->sealCfd = $dataBell['sealCfd'];
         $data->bell->sealSat = $dataBell['sealSat'];
-//        dd($data);
+        
         $module = app(PreviewModule::class)
             ->withInput($data)
             ->render();
@@ -265,7 +277,7 @@ class InvoiceGenerate
         $bell->setAttribute('UUID', $dataBell['uuid']);
         $bell->setAttribute('noCertificadoSAT', $dataBell['numberCertificateSat']);
         $bell->setAttribute('selloSAT', $dataBell['sealSat']);
-        $bell->setAttribute('selloCFD', $dataBell['sealCFD']);
+        $bell->setAttribute('selloCFD', $dataBell['sealCfd']);
         $bell->setAttribute('version', $dataBell['version']);
         $complemento->appendChild($bell);
         $comprobante->appendChild($complemento);
@@ -287,7 +299,7 @@ class InvoiceGenerate
         $c = $xmlTimbre->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', 'TimbreFiscalDigital')->item(0); 
         return [
             'dateBell'=>$c->getAttribute('FechaTimbrado'),
-            'sealCFD'=>$c->getAttribute('selloCFD'),
+            'sealCfd'=>$c->getAttribute('selloCFD'),
             'version'=>$c->getAttribute('version'),
             'numberCertificateSat'=>$c->getAttribute('noCertificadoSAT'),
             'sealSat'=>$c->getAttribute('selloSAT'),
@@ -541,6 +553,9 @@ class InvoiceGenerate
             'folio'=>$invoice->getFolio(),
             'serie'=>$invoice->getSeries(),
             'date'=>$dataBell['dateBell'],
+            'sealCfd'=>$dataBell['sealCfd'],
+            'sealSat'=>$dataBell['sealSat'],
+            'stringOriginal'=>$this->getStringOriginal($dataBell),
             'version'=>$invoice->getVersion(),
             'rfcTransmitter'=>$invoice->getTransmitter()->getRfc(),
             'nameTransmitter'=>$invoice->getTransmitter()->getBusinessName(),

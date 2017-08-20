@@ -38,7 +38,7 @@ class InvoiceCancel
     }
     
     public function init($invoice)
-    {        dd($invoice);
+    {
         $client = $this->createClient();
         
         if( !$client) {
