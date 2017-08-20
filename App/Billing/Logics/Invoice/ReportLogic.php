@@ -2,6 +2,7 @@
 
 namespace App\Billing\Logics\Invoice;
 
+use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Logics\Invoice\v32\ReportLogic as Invoice32Report;
 
@@ -12,6 +13,7 @@ use App\Billing\Logics\Invoice\v32\ReportLogic as Invoice32Report;
  */
 class ReportLogic
 {
+    use LogicBusiness;
     
     protected $repoInvoice;
 
@@ -27,7 +29,7 @@ class ReportLogic
         $invoice = $this->repoInvoice->with([
             'status'
         ])->findOrFail($id);
-        
+        dd($id);
         if( !$invoice) {
             return $this->error('Imposible get invoice');
         }

@@ -15,6 +15,18 @@ class ModulesUniversalSeeder extends InstallSeeder
     public function run()
     {        
         $this->invoice();
+        $this->series();
+    }
+    
+    public function series()
+    {
+        $this->installModuleJson('Universal/Series', [
+            'create',
+            'delete',
+            'paging',
+            'report',
+            'update',
+        ]);
     }
     
     public function invoice()

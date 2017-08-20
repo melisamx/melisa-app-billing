@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de series",
+    "url": "/billing.php/series/",
+    "description": "Módulo para paginar lista de series",
+    "task": {
+        "key": "task.billing.series.paging",
+        "name": "Paginar lista de series",
+        "description": "Permitir paginar lista de series",
+        "pattern": "read"
+    }
+}

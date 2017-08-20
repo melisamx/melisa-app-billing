@@ -1,0 +1,24 @@
+{
+    "name": "Ver series",
+    "url": "/billing.php/modules/series/view",
+    "description": "Módulo interfaz para ver series",
+    "nameSpace": "Melisa.billing.view.desktop.series.view.Wrapper",
+    "task": {
+        "key": "task.billing.series.view.access",
+        "name": "Acceso a ver serie",
+        "description": "Permitir acceso a ver series",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.series.view.access",
+        "name": "Opción para ver series",
+        "text": "Series",
+        "iconClassSmall": "x-fa fa fa-forward",
+        "iconClassMedium": "x-fa fa fa-forward",
+        "iconClassLarge": "x-fa fa fa-forward"
+    },
+    "event": {
+        "key": "event.billing.series.view.access",
+        "description": "Acceso al módulo ver series"
+    }
+}

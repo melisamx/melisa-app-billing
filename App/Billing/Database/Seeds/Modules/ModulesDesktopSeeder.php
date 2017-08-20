@@ -15,6 +15,16 @@ class ModulesDesktopSeeder extends InstallSeeder
     public function run()
     {        
         $this->invoice();        
+        $this->series();        
+    }
+    
+    public function series()
+    {
+        $this->installModuleJson('Desktop/Series', [
+            'add',
+            'update',
+            'view',
+        ]);
     }
     
     public function invoice()

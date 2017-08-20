@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de series",
+    "url": "/billing.php/series/report/",
+    "description": "Módulo para ver reporte de series",
+    "task": {
+        "key": "task.billing.series.report",
+        "name": "Acceso a ver reporte de series",
+        "description": "Permitir ver reporte de series",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.series.report.success",
+        "description": "Acceso a reporte de series"
+    }
+}

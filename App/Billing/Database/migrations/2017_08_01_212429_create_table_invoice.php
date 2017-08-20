@@ -17,14 +17,15 @@ class CreateTableInvoice extends Migration
             $table->uuid('id')->primary();
             $table->char('idIdentityCreated', 36);
             $table->smallInteger('idInvoiceStatus');
+            $table->smallInteger('idSerie');
             $table->char('idFileXml', 36);
             $table->char('idFilePdf', 36);
             $table->char('idFileCfdSeal', 36)->nullable();
             $table->char('idFileCfdBeforeSeal', 36)->nullable();
             $table->uuid('uuid')->unique();
             $table->decimal('version', 3, 1)->defualt(3.2);
-            $table->string('folio', 25);
             $table->string('serie', 10)->nullable();
+            $table->string('folio', 25)->nullable();
             $table->string('rfc', 13);
             $table->string('name', 150);
             $table->string('rfcTransmitter', 13);
@@ -52,6 +53,11 @@ class CreateTableInvoice extends Migration
             
             $table->foreign('idInvoiceStatus')
                 ->references('id')->on('invoiceStatus')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idSerie')
+                ->references('id')->on('series')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

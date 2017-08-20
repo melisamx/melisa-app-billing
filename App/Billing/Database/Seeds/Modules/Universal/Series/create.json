@@ -1,0 +1,15 @@
+{
+    "name": "Crear serie",
+    "url": "/billing.php/series/",
+    "description": "Módulo para crear serie",
+    "task": {
+        "key": "task.billing.series.create",
+        "name": "Acceso a crear serie",
+        "description": "Permitir crear serie",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.series.create.success",
+        "description": "Serie creado"
+    }
+}

@@ -12,6 +12,7 @@ use App\Drive\Logics\Files\StringCreateLogic;
 use App\Insurance\Modules\Universal\Invoice\PreviewModule;
 use App\Billing\Logics\Invoice\v32\PreviewLogic;
 use App\Drive\Logics\Files\ReportLogic;
+use App\Billing\Repositories\SeriesRepository;
 
 /**
  * Invoice generate
@@ -25,16 +26,19 @@ class InvoiceGenerate
     protected $repoInvoice;
     protected $readerXml;
     protected $logicFile;
+    protected $repoSeries;
 
     public function __construct(
         InvoiceRepository $repoInvoice,
         InvoiceXmlReader $readerXml,
-        StringCreateLogic $logicFile
+        StringCreateLogic $logicFile,
+        SeriesRepository $repoSeries
     )
     {
         $this->repoInvoice = $repoInvoice;
         $this->readerXml = $readerXml;
         $this->logicFile = $logicFile;
+        $this->repoSeries = $repoSeries;
     }
     
     public function getXsltStrinOriginal()
@@ -54,25 +58,22 @@ class InvoiceGenerate
         return $xslt;
     }
     
-    public function setFolio(Invoice &$invoice)
+    public function setSeries(Invoice &$invoice, &$serie)
     {
-        $invoice->setFolio('123');
-        return true;
-    }
-    
-    public function setSeries(Invoice &$invoice)
-    {
-        $invoice->setSeries('A');
+        $invoice->setSeries($serie->serie);
+        $invoice->setFolio($serie->folioCurrent + 1);
         return true;
     }
     
     public function init(Invoice $invoice)
     {
-        if( !$this->setFolio($invoice)) {
+        $serie = $this->getSerie();
+        
+        if( !$serie) {
             return false;
         }
         
-        if( !$this->setSeries($invoice)) {
+        if( !$this->setSeries($invoice, $serie)) {
             return false;
         }        
         
@@ -121,13 +122,17 @@ class InvoiceGenerate
         }
         
         $params ['CFD']= $sealXmlString;
-//        $timbre = $this->generateXml($client, $params);        
-//        if( !$timbre) {
-//            return false;
-//        }
-        $timbre = '<timbre esValido="True" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns=""><tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/TimbreFiscalDigital/TimbreFiscalDigital.xsd" version="1.0" FechaTimbrado="2017-08-12T12:40:22" selloCFD="FFFFFFFF-rfryrncwtJyURPkHoNFgaNXn1mJRkkkKVCpBL7VY5zwauqcG1SLTrk/F6WYUotUct/RVJZ+03TnoQESKTaTFdiY7ni4PVTnBESsPv9BI7Bmasig2R/33zq6A7ybUSdirNyaNNKJW5ImJR8d4qn+B0T8vADn3s+FOd2k=" noCertificadoSAT="30001000000100000801" selloSAT="FFFFFFFF-y3FisMIn7PJVE9vgOAzs6iVMyHzFK68CsYkknaQKw+rV/qeE9WK7EllirS48Id0USa1zYLf8VyeydVEzHctlkJVku72/3Lt6eEeC0hKOKn0UsyVgaRPSlfcj6+U18kvhRE0qjyh06KyXyil6IP6PN3DkMFmIuUytAM=" UUID="FFFFFFFF-dbed-4922-a5db-477bf3ec2b1b" /></timbre>';
+        $stamp = $this->generateXml($client, $params);
         
-        $dataBell = $this->getDataBell($timbre);
+        if( !$stamp) {
+            return false;
+        }
+        
+        if( !$this->isValidStamp($stamp)) {
+            return false;
+        }
+        
+        $dataBell = $this->getDataBell($stamp);
         
         if( !$dataBell) {
             return false;
@@ -177,10 +182,15 @@ class InvoiceGenerate
             $idFileXmlBell, 
             $idFilePdfInvoice, 
             $dataBell, 
-            $invoice
+            $invoice,
+            $serie
         );
         
         if( !$idInvoice) {
+            return $this->repoInvoice->rollback();
+        }
+        
+        if( !$this->incrementFolio($serie)) {
             return $this->repoInvoice->rollback();
         }
         
@@ -191,7 +201,54 @@ class InvoiceGenerate
             'idFilePdf'=>$idFilePdfInvoice,
             'idFileCfdBeforeSeal'=>$idFileCfdBeforeSeal,
             'idFileCfdSeal'=>$idFileCfdSeal,
+            'serie'=>$serie->serie,
+            'folio'=>$serie->folioCurrent
         ];
+    }
+    
+    public function isValidStamp(&$stamp)
+    {
+        if( !isset($stamp['TimbrarResult'])) {
+            return $this->error('Respuesta invalida por parte del prevalidador');
+        }
+        
+        libxml_use_internal_errors(true);
+        $doc = simplexml_load_string($stamp['TimbrarResult']);
+        
+        if( !$doc) {
+            return $this->error(utf8_encode($stamp['TimbrarResult']));
+        }
+        
+        $stamp = $stamp['TimbrarResult'];
+        return true;
+    }
+    
+    public function incrementFolio(&$serie)
+    {
+        $serie->folioCurrent ++;
+        $result = $serie->save();
+        
+        if( $result) {
+            return true;
+        }
+        
+        return $this->error('Imposible incrementar el folio de la serie {s}', [
+            's'=>$serie->serie
+        ]);
+    }
+    
+    public function getSerie()
+    {
+        $serie = $this->repoSeries->findWhere([
+            'isDefault'=>true,
+            'active'=>true
+        ])->first();
+        
+        if( !$serie) {
+            return $this->error('Imposible obtener la serie a usar en la factura');
+        }
+        
+        return $serie;
     }
     
     public function getFileDrive($idFile)
@@ -517,6 +574,7 @@ class InvoiceGenerate
     public function generateXml(&$client, $params)
     {
         $result = $this->runRequest($client, 'Timbrar', $params);
+        
         if( !$result) {
             return $this->error('Imposible generar XML con CI');
         }
@@ -530,7 +588,8 @@ class InvoiceGenerate
         $idFileXmlBell, 
         $idFilePdfInvoice, 
         $dataBell, 
-        $invoice
+        $invoice,
+        $serie
     )
     {
         $taxes = array_map(function($tax) {
@@ -540,9 +599,10 @@ class InvoiceGenerate
             return $concept->toArray();
         }, $invoice->getConcepts());
         
-        return $this->repoInvoice->create([
+        $result = $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
+            'idSerie'=>$serie->id,
             'idFileXml'=>$idFileXmlBell,
             'idFilePdf'=>$idFilePdfInvoice,
             'idFileCfdSeal'=>$idFileCfdSeal,
@@ -565,6 +625,12 @@ class InvoiceGenerate
             'taxes'=>json_encode($taxes),
             'total'=>$invoice->getTotal()
         ]);
+        
+        if( $result)  {
+            return $result;
+        }
+        
+        return $this->error('Imposible crear registro de la factura');
     }
     
     public function getRequestParamsPdf(&$dataXml)

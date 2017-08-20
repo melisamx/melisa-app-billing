@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar serie",
+    "url": "/billing.php/series/delete/",
+    "description": "Módulo para eliminar serie",
+    "task": {
+        "key": "task.billing.series.delete",
+        "name": "Acceso a eliminar serie",
+        "description": "Permitir eliminar serie",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.series.delete.success",
+        "description": "Serie eliminada"
+    }
+}

@@ -3,6 +3,7 @@
 namespace App\Billing\Database\Seeds;
 
 use Melisa\Laravel\Database\InstallSeeder;
+use App\Billing\Database\Seeds\Data\SeriesSeeder;
 
 /**
  * 
@@ -18,7 +19,8 @@ class DataSeeder extends InstallSeeder
             'fiscalRegime',
             'taxes',
             'invoiceStatus',
-        ]);        
+        ]);
+        $this->call(SeriesSeeder::class);
     }
     
 }

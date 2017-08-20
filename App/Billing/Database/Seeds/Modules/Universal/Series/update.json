@@ -1,0 +1,15 @@
+{
+    "name": "Modificar serie",
+    "url": "/billing.php/series/update/",
+    "description": "Módulo para modificar serie",
+    "task": {
+        "key": "task.billing.series.update",
+        "name": "Acceso a modificar serie",
+        "description": "Permitir modificar serie",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.series.update.success",
+        "description": "Serie modificada"
+    }
+}
