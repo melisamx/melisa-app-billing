@@ -23,3 +23,9 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/debtsToPay.php');    
 });
+
+Route::group([
+    'prefix'=>'accountsReceivable',
+], function() {    
+    require realpath(base_path() . '/routes/modules/accountsReceivable.php');    
+});

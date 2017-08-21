@@ -1,0 +1,15 @@
+{
+    "name": "Saldar cuenta por cobrar",
+    "url": "/billing.php/accountsReceivable/charged/",
+    "description": "Módulo para saldar cuenta por cobrar",
+    "task": {
+        "key": "task.billing.accountsReceivable.charged",
+        "name": "Acceso a saldar cuenta por cobrar",
+        "description": "Permitir saldar cuenta por cobrar",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.accountsReceivable.charged.success",
+        "description": "Cuenta por cobrar saldada"
+    }
+}

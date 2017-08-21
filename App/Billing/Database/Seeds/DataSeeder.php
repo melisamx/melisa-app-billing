@@ -21,6 +21,7 @@ class DataSeeder extends InstallSeeder
             'taxes',
             'invoiceStatus',
             'debtsToPayStatus',
+            'accountsReceivableStatus',
         ]);
         $this->call(SeriesSeeder::class);
         $this->call(AccountsSeeder::class);

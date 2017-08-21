@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de cuenta por cobrar",
+    "url": "/billing.php/accountsReceivable/report/",
+    "description": "Módulo para ver reporte de cuenta por cobrar",
+    "task": {
+        "key": "task.billing.accountsReceivable.report",
+        "name": "Acceso a ver reporte de cuenta por cobrar",
+        "description": "Permitir ver reporte de cuenta por cobrar",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.accountsReceivable.report.success",
+        "description": "Acceso a reporte de cuenta por cobrar"
+    }
+}

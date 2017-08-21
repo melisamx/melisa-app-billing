@@ -34,3 +34,10 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/accounts.php');    
 });
+
+Route::group([
+    'prefix'=>'accountsReceivable',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/accountsReceivable.php');    
+});

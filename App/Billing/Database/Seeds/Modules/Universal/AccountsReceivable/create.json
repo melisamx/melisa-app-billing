@@ -1,0 +1,15 @@
+{
+    "name": "Crear cuenta por cobrar por cobrar",
+    "url": "/billing.php/accountsReceivable/",
+    "description": "Módulo para crear cuenta por cobrar por cobrar",
+    "task": {
+        "key": "task.billing.accountsReceivable.create",
+        "name": "Acceso a crear cuenta por cobrar por cobrar",
+        "description": "Permitir crear cuenta por cobrar por cobrar",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.accountsReceivable.create.success",
+        "description": "Cuenta por cobrar creada"
+    }
+}

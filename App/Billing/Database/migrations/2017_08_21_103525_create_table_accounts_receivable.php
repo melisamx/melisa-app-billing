@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableDebtstopay extends Migration
+class CreateTableAccountsReceivable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,20 @@ class CreateTableDebtstopay extends Migration
      */
     public function up()
     {
-        Schema::create('debtsToPay', function (Blueprint $table) {
+        Schema::create('accountsReceivable', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->smallInteger('idDebtsToPayStatus');
             $table->smallInteger('idAccount');
+            $table->smallInteger('idAccountReceivableStatus');
+            $table->smallInteger('idPaymentMethod');
             $table->char('idIdentityCreated', 36);
-            $table->char('idFileVoucher', 36);
-            $table->decimal('amountPayable', 15, 2);
-            $table->dateTime('dateVoucher');            
+            $table->char('idInvoice', 36);
+            $table->char('idIdentity', 36);
+            $table->decimal('amountCharged', 15, 2);
             $table->dateTime('dueDate')->nullable();            
             $table->boolean('expiredDate')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('idIdentityUpdated', 36)->nullable();
             $table->dateTime('updatedAt')->nullable();
-            
-            $table->foreign('idDebtsToPayStatus')
-                ->references('id')->on('debtsToPayStatus')
-                ->onDelete('no action')
-                ->onUpdate('no action');
             
             $table->foreign('idAccount')
                 ->references('id')->on('accounts')
@@ -46,6 +42,6 @@ class CreateTableDebtstopay extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('debtsToPay');
+        Schema::dropIfExists('accountsReceivable');
     }
 }

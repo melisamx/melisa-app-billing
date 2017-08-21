@@ -17,6 +17,15 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->invoice();        
         $this->series();        
         $this->debtsToPay();        
+        $this->accountsReceivable();        
+    }
+    
+    public function accountsReceivable()
+    {
+        $this->installModuleJson('Desktop/AccountsReceivable', [
+            'add',
+            'view',
+        ]);
     }
     
     public function debtsToPay()

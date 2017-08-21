@@ -18,6 +18,17 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->series();
         $this->accounts();
         $this->debtsToPay();
+        $this->accountsReceivable();
+    }
+    
+    public function accountsReceivable()
+    {
+        $this->installModuleJson('Universal/AccountsReceivable', [
+            'create',
+            'paging',
+            'report',
+            'charged',
+        ]);
     }
     
     public function debtsToPay()

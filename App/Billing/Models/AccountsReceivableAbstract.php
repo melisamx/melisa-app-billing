@@ -8,20 +8,21 @@ use Melisa\Laravel\Models\BaseUuid;
  * 
  * @author Luis Josafat Heredia Contreras
  */
-abstract class DebtsToPayAbstract extends BaseUuid
+abstract class AccountsReceivableAbstract extends BaseUuid
 {    
     protected $connection = 'billing';
-    protected $table = 'debtsToPay';
+    protected $table = 'accountsReceivable';
     public $timestamps = true;
     /* incrementing */
     protected $fillable = [
         'id',
         'idAccount',
-        'idDebtsToPayStatus',
+        'idAccountReceivableStatus',
+        'idPaymentMethod',
         'idIdentityCreated',
-        'idFileVoucher',
-        'amountPayable',
-        'dateVoucher',
+        'idInvoice',
+        'idIdentity',
+        'amountCharged',
         'dueDate',
         'expiredDate',
         'createdAt',

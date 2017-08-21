@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de cuentas por cobrar",
+    "url": "/billing.php/accountsReceivable/",
+    "description": "Módulo para paginar lista de cuentas por cobrar",
+    "task": {
+        "key": "task.billing.accountsReceivable.paging",
+        "name": "Paginar lista de cuentas por cobrar",
+        "description": "Permitir paginar lista de cuentas por cobrar",
+        "pattern": "read"
+    }
+}
