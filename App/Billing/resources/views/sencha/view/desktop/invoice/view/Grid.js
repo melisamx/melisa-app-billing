@@ -88,6 +88,24 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                     disabled: '{record.idFilePdf ? false : true}'
                 }
             }
+        },
+        {
+            xtype: 'widgetcolumn',
+            width: 30,
+            widget: {
+                xtype: 'button',
+                iconCls: 'x-fa fa-ban',
+                tooltip: 'Cancelar factura',
+                bind: {
+                    melisa: '{modules.cancel}',
+                    hidden: '{!modules.cancel.allowed}'
+                },
+                plugins: {
+                    ptype: 'buttonconfirmation',
+                    messageConfirmation: '¿Realmente desea cancelar la factura?',
+                    messageSuccess: 'Factura cancelada'
+                }
+            }
         }
     ],
     selModel: {

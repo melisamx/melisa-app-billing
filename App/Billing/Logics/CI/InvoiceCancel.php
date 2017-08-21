@@ -7,11 +7,7 @@ use App\Billing\Interfaces\Invoice\v32\Invoice;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
-use App\Drive\Interfaces\FileContent;
-use App\Drive\Logics\Files\StringCreateLogic;
-
-/* fake */
-require_once base_path() . '../../../nusoap/nusoap.php';
+use App\Drive\Logics\Files\GetContentLogic;
 
 /**
  * Invoice cancel
@@ -22,19 +18,13 @@ class InvoiceCancel
 {
     use LogicBusiness, Client;
     
-    protected $repoInvoice;
-    protected $readerXml;
-    protected $logicFile;
+    protected $logicGetContentFile;
 
     public function __construct(
-        InvoiceRepository $repoInvoice,
-        InvoiceXmlReader $readerXml,
-        StringCreateLogic $logicFile
+        GetContentLogic $logicGetContentFile
     )
     {
-        $this->repoInvoice = $repoInvoice;
-        $this->readerXml = $readerXml;
-        $this->logicFile = $logicFile;
+        $this->logicGetContentFile = $logicGetContentFile;
     }
     
     public function init($invoice)
@@ -45,7 +35,14 @@ class InvoiceCancel
             return false;
         }
         
-        $params = $this->getRequestParams($invoice);
+        $cfd = $this->getCfd($invoice->idFileXml);
+        
+        if( !$cfd) {
+            return false;
+        }
+        
+        $params = $this->getRequestParams();
+        $params ['CFD']= $cfd;
         
         $result = $this->cancelCfdi($client, $params);
         dd($result);
@@ -87,41 +84,34 @@ class InvoiceCancel
         ];
     }
     
+    public function getCfd($idFileCfd)
+    {
+        $content = $this->logicGetContentFile->init($idFileCfd);
+        
+        if( $content === false) {
+            return $this->error('Imposible obtener el contenido del CFD timbrado');
+        }
+        
+        return str_replace([ PHP_EOL, '\r'], '', $content);
+    }
+    
     public function cancelCfdi(&$client, &$params)
     {
-        $params ['uuid']= 'CB1C1059-7B9F-11E7-86FB-00155D014300';
-        $result = $this->runRequest($client, 'CancelaCFDI', $params);
+//        dd($params);
+        $result = $this->runRequest($client, 'CancelarCFDI', $params);
         dd($result);
         if( !$result) {
             return $this->error('Imposible cancelar la factura');
         }
         
         return $result['CancelaCFDIResult'];
-    }
+    }   
         
-    public function saveFileXml(&$xmlBase64, &$xmlData)
-    {
-        $file = new FileContent();
-        $file
-            ->setName($xmlData['uuid'] . '.xml')
-            ->setOriginalName($xmlData['uuid'])
-            ->setExtension('xml')
-            ->setContent($xmlBase64);
-        
-        return $this->logicFile->init($file);
-    }
-    
-    public function updateInvoice($idInvoice, $data)
-    {
-        return $this->repoInvoice->update($data, $idInvoice);
-    }    
-        
-    public function getRequestParams(&$invoice)
+    public function getRequestParams()
     {
         return [
-            'Usuario'=>$this->getUser(),
-            'Contrasena'=>$this->getPass(),
-            'uuid'=>$invoice->uuid
+            'LoginWS'=>$this->getUser(),
+            'PasswordWS'=>$this->getPass(),
         ];
     }    
     

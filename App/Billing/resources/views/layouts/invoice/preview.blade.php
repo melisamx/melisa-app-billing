@@ -5,50 +5,50 @@
     <table class="table">
         <thead>
             <tr>
-                <td width="70%">
+                <td width="40%">
                     <img class="powerbyImage" src="{{ $assets['powerbyImage']['url'] }}" />
                 </td>
-                <td width="30%">
-                    <table>
+                <td width="60%">
+                    <table class="table">
                         <tr>
-                            <th>Folio Fiscal</th>
+                            <th width="50%">Factura Número</th>                            
+                            <th width="50%">Folio Fiscal</th>                            
                         </tr>
                         <tr>
-                            @if( isset($report->bell))
-                            <td>{{ $report->bell->uuid }}</td>
+                            @if( isset($report->uuid))
+                            <td>{{ $report->serie . ' '. $report->folio }}</td>
                             @else
                             <td class="empty">Por generar</td>
                             @endif
-                        </tr>
-                        <tr>
-                            <th>Factura Número</th>
-                        </tr>
-                        <tr>
-                            @if( isset($report->bell))
-                            <td>{{ $report->serie . ' '. $report->folio }}</td>
+                            @if( isset($report->uuid))
+                            <td>{{ $report->uuid }}</td>
                             @else
                             <td class="empty">Por generar</td>
                             @endif
                         </tr>
                         <tr>
                             <th>No. de serie del CSD del emisor</th>
-                        </tr>
-                        <tr>
-                            @if( isset($report->bell))
-                            <td>{{ $report->bell->numberCertificateSat }}</td>
-                            @else
-                            <td class="empty">Por generar</td>
-                            @endif
-                        </tr>
-                        <tr>
                             <th>Fecha y Hora de emisión</th>
                         </tr>
                         <tr>
-                            @if( isset($report->bell))
-                            <td>{{ $report->bell->dateBell }}</td>
+                            @if( isset($report->numberCertificateSat))
+                            <td>{{ $report->numberCertificateSat }}</td>
                             @else
                             <td class="empty">Por generar</td>
                             @endif
+                            @if( isset($report->date))
+                            <td>{{ $report->date }}</td>
+                            @else
+                            <td class="empty">Por generar</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <th>Forma de Pago</th>
+                            <th>Lugar de expedición</th>
+                        </tr>
+                        <tr>
+                            <td>{{ $report->methodPayment }}</td>
+                            <td>{{ $report->expeditionPlace }}</td>
                         </tr>
                     </table>
                 </td>
@@ -59,9 +59,6 @@
     <div class="row">
         <div class="col-lg-12">
             <table class="table">
-                <tr>
-                    <td>Lugar de expedición: {{ $report->expeditionPlace }}</td>
-                </tr>
                 <tr>
                     <th colspan="4" class="title section">Emisor</th>
                 </tr>
@@ -75,7 +72,7 @@
                     <td>Colonia: {{ $report->transmitter->colony }}</td>
                 </tr>
                 <tr>
-                    <td>Delegación: {{ $report->transmitter->municiplaity }}</td>
+                    <td>Delegación: {{ $report->transmitter->municipality }}</td>
                     <td>Estado: {{ $report->transmitter->country }}</td>
                     <td>CP: {{ $report->transmitter->postalCode }}</td>
                     <td>Pais: {{ $report->transmitter->country }}</td>
@@ -93,7 +90,7 @@
                     <td>Colonia: {{ $report->receiver->colony }}</td>
                 </tr>
                 <tr>
-                    <td>Delegación: {{ $report->receiver->municiplaity }}</td>
+                    <td>Delegación: {{ $report->receiver->municipality }}</td>
                     <td>Estado: {{ $report->receiver->country }}</td>
                     <td>CP: {{ $report->receiver->postalCode }}</td>
                     <td>Pais: {{ $report->receiver->country }}</td>
@@ -107,11 +104,11 @@
             <table class="table">
                 <thead class="title section">
                     <tr>
-                        <td>Cantidad</td>
-                        <td>Unidad de medida</td>
-                        <td>Concepto</td>
-                        <td>Precio unitario</td>
-                        <td>Importe</td>
+                        <th>Cantidad</td>
+                        <th>Unidad de medida</td>
+                        <th>Concepto</td>
+                        <th>Precio unitario</td>
+                        <th>Importe</td>
                     </tr>
                 </thead>
                 @foreach($report->concepts as $concept)
@@ -127,13 +124,13 @@
         </div>
     </div>
     
-    <br>
+    <hr>
     
     <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             
         </div>        
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <table class="table">
                 <tr>
                     <th class="title section">Subtotal</th>
@@ -153,22 +150,23 @@
         </div>
     </div>
     
-    <br>
+    <hr>
     
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             <table class="table">
                 <tr>
-                    <th class="title section">Cadena original del complemento de certificación digital del SAT</th>
-                    <td rowspan="7" style="width: 30%">
-                        @if( isset($report->bell))
-                        <img src="https://timbrado.bwnet.mx/qr/{{ $report->bell->uuid }}.jpg" />
-                        @endif
-                    </td>
+                    <th class="title section">Total en letra</th>                    
                 </tr>
                 <tr>
-                    @if( isset($report->bell))
-                    <td class="text-center">{{ $report->bell->stringOriginal }}</td>
+                    <td>{{ $report->totalLetter }}</td>
+                </tr>
+                <tr>
+                    <th class="title section">Cadena original del complemento de certificación digital del SAT</th>
+                </tr>
+                <tr>
+                    @if( isset($report->stringOriginal))
+                    <td class="text-center word-break text-small">{{ $report->stringOriginal }}</td>
                     @else
                     <td class="empty">Por generar</td>
                     @endif
@@ -176,9 +174,20 @@
                 <tr>
                     <th class="title section">Sello digital del emisor</th>
                 </tr>
+            </table>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            @if( isset($report->uuid))
+            <div id="qrcode"></div> 
+            @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
                 <tr>
-                    @if( isset($report->bell))
-                    <td class="text-center">{{ $report->bell->sealCfd }}</td>
+                    @if( isset($report->sealCfd))
+                    <td class="text-center word-break text-small">{{ $report->sealCfd }}</td>
                     @else
                     <td class="empty">Por generar</td>
                     @endif
@@ -187,8 +196,8 @@
                     <th class="title section">Sello digital del SAT</th>
                 </tr>
                 <tr>
-                    @if( isset($report->bell))
-                    <td class="text-center">{{ $report->bell->sealSat }}</td>
+                    @if( isset($report->sealSat))
+                    <td class="text-center word-break text-small">{{ $report->sealSat }}</td>
                     @else
                     <td class="empty">Por generar</td>
                     @endif
@@ -197,6 +206,20 @@
                     <td class="text-center">Este documento es una representacion impresa de un CFDI</td>
                 </tr>
             </table>
+        </div>
     </div>
 </div>
+
+@if( isset($report->uuid))
+<script>
+    var qrcode = new QRCode(document.getElementById('qrcode'), {
+        text: "{!! $report->uuid !!}",
+        width: 150,
+        height: 150,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
+@endif
 @endsection

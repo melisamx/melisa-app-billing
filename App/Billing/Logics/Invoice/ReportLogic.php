@@ -4,7 +4,8 @@ namespace App\Billing\Logics\Invoice;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Logics\Invoice\v32\ReportLogic as Invoice32Report;
+use App\Billing\Modules\Universal\Invoice\ReportModule;
+use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
  * Invoice report
@@ -14,7 +15,7 @@ use App\Billing\Logics\Invoice\v32\ReportLogic as Invoice32Report;
 class ReportLogic
 {
     use LogicBusiness;
-    
+      
     protected $repoInvoice;
 
     public function __construct(
@@ -24,23 +25,29 @@ class ReportLogic
         $this->repoInvoice = $invoice;
     }
     
-    public function init($id, $format)
+    public function init($id, $format = 'html')
     {
         $invoice = $this->repoInvoice->with([
             'status'
         ])->findOrFail($id);
-        dd($id);
-        if( !$invoice) {
-            return $this->error('Imposible get invoice');
-        }
         
         return $this->renderModule($invoice);
     }
     
     public function renderModule(&$invoice)
     {
+        if( !$invoice) {
+            dd('error');
+        }
+        
         $report = $invoice->toArray();
-        dd($report);
+        $report ['transmitter']= json_decode($report['transmitter']);
+        $report ['receiver']= json_decode($report['receiver']);
+        $report ['concepts']= json_decode($report['concepts']);
+        $report ['taxes']= json_decode($report['taxes']);
+        $report ['totalLetter']= app(NumberToLetterConverter::class)->convertir($report['total']);
+        
+        return json_decode(json_encode($report));
     }
     
 }

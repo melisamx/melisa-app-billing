@@ -9,10 +9,11 @@ use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
-use App\Insurance\Modules\Universal\Invoice\PreviewModule;
+use App\Billing\Modules\Universal\Invoice\ReportModule;
 use App\Billing\Logics\Invoice\v32\PreviewLogic;
 use App\Drive\Logics\Files\ReportLogic;
 use App\Billing\Repositories\SeriesRepository;
+use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
  * Invoice generate
@@ -27,42 +28,21 @@ class InvoiceGenerate
     protected $readerXml;
     protected $logicFile;
     protected $repoSeries;
+    protected $libNumberToLetter;
 
     public function __construct(
         InvoiceRepository $repoInvoice,
         InvoiceXmlReader $readerXml,
         StringCreateLogic $logicFile,
-        SeriesRepository $repoSeries
+        SeriesRepository $repoSeries,
+        NumberToLetterConverter $libNumberToLetter
     )
     {
         $this->repoInvoice = $repoInvoice;
         $this->readerXml = $readerXml;
         $this->logicFile = $logicFile;
         $this->repoSeries = $repoSeries;
-    }
-    
-    public function getXsltStrinOriginal()
-    {
-        $filePath = __DIR__ . '/cadenaoriginal_3_0.xslt';
-        
-        if( !file_exists($filePath)) {
-            return $this->error('Imposible leer archivo XSLT para generar cadena original');
-        }
-        
-        $xslt = file_get_contents($filePath);
-        
-        if( !$xslt) {
-            return $this->error('Imposible leer el archivo XSLT para generar cadena original');
-        }
-        
-        return $xslt;
-    }
-    
-    public function setSeries(Invoice &$invoice, &$serie)
-    {
-        $invoice->setSeries($serie->serie);
-        $invoice->setFolio($serie->folioCurrent + 1);
-        return true;
+        $this->libNumberToLetter = $libNumberToLetter;
     }
     
     public function init(Invoice $invoice)
@@ -83,7 +63,7 @@ class InvoiceGenerate
             return false;
         }
         
-        $params = $this->getRequestParamsXml($formatInvoice);
+        $params = $this->getRequestParamsXml();
         
         $fileCer = $this->getFileCer();
         $fileKey = $this->getFileKey();
@@ -206,6 +186,30 @@ class InvoiceGenerate
         ];
     }
     
+    public function getXsltStrinOriginal()
+    {
+        $filePath = __DIR__ . '/cadenaoriginal_3_0.xslt';
+        
+        if( !file_exists($filePath)) {
+            return $this->error('Imposible leer archivo XSLT para generar cadena original');
+        }
+        
+        $xslt = file_get_contents($filePath);
+        
+        if( !$xslt) {
+            return $this->error('Imposible leer el archivo XSLT para generar cadena original');
+        }
+        
+        return $xslt;
+    }
+    
+    public function setSeries(Invoice &$invoice, &$serie)
+    {
+        $invoice->setSeries($serie->serie);
+        $invoice->setFolio($serie->folioCurrent + 1);
+        return true;
+    }
+    
     public function isValidStamp(&$stamp)
     {
         if( !isset($stamp['TimbrarResult'])) {
@@ -291,7 +295,7 @@ class InvoiceGenerate
         return implode('|', [
             '||1.0',
             $dataBell['uuid'],
-            $dataBell['dateBell'],
+            $dataBell['date'],
             $dataBell['sealCfd'],
             $dataBell['numberCertificateSat'],
             '|'
@@ -301,15 +305,15 @@ class InvoiceGenerate
     public function createHtmlInvoice(&$invoice, &$dataBell)
     {        
         $data = app(PreviewLogic::class)->init($invoice);
-        $data->bell = new \stdClass();
-        $data->bell->uuid = $dataBell['uuid'];
-        $data->bell->dateBell = $dataBell['dateBell'];
-        $data->bell->numberCertificateSat = $dataBell['numberCertificateSat'];
-        $data->bell->stringOriginal = $this->getStringOriginal($dataBell);
-        $data->bell->sealCfd = $dataBell['sealCfd'];
-        $data->bell->sealSat = $dataBell['sealSat'];
+        $data->uuid = $dataBell['uuid'];
+        $data->date = $dataBell['date'];
+        $data->numberCertificateSat = $dataBell['numberCertificateSat'];
+        $data->stringOriginal = $this->getStringOriginal($dataBell);
+        $data->sealCfd = $dataBell['sealCfd'];
+        $data->sealSat = $dataBell['sealSat'];
+        $data->totalLetter = $this->libNumberToLetter->convertir($data->total);
         
-        $module = app(PreviewModule::class)
+        $module = app(ReportModule::class)
             ->withInput($data)
             ->render();
         $htmlInvoice = $module->render();
@@ -330,7 +334,7 @@ class InvoiceGenerate
         $bell->setAttribute('xmlns:tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital');
         $bell->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $bell->setAttribute('xsi:schemaLocation', 'http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd');
-        $bell->setAttribute('FechaTimbrado', $dataBell['dateBell']);
+        $bell->setAttribute('FechaTimbrado', $dataBell['date']);
         $bell->setAttribute('UUID', $dataBell['uuid']);
         $bell->setAttribute('noCertificadoSAT', $dataBell['numberCertificateSat']);
         $bell->setAttribute('selloSAT', $dataBell['sealSat']);
@@ -355,7 +359,7 @@ class InvoiceGenerate
         
         $c = $xmlTimbre->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', 'TimbreFiscalDigital')->item(0); 
         return [
-            'dateBell'=>$c->getAttribute('FechaTimbrado'),
+            'date'=>$c->getAttribute('FechaTimbrado'),
             'sealCfd'=>$c->getAttribute('selloCFD'),
             'version'=>$c->getAttribute('version'),
             'numberCertificateSat'=>$c->getAttribute('noCertificadoSAT'),
@@ -612,9 +616,14 @@ class InvoiceGenerate
             'uuid'=>$dataBell['uuid'],
             'folio'=>$invoice->getFolio(),
             'serie'=>$invoice->getSeries(),
-            'date'=>$dataBell['dateBell'],
+            'date'=>$dataBell['date'],
             'sealCfd'=>$dataBell['sealCfd'],
             'sealSat'=>$dataBell['sealSat'],
+            'voucherType'=>$invoice->getVoucherType(),
+            'methodPayment'=>$invoice->getMethodPayment(),
+            'expeditionPlace'=>$invoice->getExpeditionPlace(),
+            'coin'=>$invoice->getCoin(),
+            'numberCertificateSat'=>$dataBell['numberCertificateSat'],
             'stringOriginal'=>$this->getStringOriginal($dataBell),
             'version'=>$invoice->getVersion(),
             'rfcTransmitter'=>$invoice->getTransmitter()->getRfc(),
@@ -623,7 +632,8 @@ class InvoiceGenerate
             'transmitter'=>json_encode($invoice->getTransmitter()->toArray()),
             'concepts'=>json_encode($concepts),
             'taxes'=>json_encode($taxes),
-            'total'=>$invoice->getTotal()
+            'total'=>$invoice->getTotal(),
+            'subTotal'=>$invoice->getSubTotal()
         ]);
         
         if( $result)  {
@@ -643,7 +653,7 @@ class InvoiceGenerate
         ];
     }
     
-    public function getRequestParamsXml(&$formatInvoice)
+    public function getRequestParamsXml()
     {
         $formatInvoice ['LoginWS']= $this->getUser();
         $formatInvoice ['PasswordWS']= $this->getPass();

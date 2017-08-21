@@ -23,6 +23,7 @@ class ViewModule extends Outbuildings
                 'modules'=>[
                     'invoice'=>$this->module('task.billing.invoice.paging'),
                     'report'=>$this->module('task.billing.invoice.report'),
+                    'cancel'=>$this->module('task.billing.invoice.cancel', false),
                     'filesView'=>$this->module('task.drive.files.view'),
                 ],
                 'wrapper'=>[

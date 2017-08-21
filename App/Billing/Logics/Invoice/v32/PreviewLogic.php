@@ -3,6 +3,7 @@
 namespace App\Billing\Logics\Invoice\v32;
 
 use App\Billing\Interfaces\Invoice\v32\Invoice;
+use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
  * Invoice generate version 3.2
@@ -11,6 +12,15 @@ use App\Billing\Interfaces\Invoice\v32\Invoice;
  */
 class PreviewLogic
 {
+    
+    protected $libNumbertToLetter;
+
+    public function __construct(
+        NumberToLetterConverter $libNumbertToLetter
+    )
+    {
+        $this->libNumbertToLetter = $libNumbertToLetter;
+    }
     
     public function init(Invoice $invoice)
     {
@@ -26,7 +36,8 @@ class PreviewLogic
             'transmitter'=>$this->getFormatTransmitter($invoice->getTransmitter()),
             'receiver'=>$this->getFormatReceiver($invoice->getReceiver()),
             'taxes'=>$this->getFormatTaxes($invoice->getTaxes()),
-            'concepts'=>$this->getFormatConceps($invoice->getConcepts())
+            'concepts'=>$this->getFormatConceps($invoice->getConcepts()),
+            'totalLetter'=>$this->libNumbertToLetter->convertir($invoice->getTotal())
         ]));
     }
     
@@ -41,7 +52,7 @@ class PreviewLogic
             'colony'=>$transmitter->getColony(),
             'country'=>$transmitter->getCountry(),
             'state'=>$transmitter->getState(),
-            'municiplaity'=>$transmitter->getMunicipality(),
+            'municipality'=>$transmitter->getMunicipality(),
             'postalCode'=>$transmitter->getPostalCode(),
         ];
     }
@@ -85,7 +96,7 @@ class PreviewLogic
             'colony'=>$receiver->getColony(),
             'country'=>$receiver->getCountry(),
             'state'=>$receiver->getState(),
-            'municiplaity'=>$receiver->getMunicipality(),
+            'municipality'=>$receiver->getMunicipality(),
             'postalCode'=>$receiver->getPostalCode(),
         ];
     }

@@ -3,6 +3,8 @@
 namespace App\Billing\Http\Controllers;
 
 use Melisa\Laravel\Http\Controllers\CrudController;
+use App\Billing\Http\Requests\Invoice\CancelRequest;
+use App\Billing\Logics\Invoice\CancelLogic;
 
 /**
  * 
@@ -29,5 +31,11 @@ class InvoiceController extends CrudController
         'logic'=>'ReportLogic',
         'module'=>'Universal\Invoice\ReportModule',
     ];
+    
+    public function cancel(CancelRequest $request, CancelLogic $logic)
+    {
+        $result = $logic->init($request->allValid());
+        return response()->data($result);
+    }
     
 }

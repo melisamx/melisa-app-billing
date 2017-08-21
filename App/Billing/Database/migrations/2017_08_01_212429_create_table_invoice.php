@@ -38,6 +38,12 @@ class CreateTableInvoice extends Migration
             $table->text('stringOriginal');
             $table->text('sealCfd');
             $table->text('sealSat');
+            $table->string('voucherType');
+            $table->string('coin');
+            $table->string('expeditionPlace');
+            $table->string('methodPayment');
+            $table->string('numberCertificateSat', 100);
+            $table->decimal('subTotal', 15, 2);
             $table->decimal('total', 15, 2);
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));

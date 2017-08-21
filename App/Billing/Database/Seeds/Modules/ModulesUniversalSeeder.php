@@ -32,6 +32,7 @@ class ModulesUniversalSeeder extends InstallSeeder
     public function invoice()
     {
         $this->installModuleJson('Universal/Invoice', [
+            'report',
             'cancel',
             'create',
             'paging',
