@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cuenta",
+    "url": "/billing.php/accounts/delete/",
+    "description": "Módulo para eliminar cuenta",
+    "task": {
+        "key": "task.billing.accounts.delete",
+        "name": "Acceso a eliminar cuenta",
+        "description": "Permitir eliminar cuenta",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.accounts.delete.success",
+        "description": "Cuenta eliminada"
+    }
+}

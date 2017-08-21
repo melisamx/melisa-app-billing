@@ -16,6 +16,29 @@ class ModulesUniversalSeeder extends InstallSeeder
     {        
         $this->invoice();
         $this->series();
+        $this->accounts();
+        $this->debtsToPay();
+    }
+    
+    public function debtsToPay()
+    {
+        $this->installModuleJson('Universal/DebtsToPay', [
+            'create',
+            'paging',
+            'report',
+            'payoff',
+        ]);
+    }
+    
+    public function accounts()
+    {
+        $this->installModuleJson('Universal/Accounts', [
+            'create',
+            'delete',
+            'paging',
+            'report',
+            'update',
+        ]);
     }
     
     public function series()

@@ -16,6 +16,15 @@ class ModulesDesktopSeeder extends InstallSeeder
     {        
         $this->invoice();        
         $this->series();        
+        $this->debtsToPay();        
+    }
+    
+    public function debtsToPay()
+    {
+        $this->installModuleJson('Desktop/DebtsToPay', [
+            'add',
+            'view',
+        ]);
     }
     
     public function series()

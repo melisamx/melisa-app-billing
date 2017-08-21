@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableAccountCatalog extends Migration
+class CreateTableDebtstopayStatus extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTableAccountCatalog extends Migration
      */
     public function up()
     {
-        Schema::create('accountCatalog', function (Blueprint $table) {
-            $table->smallInteger('id', true);
-            $table->smallInteger('nivel');
-            $table->string('groupingCode', 30);
-            $table->string('name')->unique();
+        Schema::create('debtsToPayStatus', function (Blueprint $table) {
+            $table->smallInteger('id')->primary();
+            $table->string('name', 75)->unique();
+            
+            $table->index('name');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateTableAccountCatalog extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accountCatalog');
+        Schema::dropIfExists('debtsToPayStatus');
     }
 }

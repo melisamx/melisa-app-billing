@@ -1,0 +1,15 @@
+{
+    "name": "Crear cuenta",
+    "url": "/billing.php/accounts/",
+    "description": "Módulo para crear cuenta",
+    "task": {
+        "key": "task.billing.accounts.create",
+        "name": "Acceso a crear cuenta",
+        "description": "Permitir crear cuenta",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.accounts.create.success",
+        "description": "Cuenta creada"
+    }
+}

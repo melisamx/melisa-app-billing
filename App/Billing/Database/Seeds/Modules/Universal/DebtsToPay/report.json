@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de cuenta por pagar",
+    "url": "/billing.php/debtsToPay/report/",
+    "description": "Módulo para ver reporte de cuenta por pagar",
+    "task": {
+        "key": "task.billing.debtsToPay.report",
+        "name": "Acceso a ver reporte de cuenta por pagar",
+        "description": "Permitir ver reporte de cuenta por pagar",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.debtsToPay.report.success",
+        "description": "Acceso a reporte de cuenta por pagar"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Modificar cuenta",
+    "url": "/billing.php/accounts/update/",
+    "description": "Módulo para modificar cuenta",
+    "task": {
+        "key": "task.billing.accounts.update",
+        "name": "Acceso a modificar cuenta",
+        "description": "Permitir modificar cuenta",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.accounts.update.success",
+        "description": "Cuenta modificada"
+    }
+}

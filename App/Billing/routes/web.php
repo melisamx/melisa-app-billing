@@ -20,3 +20,17 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/series.php');    
 });
+
+Route::group([
+    'prefix'=>'debtsToPay',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/debtsToPay.php');    
+});
+
+Route::group([
+    'prefix'=>'accounts',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/accounts.php');    
+});

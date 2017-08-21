@@ -1,0 +1,15 @@
+{
+    "name": "Saldar cuenta por pagar",
+    "url": "/billing.php/debtsToPay/payoff/",
+    "description": "Módulo para saldar cuenta por pagar",
+    "task": {
+        "key": "task.billing.debtsToPay.payoff",
+        "name": "Acceso a saldar cuenta por pagar",
+        "description": "Permitir saldar cuenta por pagar",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.debtsToPay.payoff.success",
+        "description": "Cuenta saldada"
+    }
+}

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableSuppliers extends Migration
+class CreateTableAccounts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateTableSuppliers extends Migration
      */
     public function up()
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->smallInteger('id', true);
             $table->char('idIdentityCreated', 36);
-            $table->string('name', 150);
-            $table->string('key', 10);
-            $table->boolean('isPac')->default(0);
+            $table->string('name', 150)->unique();
+            $table->string('key')->unique();
             $table->boolean('active')->default(1);
-            $table->boolean('isDefault')->default(0);
-            $table->boolean('enviromentProduction')->default(0);
+            $table->smallInteger('expirationDays')->default(14)->nullable();
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->char('idIdentityUpdated', 36)->nullable();
             $table->dateTime('updatedAt')->nullable();
+            
+            $table->index('name');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateTableSuppliers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suppliers');
+        Schema::dropIfExists('accounts');
     }
 }

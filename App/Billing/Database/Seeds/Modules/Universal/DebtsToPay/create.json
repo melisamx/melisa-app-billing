@@ -1,0 +1,15 @@
+{
+    "name": "Crear cuenta por pagar por pagar",
+    "url": "/billing.php/debtsToPay/",
+    "description": "Módulo para crear cuenta por pagar por pagar",
+    "task": {
+        "key": "task.billing.debtsToPay.create",
+        "name": "Acceso a crear cuenta por pagar por pagar",
+        "description": "Permitir crear cuenta por pagar por pagar",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.debtsToPay.create.success",
+        "description": "Cuenta por pagar creada"
+    }
+}
