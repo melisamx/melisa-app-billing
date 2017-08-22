@@ -41,8 +41,10 @@ class InvoiceCancel
             return false;
         }
         
+        $xmlCancel = $this->getXmlCancel($invoice);
+        
         $params = $this->getRequestParams();
-        $params ['CFD']= $cfd;
+        $params ['CFD']= $xmlCancel;
         
         $result = $this->cancelCfdi($client, $params);
         dd($result);
@@ -84,6 +86,46 @@ class InvoiceCancel
         ];
     }
     
+    public function getXmlCancel(&$invoice)
+    {
+        $objCancel = new \stdClass();
+        $objCancel->uuid = $invoice->uuid;
+        $objCancel->uuid = $invoice->uuid;
+        $fileCer = $this->getFileCer();
+        $fileKey = str_replace([ '\n', '\r'], '', $this->getFileKey());
+        
+        $objCancel->certificate = base64_encode($fileCer);
+        $objCancel->keyCertificate = base64_encode($fileKey);
+        
+        /* CI use RFC test */
+        if( env('CI_ENVIROMENT') === 'sandbox') {
+            $objCancel->rfc = 'CGA030903UC3';//env('CI_RFC_TRANSMITTER');
+        } else {
+            $objCancel->rfc = $invoice->rfcTransmitter;
+        }
+//        dd($objCancel);
+        return str_replace([ PHP_EOL, '\r'], '', view('layouts/ci/cancel', [
+            'cancel'=>$objCancel
+        ])->render());
+    }
+    
+    public function getFileKey()
+    {
+        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/CSD01_AAA010101AAA.key -passin pass:12345678a', $result, $code);
+        
+        if( $code !== 0) {
+            return $this->error('Imposible obtener el archivo PEM');
+        }
+//        array_shift($result);
+//        array_pop($result);
+        return implode(PHP_EOL, $result);
+    }
+    
+    public function getFileCer()
+    {
+        return file_get_contents(__DIR__ . '/CSD01_AAA010101AAA.cer');
+    }
+    
     public function getCfd($idFileCfd)
     {
         $content = $this->logicGetContentFile->init($idFileCfd);
@@ -97,7 +139,7 @@ class InvoiceCancel
     
     public function cancelCfdi(&$client, &$params)
     {
-//        dd($params);
+        dd($params);
         $result = $this->runRequest($client, 'CancelarCFDI', $params);
         dd($result);
         if( !$result) {
