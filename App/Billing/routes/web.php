@@ -41,3 +41,10 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/accountsReceivable.php');    
 });
+
+Route::group([
+    'prefix'=>'csd',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/csd.php');    
+});

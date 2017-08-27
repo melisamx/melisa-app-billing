@@ -19,6 +19,17 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->accounts();
         $this->debtsToPay();
         $this->accountsReceivable();
+        $this->csd();
+    }
+    
+    public function csd()
+    {
+        $this->installModuleJson('Universal/Csd', [
+            'create',
+            'paging',
+            'report',
+            'delete',
+        ]);
     }
     
     public function accountsReceivable()

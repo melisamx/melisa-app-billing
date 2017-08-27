@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de certificados de sello digital",
+    "url": "/billing.php/csd/",
+    "description": "Módulo para paginar lista de certificados de sello digital",
+    "task": {
+        "key": "task.billing.csd.paging",
+        "name": "Paginar lista de certificados de sello digital",
+        "description": "Permitir paginar lista de certificados de sello digital",
+        "pattern": "read"
+    }
+}

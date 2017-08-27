@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar certificado de sello digital",
+    "url": "/billing.php/csd/delete/",
+    "description": "Módulo para eliminar certificado de sello digital",
+    "task": {
+        "key": "task.billing.csd.delete",
+        "name": "Acceso a eliminar serie",
+        "description": "Permitir eliminar certificado de sello digital",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.csd.delete.success",
+        "description": "Certificado de sello digital eliminado"
+    }
+}

@@ -18,6 +18,15 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->series();        
         $this->debtsToPay();        
         $this->accountsReceivable();        
+        $this->csd();        
+    }
+    
+    public function csd()
+    {
+        $this->installModuleJson('Desktop/Csd', [
+            'add',
+            'view',
+        ]);
     }
     
     public function accountsReceivable()

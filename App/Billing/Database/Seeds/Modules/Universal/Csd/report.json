@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de certificado de sello digital",
+    "url": "/billing.php/csd/report/",
+    "description": "Módulo para ver reporte de certificado de sello digital",
+    "task": {
+        "key": "task.billing.csd.report",
+        "name": "Acceso a ver reporte de certificado de sello digital",
+        "description": "Permitir ver reporte de certificado de sello digital",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.csd.report.success",
+        "description": "Acceso a reporte de certificado de sello digital"
+    }
+}

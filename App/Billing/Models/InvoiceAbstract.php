@@ -17,8 +17,10 @@ abstract class InvoiceAbstract extends BaseUuid
     protected $fillable = [
         'id',
         'uuid',
+        'idCsd',
         'idInvoiceStatus',
         'idSerie',
+        'idVoucherType',
         'idIdentityCreated',
         'idFileXml',
         'idFilePdf',

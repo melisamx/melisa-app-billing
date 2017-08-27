@@ -16,12 +16,14 @@ class CreateTableInvoice extends Migration
         Schema::create('invoice', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->char('idIdentityCreated', 36);
+            $table->uuid('idCsd');
             $table->smallInteger('idInvoiceStatus');
             $table->smallInteger('idSerie');
-            $table->char('idFileXml', 36);
-            $table->char('idFilePdf', 36);
-            $table->char('idFileCfdSeal', 36)->nullable();
-            $table->char('idFileCfdBeforeSeal', 36)->nullable();
+            $table->smallInteger('idVoucherType');
+            $table->uuid('idFileXml');
+            $table->uuid('idFilePdf');
+            $table->uuid('idFileCfdSeal')->nullable();
+            $table->uuid('idFileCfdBeforeSeal')->nullable();
             $table->uuid('uuid')->unique();
             $table->decimal('version', 3, 1)->defualt(3.2);
             $table->string('serie', 10)->nullable();
@@ -57,6 +59,11 @@ class CreateTableInvoice extends Migration
             $table->index('serie');
             $table->index('date');
             
+            $table->foreign('idCsd')
+                ->references('id')->on('csd')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
             $table->foreign('idInvoiceStatus')
                 ->references('id')->on('invoiceStatus')
                 ->onDelete('no action')
@@ -64,6 +71,11 @@ class CreateTableInvoice extends Migration
             
             $table->foreign('idSerie')
                 ->references('id')->on('series')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idVoucherType')
+                ->references('id')->on('voucherTypes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -17,7 +17,7 @@ class OptionsSeeder extends InstallSeeder
         
         $this->installOption('option.billing.access', [
             'name'=>'Option main de aplicación billing',
-            'text'=>'Billing',
+            'text'=>'Facturación',
             'isSubMenu'=>true,
             'iconClassSmall'=>'x-fa fa fa-cog',
             'iconClassMedium'=>'x-fa fa fa-cog fa-3x',

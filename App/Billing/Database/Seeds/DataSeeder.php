@@ -17,6 +17,7 @@ class DataSeeder extends InstallSeeder
     public function run()
     {
         $this->csvImportSimple([
+            'voucherTypes',
             'fiscalRegime',
             'taxes',
             'invoiceStatus',
