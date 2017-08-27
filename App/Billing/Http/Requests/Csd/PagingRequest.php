@@ -15,12 +15,13 @@ class PagingRequest extends WithFilter
         'page'=>'bail|required|xss|numeric',
         'start'=>'bail|required|xss|numeric',
         'limit'=>'bail|required|xss|numeric',
-        'filter'=>'bail|sometimes|json|filter:number',
+        'filter'=>'bail|sometimes|json|filter:number,name',
         'query'=>'bail|sometimes',
     ];
     
     public $rulesFilters = [
         'number'=>'nullable|max:150|xss',
+        'name'=>'nullable|max:150|xss',
     ];
     
 }

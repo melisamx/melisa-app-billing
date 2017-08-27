@@ -8,6 +8,7 @@ Ext.define('Melisa.billing.view.desktop.csd.view.WrapperController', {
     
     listen: {
         global: {
+            'event.billing.csd.create.success': 'onUpdatedRecord',
             'event.billing.csd.update.success': 'onUpdatedRecord',
             'event.billing.csd.delete.success': 'onUpdatedRecord'
         }
@@ -15,7 +16,7 @@ Ext.define('Melisa.billing.view.desktop.csd.view.WrapperController', {
     
     storeReload: 'csd',
     windowReportConfig: {
-        title: 'Serie'
+        title: 'Certificado de sello digital'
     }
     
 });

@@ -25,11 +25,19 @@ Ext.define('Melisa.billing.view.desktop.csd.view.Wrapper', {
                 {
                     ptype: 'autofilters',
                     filters: {
+                        name: {
+                            operator: 'like',
+                            minChars: 1
+                        },
                         number: {
                             operator: 'like',
                             minChars: 1
                         }
-                    }
+                    },
+                    filtersIgnore: [
+                        'dateExpiration',
+                        'dateExpedition'
+                    ]
                 },
                 {
                     ptype: 'floatingbutton',
