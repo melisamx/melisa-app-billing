@@ -94,7 +94,8 @@ class InvoiceGenerate
             return false;
         }
         
-        $sealXmlString = $sealXml->saveXML();
+        $sealXmlString = $this->cleanString($sealXml->saveXML());
+        
         $idFileCfdSeal = $this->saveCfdSeal($invoice, $sealXmlString);
         
         if( !$idFileCfdSeal) {
@@ -186,9 +187,15 @@ class InvoiceGenerate
         ];
     }
     
+    public function cleanString($string)
+    {
+        $string = preg_replace('/\s{2,}/', '', $string);
+        return str_replace([ PHP_EOL, '\r', '\t', '\s\s\s\s'], '', $string);
+    }
+    
     public function getXsltStrinOriginal()
     {
-        $filePath = __DIR__ . '/cadenaoriginal_3_0.xslt';
+        $filePath = __DIR__ . '/cadenaoriginal_3_2.xslt';
         
         if( !file_exists($filePath)) {
             return $this->error('Imposible leer archivo XSLT para generar cadena original');
@@ -436,13 +443,17 @@ class InvoiceGenerate
             $invoice->getTransmitter()->setRfc(env('CI_RFC_TRANSMITTER'));
         }
         
-        return view('layouts/ci/xml', [
+        $xml = view('layouts/ci/xml', [
             'invoice'=>$invoice
         ])->render();
+        
+        return $this->cleanString($xml);
     }
     
     public function getFileKey()
     {
+//        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/CSD_Nerine_HECL831114N48_20131122_110931.key -passin pass:mzgcls01', $result, $code);
+//        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/Claveprivada_FIEL_HECL831114N48_20130830_070529.key -passin pass:WA2pfXHzUJPXKcPCe7dIJIrh', $result, $code);
         exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/CSD01_AAA010101AAA.key -passin pass:12345678a', $result, $code);
         
         if( $code !== 0) {
@@ -454,6 +465,7 @@ class InvoiceGenerate
     
     public function getFileCer()
     {
+//        return file_get_contents(__DIR__ . '/00001000000301379410.cer');
         return file_get_contents(__DIR__ . '/CSD01_AAA010101AAA.cer');
     }
     
@@ -563,7 +575,7 @@ class InvoiceGenerate
             return $this->error('Al obtener clave privada');
         }
         
-        $certificate = str_replace(['\n', '\r'], '', base64_encode($fileCer));
+        $certificate = base64_encode($fileCer);
         
         openssl_sign($this->stringOriginal, $sig, $private);
         $seal = base64_encode($sig);
@@ -577,6 +589,7 @@ class InvoiceGenerate
     
     public function generateXml(&$client, $params)
     {
+        $params['CFD'] = utf8_encode($params['CFD']);
         $result = $this->runRequest($client, 'Timbrar', $params);
         
         if( !$result) {

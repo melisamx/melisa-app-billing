@@ -85,7 +85,7 @@
                     <td colspan="2">RFC: {{ $report->receiver->rfc }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Calle y Número: {{ $report->receiver->address . $report->receiver->exteriorNumber }}</td>
+                    <td colspan="2">Calle y Número: {{ $report->receiver->address . ' ' . $report->receiver->exteriorNumber }}</td>
                     <td>Ciudad: {{ $report->receiver->country }}</td>
                     <td>Colonia: {{ $report->receiver->colony }}</td>
                 </tr>
