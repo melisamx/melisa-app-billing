@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de tipo de cambio",
+    "url": "/insurance.php/exchangeRates/report/",
+    "description": "Módulo para ver reporte de tipo de cambio",
+    "task": {
+        "key": "task.billing.exchangeRates.report",
+        "name": "Acceso a ver reporte de tipo de cambio",
+        "description": "Permitir ver reporte de tipo de cambio",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.exchangeRates.report.success",
+        "description": "Acceso a reporte de tipo de cambio"
+    }
+}

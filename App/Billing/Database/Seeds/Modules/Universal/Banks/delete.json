@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar banco",
+    "url": "/billing.php/banks/delete/",
+    "description": "Módulo para eliminar banco",
+    "task": {
+        "key": "task.billing.banks.delete",
+        "name": "Acceso a eliminar banco",
+        "description": "Permitir eliminar banco",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.banks.delete.success",
+        "description": "Banco eliminado"
+    }
+}

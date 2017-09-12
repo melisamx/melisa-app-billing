@@ -447,7 +447,8 @@ class InvoiceGenerate
             'invoice'=>$invoice
         ])->render();
         
-        return $this->cleanString($xml);
+        return $xml;
+//        return $this->cleanString($xml);
     }
     
     public function getFileKey()

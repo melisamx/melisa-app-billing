@@ -1,0 +1,15 @@
+{
+    "name": "Modificar banco",
+    "url": "/billing.php/banks/update/",
+    "description": "Módulo para modificar banco",
+    "task": {
+        "key": "task.billing.banks.update",
+        "name": "Acceso a modificar banco",
+        "description": "Permitir modificar banco",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.banks.update.success",
+        "description": "Banco modificado"
+    }
+}

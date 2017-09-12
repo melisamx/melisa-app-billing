@@ -15,19 +15,12 @@ class CreateTableInvoice extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->char('idIdentityCreated', 36);
-            $table->uuid('idCsd');
+            $table->uuid('idIdentityCreated');
             $table->smallInteger('idInvoiceStatus');
-            $table->smallInteger('idSerie');
             $table->smallInteger('idVoucherType');
-            $table->uuid('idFileXml');
-            $table->uuid('idFilePdf');
-            $table->uuid('idFileCfdSeal')->nullable();
-            $table->uuid('idFileCfdBeforeSeal')->nullable();
-            $table->uuid('uuid')->unique();
-            $table->decimal('version', 3, 1)->defualt(3.2);
-            $table->string('serie', 10)->nullable();
-            $table->string('folio', 25)->nullable();
+            $table->string('serie', 10);
+            $table->string('folio', 25);
+            $table->uuid('uuid');
             $table->string('rfc', 13);
             $table->string('name', 150);
             $table->string('rfcTransmitter', 13);
@@ -47,9 +40,17 @@ class CreateTableInvoice extends Migration
             $table->string('numberCertificateSat', 100);
             $table->decimal('subTotal', 15, 2);
             $table->decimal('total', 15, 2);
+            $table->decimal('version', 3, 1)->default(3.2);
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
+            $table->uuid('idFileXml')->nullable();
+            $table->uuid('idFilePdf')->nullable();
+            $table->uuid('idFileCfdSeal')->nullable();
+            $table->uuid('idFileCfdBeforeSeal')->nullable();
+            $table->uuid('idCsd')->nullable();
+            $table->smallInteger('idSerie')->nullable();
+            $table->text('extraData')->nullable();
             $table->dateTime('updatedAt')->nullable();
             $table->dateTime('canceledAt')->nullable();
             

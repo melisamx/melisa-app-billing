@@ -18,14 +18,14 @@ class CreateTableAccountsReceivable extends Migration
             $table->smallInteger('idAccount');
             $table->smallInteger('idAccountReceivableStatus');
             $table->smallInteger('idPaymentMethod');
-            $table->char('idIdentityCreated', 36);
-            $table->char('idInvoice', 36);
-            $table->char('idIdentity', 36);
+            $table->uuid('idIdentityCreated');
+            $table->uuid('idInvoice')->nullable();
+            $table->uuid('idReferralNote')->nullable();
             $table->decimal('amountCharged', 15, 2);
             $table->dateTime('dueDate')->nullable();            
             $table->boolean('expiredDate')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->foreign('idAccount')

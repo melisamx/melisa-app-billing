@@ -1,0 +1,15 @@
+{
+    "name": "Crear tipo de cambio",
+    "url": "/insurance.php/exchangeRates/",
+    "description": "Módulo para crear tipo de cambio",
+    "task": {
+        "key": "task.billing.exchangeRates.create",
+        "name": "Acceso a crear tipo de cambio",
+        "description": "Permitir crear tipo de cambio",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.exchangeRates.create.success",
+        "description": "Tipo de cambio creado"
+    }
+}

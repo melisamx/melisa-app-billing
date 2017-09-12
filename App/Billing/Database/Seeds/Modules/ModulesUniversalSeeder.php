@@ -20,6 +20,64 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->debtsToPay();
         $this->accountsReceivable();
         $this->csd();
+        $this->coins();
+        $this->banks();
+        $this->paymentMethods();
+        $this->waytopay();
+        $this->exchangeRates();
+        $this->referralNotes();
+    }
+    
+    public function referralNotes()
+    {
+        $this->installModuleJson('Universal/ReferralNotes', [
+            'create',
+            'paging',
+            'report',
+        ]);
+    }
+    
+    public function exchangeRates()
+    {
+        $this->installModuleJson('Universal/ExchangeRates', [
+            'create',
+            'paging',
+            'update',
+            'delete',
+            'report',
+        ]);
+    }
+    
+    public function waytopay()
+    {
+        $this->installModuleJson('Universal/Waytopay', [
+            'paging',
+        ]);
+    }
+    
+    public function paymentMethods()
+    {
+        $this->installModuleJson('Universal/PaymentMethods', [
+            'paging',
+        ]);
+    }
+    
+    public function coins()
+    {
+        $this->installModuleJson('Universal/Coins', [
+            'paging',
+        ]);
+    }
+    
+    public function banks()
+    {
+        $this->installModuleJson('Universal/Banks', [
+            'create',
+            'paging',
+            'delete',
+            'update',
+            'report',
+        ]);
     }
     
     public function csd()

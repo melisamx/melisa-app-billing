@@ -1,0 +1,15 @@
+{
+    "name": "Crear banco",
+    "url": "/billing.php/banks/",
+    "description": "Módulo para crear banco",
+    "task": {
+        "key": "task.billing.banks.create",
+        "name": "Acceso a crear banco",
+        "description": "Permitir crear banco",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.banks.create.success",
+        "description": "Banco creado"
+    }
+}

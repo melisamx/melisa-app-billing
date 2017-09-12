@@ -17,14 +17,15 @@ class CreateTableDebtstopay extends Migration
             $table->uuid('id')->primary();
             $table->smallInteger('idDebtsToPayStatus');
             $table->smallInteger('idAccount');
-            $table->char('idIdentityCreated', 36);
-            $table->char('idFileVoucher', 36);
+            $table->uuid('idIdentityCreated');
+            $table->uuid('idFileVoucher');
+            $table->uuid('idInvoice')->nullable();
             $table->decimal('amountPayable', 15, 2);
             $table->dateTime('dateVoucher');            
             $table->dateTime('dueDate')->nullable();            
             $table->boolean('expiredDate')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->foreign('idDebtsToPayStatus')

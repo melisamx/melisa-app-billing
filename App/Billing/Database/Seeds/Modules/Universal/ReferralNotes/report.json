@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de nota de remisión",
+    "url": "/billing.php/referralNotes/report/",
+    "description": "Módulo para ver reporte de nota de remisión",
+    "task": {
+        "key": "task.billing.referralNotes.report",
+        "name": "Acceso a ver reporte de nota de remisión",
+        "description": "Permitir ver reporte de nota de remisión",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.referralNotes.report.success",
+        "description": "Acceso a reporte de nota de remisión"
+    }
+}

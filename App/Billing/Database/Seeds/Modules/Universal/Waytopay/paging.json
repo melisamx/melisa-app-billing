@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de formas de pago",
+    "url": "/billing.php/waytopay/",
+    "description": "Módulo para paginar lista de formas de pago",
+    "task": {
+        "key": "task.billing.waytopay.paging",
+        "name": "Paginar lista de formas de pago",
+        "description": "Permitir paginar lista de formas de pago",
+        "pattern": "read"
+    }
+}

@@ -16,10 +16,12 @@ class CreateTableVoucherTypes extends Migration
         Schema::create('voucherTypes', function (Blueprint $table) {
             $table->smallInteger('id', true);
             $table->string('name', 80)->unique();
+            $table->string('key', 15)->unique();
             $table->string('valueV32');
             $table->string('valueV33');
             
             $table->index('name');
+            $table->index('key');
         });
     }
 

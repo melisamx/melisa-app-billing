@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de nota de remisións",
+    "url": "/billing.php/referralNotes/",
+    "description": "Módulo para paginar lista de nota de remisións",
+    "task": {
+        "key": "task.billing.referralNotes.paging",
+        "name": "Paginar lista de nota de remisións",
+        "description": "Permitir paginar lista de nota de remisións",
+        "pattern": "read"
+    }
+}

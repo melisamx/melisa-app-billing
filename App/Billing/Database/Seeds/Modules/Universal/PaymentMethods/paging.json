@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de métodos de pago",
+    "url": "/billing.php/paymentMethods/",
+    "description": "Módulo para paginar lista de métodos de pago",
+    "task": {
+        "key": "task.billing.paymentMethods.paging",
+        "name": "Paginar lista de métodos de pago",
+        "description": "Permitir paginar lista de métodos de pago",
+        "pattern": "read"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar tipo de cambio",
+    "url": "/forge.php/records/delete/default/sacInsurance/exchangeRates/",
+    "description": "Módulo para eliminar tipo de cambio",
+    "task": {
+        "key": "task.billing.exchangeRates.delete",
+        "name": "Acceso a eliminar tipo de cambio",
+        "description": "Permitir eliminar tipo de cambio",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.exchangeRates.delete.success",
+        "description": "Tipo de cambio eliminado"
+    }
+}

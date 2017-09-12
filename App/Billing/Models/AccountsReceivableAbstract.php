@@ -21,7 +21,7 @@ abstract class AccountsReceivableAbstract extends BaseUuid
         'idPaymentMethod',
         'idIdentityCreated',
         'idInvoice',
-        'idIdentity',
+        'idReferralNote',
         'amountCharged',
         'dueDate',
         'expiredDate',

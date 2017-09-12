@@ -20,6 +20,7 @@ abstract class DebtsToPayAbstract extends BaseUuid
         'idDebtsToPayStatus',
         'idIdentityCreated',
         'idFileVoucher',
+        'idInvoice',
         'amountPayable',
         'dateVoucher',
         'dueDate',

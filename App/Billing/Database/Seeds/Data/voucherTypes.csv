@@ -1,2 +1,5 @@
-name,valueV32,valueV33
-Ingreso,ingreso,I
+name,key,valueV32,valueV33
+Ingreso,I,ingreso,I
+Traslado,T,traslado,T
+Nómina,N,nomina,N	
+Pago,P,pago,P

@@ -18,7 +18,35 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->series();        
         $this->debtsToPay();        
         $this->accountsReceivable();        
-        $this->csd();        
+        $this->csd();
+        $this->exchangeRates();
+        $this->banks();
+        $this->referralNotes();
+    }
+    
+    public function referralNotes()
+    {
+        $this->installModuleJson('Desktop/ReferralNotes', [
+            'view',
+        ]);
+    }
+    
+    public function banks()
+    {
+        $this->installModuleJson('Desktop/Banks', [
+            'add',
+            'update',
+            'view',
+        ]);
+    }
+    
+    public function exchangeRates()
+    {
+        $this->installModuleJson('Desktop/ExchangeRates', [
+            'add',
+            'update',
+            'view',
+        ]);
     }
     
     public function csd()

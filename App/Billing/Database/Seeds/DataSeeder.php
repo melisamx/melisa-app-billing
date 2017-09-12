@@ -23,6 +23,10 @@ class DataSeeder extends InstallSeeder
             'invoiceStatus',
             'debtsToPayStatus',
             'accountsReceivableStatus',
+            'conceptUnits',
+            'waytopay',
+            'coins',
+            'banks',
         ]);
         $this->call(SeriesSeeder::class);
         $this->call(AccountsSeeder::class);

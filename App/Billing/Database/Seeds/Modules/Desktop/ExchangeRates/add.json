@@ -1,0 +1,21 @@
+{
+    "name": "Agregar tipo de cambio",
+    "url": "/billing.php/modules/exchangeRates/add",
+    "description": "Módulo interfaz para agregar exchangeRates",
+    "nameSpace": "Melisa.billing.view.desktop.exchangeRates.add.Wrapper",
+    "task": {
+        "key": "task.billing.exchangeRates.add.access",
+        "name": "Acceso a agregar tipo de cambio",
+        "description": "Permitir acceso a agregar tipo de cambio",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.exchangeRates.add.access",
+        "name": "Opción para agregar tipo de cambio",
+        "text": "Agregar tipo de cambio"
+    },
+    "event": {
+        "key": "event.billing.exchangeRates.add.access",
+        "description": "Acceso al módulo agregar tipo de cambio"
+    }
+}

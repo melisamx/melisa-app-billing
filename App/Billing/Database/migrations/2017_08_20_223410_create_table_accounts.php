@@ -15,13 +15,13 @@ class CreateTableAccounts extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->smallInteger('id', true);
-            $table->char('idIdentityCreated', 36);
+            $table->uuid('idIdentityCreated');
             $table->string('name', 150)->unique();
             $table->string('key')->unique();
             $table->boolean('active')->default(1);
             $table->smallInteger('expirationDays')->default(14)->nullable();
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->index('name');

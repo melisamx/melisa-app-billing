@@ -15,17 +15,17 @@ class CreateTableCsd extends Migration
     {
         Schema::create('csd', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->char('idIdentityCreated', 36);
-            $table->char('idFileCer', 36);
-            $table->char('idFileKey', 36);
-            $table->char('idFilePem', 36);
+            $table->uuid('idIdentityCreated');
+            $table->uuid('idFileCer');
+            $table->uuid('idFileKey');
+            $table->uuid('idFilePem');
             $table->string('number', 20)->unique();
             $table->string('name');
             $table->dateTime('dateExpedition')->nullable();
             $table->dateTime('dateExpiration')->nullable();
             $table->boolean('valid')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->index('number');

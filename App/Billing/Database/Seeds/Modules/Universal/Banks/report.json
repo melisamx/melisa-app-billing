@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de repositorios",
+    "url": "/billing.php/banks/report/",
+    "description": "Módulo para ver reporte de repositorios",
+    "task": {
+        "key": "task.billing.banks.report",
+        "name": "Acceso a ver reporte de repositorios",
+        "description": "Permitir ver reporte de repositorios",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.banks.report.success",
+        "description": "Acceso a reporte de repositorios"
+    }
+}

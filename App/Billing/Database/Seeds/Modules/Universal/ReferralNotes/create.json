@@ -1,0 +1,15 @@
+{
+    "name": "Crear nota de remisión",
+    "url": "/billing.php/referralNotes/",
+    "description": "Módulo para crear nota de remisión",
+    "task": {
+        "key": "task.billing.referralNotes.create",
+        "name": "Acceso a crear nota de remisión",
+        "description": "Permitir crear nota de remisión",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.referralNotes.create.success",
+        "description": "Factura creada"
+    }
+}

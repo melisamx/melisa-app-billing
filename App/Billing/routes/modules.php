@@ -35,3 +35,21 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/csd.php');    
 });
+
+Route::group([
+    'prefix'=>'banks',
+], function() {    
+    require realpath(base_path() . '/routes/modules/banks.php');    
+});
+
+Route::group([
+    'prefix'=>'exchangeRates',
+], function() {    
+    require realpath(base_path() . '/routes/modules/exchangeRates.php');    
+});
+
+Route::group([
+    'prefix'=>'referralNotes',
+], function() {    
+    require realpath(base_path() . '/routes/modules/referralNotes.php');    
+});

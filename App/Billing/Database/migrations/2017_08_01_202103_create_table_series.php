@@ -15,7 +15,7 @@ class CreateTableSeries extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->smallInteger('id', true);
-            $table->char('idIdentityCreated', 36);
+            $table->uuid('idIdentityCreated');
             $table->string('serie', 10)->unique();
             $table->integer('folioInitial');
             $table->integer('folioCurrent');
@@ -23,7 +23,7 @@ class CreateTableSeries extends Migration
             $table->boolean('active')->default(1);
             $table->boolean('isDefault')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->char('idIdentityUpdated', 36)->nullable();
+            $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->index([ 'serie', 'isDefault' ]);

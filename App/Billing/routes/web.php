@@ -8,6 +8,13 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'referralNotes',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/referralNotes.php');    
+});
+
+Route::group([
     'prefix'=>'invoice',
     'middleware'=>'auth',
 ], function() {    
@@ -47,4 +54,39 @@ Route::group([
     'middleware'=>'auth',
 ], function() {    
     require realpath(base_path() . '/routes/modules/csd.php');    
+});
+
+Route::group([
+    'prefix'=>'paymentMethods',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/paymentMethods.php');    
+});
+
+Route::group([
+    'prefix'=>'waytopay',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/waytopay.php');    
+});
+
+Route::group([
+    'prefix'=>'coins',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/coins.php');    
+});
+
+Route::group([
+    'prefix'=>'banks',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/banks.php');    
+});
+
+Route::group([
+    'prefix'=>'exchangeRates',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/exchangeRates.php');    
 });
