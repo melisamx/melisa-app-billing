@@ -36,6 +36,19 @@ Ext.define('Melisa.billing.view.desktop.series.view.Wrapper', {
                             operator: 'like'
                         }
                     }
+                },
+                {
+                    ptype: 'floatingbutton',
+                    configButton: {
+                        handler: 'moduleRun',
+                        iconCls: 'x-fa fa-plus',
+                        scale: 'large',
+                        tooltip: 'Agregar cliente',
+                        bind: {
+                            melisa: '{modules.add}',
+                            hidden: '{!modules.add.allowed}'
+                        }
+                    }
                 }
             ]
         }

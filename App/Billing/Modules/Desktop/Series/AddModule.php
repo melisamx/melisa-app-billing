@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Billing\Modules\Desktop\Series;
 
@@ -9,11 +9,11 @@ use App\Core\Logics\Modules\Outbuildings;
  *
  * @author Luis Josafat Heredia Contreras
  */
-class ViewModule extends Outbuildings
+class AddModule extends Outbuildings
 {
     
-    public $event = 'billing.series.view.access';
-
+    public $event = 'billing.series.add.access';
+    
     public function dataDictionary()
     {        
         return [
@@ -22,7 +22,11 @@ class ViewModule extends Outbuildings
                 'token'=>csrf_token(),
                 'modules'=>$this->getModules(),
                 'wrapper'=>[
-                    'title'=>'Series'
+                    'title'=>'Agregar serie'
+                ],
+                'i18n'=>[
+                    'success'=>'Serie creada',
+                    'btnSave'=>'Agregar serie'
                 ]
             ]
         ];        
@@ -31,10 +35,7 @@ class ViewModule extends Outbuildings
     public function getModules()
     {
         return [
-            'series'=>$this->module('task.billing.series.paging'),
-            'report'=>$this->module('task.billing.series.report'),
-            'add'=>$this->module('task.billing.series.add.access', false),
-            'delete'=>$this->module('task.billing.series.delete', false),
+            'submit'=>$this->module('task.billing.series.create'),
         ];
     }
     

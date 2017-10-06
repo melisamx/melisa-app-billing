@@ -18,7 +18,7 @@ class CreateTableSeries extends Migration
             $table->uuid('idIdentityCreated');
             $table->string('serie', 10)->unique();
             $table->integer('folioInitial');
-            $table->integer('folioCurrent');
+            $table->integer('folioCurrent')->default(0);
             $table->integer('totalInvoice')->default(0);
             $table->boolean('active')->default(1);
             $table->boolean('isDefault')->default(1);
