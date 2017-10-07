@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Billing\Logics\CI;
+namespace App\Billing\Logics\Provider\Profact;
 
 use Melisa\core\LogicBusiness;
+use App\Drive\Logics\Files\ReportLogic;
+use App\Drive\Interfaces\FileContent;
+use App\Drive\Logics\Files\StringCreateLogic;
 use App\Billing\Interfaces\Invoice\v32\Invoice;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
-use App\Drive\Interfaces\FileContent;
-use App\Drive\Logics\Files\StringCreateLogic;
 use App\Billing\Modules\Universal\Invoice\ReportModule;
 use App\Billing\Logics\Invoice\v32\PreviewLogic;
-use App\Drive\Logics\Files\ReportLogic;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
- * Invoice generate
+ * Invoice generate with Profact
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -45,38 +45,25 @@ class InvoiceGenerate
         $this->libNumberToLetter = $libNumberToLetter;
     }
     
-    public function init(Invoice $invoice)
+    public function init(Invoice $invoice, $serie, $csd)
     {
-        $serie = $this->getSerie();
+        $serie = $this->getSerie($serie);
         
         if( !$serie) {
             return false;
         }
         
+        $csd = $this->getCsd($csd);
+        
+        if( !$csd) {
+            return false;
+        }
+        
         if( !$this->setSeries($invoice, $serie)) {
             return false;
-        }        
-        
-        $client = $this->createClient();
-        
-        if( !$client) {
-            return false;
         }
         
-        $params = $this->getRequestParamsXml();
-        
-        $fileCer = $this->getFileCer();
-        $fileKey = $this->getFileKey();
-        
-        $xsltString = $this->getXsltStrinOriginal();    
-        
-        if( !$xsltString) {
-            return false;
-        }
-        
-        $numberCertificate = $this->getNumberCertificate($fileCer);
-        
-        if( !$numberCertificate) {
+        if( !$this->setDate($invoice)) {
             return false;
         }
         
@@ -88,49 +75,40 @@ class InvoiceGenerate
             return $this->error('Imposible guardar CFD antes de ser sellado');
         }
         
-        $sealXml = $this->getSealXml($xmlString, $xsltString, $fileKey, $fileCer, $numberCertificate);
+        $params = $this->getClientParams([
+            'xmlComprobanteBase64'=>base64_encode($xmlString)
+        ]);
         
-        if( !$sealXml) {
+        $client = $this->createClient($params);
+        
+        $result = $this->generateXml($client, $params);
+        
+        if( !$result) {
             return false;
         }
         
-        $sealXmlString = $this->cleanString($sealXml->saveXML());
-        
-        $idFileCfdSeal = $this->saveCfdSeal($invoice, $sealXmlString);
-        
-        if( !$idFileCfdSeal) {
-            return $this->error('Imposible guardar CFD despues de ser sellado');
-        }
-        
-        $params ['CFD']= $sealXmlString;
-        $stamp = $this->generateXml($client, $params);
-        
-        if( !$stamp) {
-            return false;
-        }
-        
-        if( !$this->isValidStamp($stamp)) {
-            return false;
-        }
-        
-        $dataBell = $this->getDataBell($stamp);
+        $dataBell = $this->getDataBell($result['xml']);
         
         if( !$dataBell) {
             return false;
         }
         
-        if( !$this->updateSealXml($sealXml, $dataBell)) {
-            return false;
-        }
+        $dataBell ['stringOriginal']= $result['stringOriginal'];
         
         $this->repoInvoice->beginTransaction();
         
-        $idFileXmlBell = $this->saveFileXmlBell($sealXml->saveXML(), $dataBell);
+        $idFileXmlBell = $this->saveFileXmlBell($result['xml'], $dataBell);
         
         if( !$idFileXmlBell) {
             return $this->error('Imposible guardar XML timbrado {t}', [
-                't'=>$sealXml->saveXML()
+                't'=>$result['xml']
             ]);
+        }
+        
+        $idFileQr = $this->saveFileQr($result['qr'], $dataBell);
+        
+        if( !$idFileQr) {
+            return $this->error('Imposible guardar imagen QR');
         }
         
         $idFileHtmlInvoice = $this->createHtmlInvoice($invoice, $dataBell);
@@ -159,7 +137,7 @@ class InvoiceGenerate
         
         $idInvoice = $this->createInvoice(
             $idFileCfdBeforeSeal,
-            $idFileCfdSeal,
+            $idFileQr,
             $idFileXmlBell, 
             $idFilePdfInvoice, 
             $dataBell, 
@@ -181,33 +159,10 @@ class InvoiceGenerate
             'idFileXml'=>$idFileXmlBell,
             'idFilePdf'=>$idFilePdfInvoice,
             'idFileCfdBeforeSeal'=>$idFileCfdBeforeSeal,
-            'idFileCfdSeal'=>$idFileCfdSeal,
+            'idFileQr'=>$idFileQr,
             'serie'=>$serie->serie,
             'folio'=>$serie->folioCurrent
         ];
-    }
-    
-    public function cleanString($string)
-    {
-        $string = preg_replace('/\s{2,}/', '', $string);
-        return str_replace([ PHP_EOL, '\r', '\t', '\s\s\s\s'], '', $string);
-    }
-    
-    public function getXsltStrinOriginal()
-    {
-        $filePath = __DIR__ . '/cadenaoriginal_3_2.xslt';
-        
-        if( !file_exists($filePath)) {
-            return $this->error('Imposible leer archivo XSLT para generar cadena original');
-        }
-        
-        $xslt = file_get_contents($filePath);
-        
-        if( !$xslt) {
-            return $this->error('Imposible leer el archivo XSLT para generar cadena original');
-        }
-        
-        return $xslt;
     }
     
     public function setSeries(Invoice &$invoice, &$serie)
@@ -217,20 +172,11 @@ class InvoiceGenerate
         return true;
     }
     
-    public function isValidStamp(&$stamp)
+    public function setDate(Invoice &$invoice)
     {
-        if( !isset($stamp['TimbrarResult'])) {
-            return $this->error('Respuesta invalida por parte del prevalidador');
-        }
-        
-        libxml_use_internal_errors(true);
-        $doc = simplexml_load_string($stamp['TimbrarResult']);
-        
-        if( !$doc) {
-            return $this->error(utf8_encode($stamp['TimbrarResult']));
-        }
-        
-        $stamp = $stamp['TimbrarResult'];
+        $carbon = new \Carbon\Carbon('now');
+        $formatted = $carbon->toRfc3339String();
+        $invoice->setDate($formatted);
         return true;
     }
     
@@ -248,8 +194,21 @@ class InvoiceGenerate
         ]);
     }
     
-    public function getSerie()
+    public function getCsd(&$csd)
     {
+        if( $csd) {
+            return $csd;
+        }
+        
+        return $this->error('CSD no especific');
+    }
+    
+    public function getSerie(&$serie)
+    {
+        if( $serie) {
+            return $serie;
+        }
+        
         $serie = $this->repoSeries->findWhere([
             'isDefault'=>true,
             'active'=>true
@@ -297,25 +256,13 @@ class InvoiceGenerate
         return $content;
     }
     
-    public function getStringOriginal(&$dataBell)
-    {
-        return implode('|', [
-            '||1.0',
-            $dataBell['uuid'],
-            $dataBell['date'],
-            $dataBell['sealCfd'],
-            $dataBell['numberCertificateSat'],
-            '|'
-        ]);
-    }
-    
     public function createHtmlInvoice(&$invoice, &$dataBell)
-    {        
+    {
         $data = app(PreviewLogic::class)->init($invoice);
         $data->uuid = $dataBell['uuid'];
         $data->date = $dataBell['date'];
         $data->numberCertificateSat = $dataBell['numberCertificateSat'];
-        $data->stringOriginal = $this->getStringOriginal($dataBell);
+        $data->stringOriginal = $dataBell['stringOriginal'];
         $data->sealCfd = $dataBell['sealCfd'];
         $data->sealSat = $dataBell['sealSat'];
         $data->totalLetter = $this->libNumberToLetter->convertir($data->total);
@@ -333,36 +280,10 @@ class InvoiceGenerate
         return $idFileHtmlInvoice;
     }
     
-    public function updateSealXml(&$sealXml, &$dataBell)
-    {
-        $comprobante = $sealXml->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0);
-        $complemento = $sealXml->createElement('cfdi:Complemento');
-        $bell = $sealXml->createElement('tfd:TimbreFiscalDigital');
-        $bell->setAttribute('xmlns:tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital');
-        $bell->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $bell->setAttribute('xsi:schemaLocation', 'http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd');
-        $bell->setAttribute('FechaTimbrado', $dataBell['date']);
-        $bell->setAttribute('UUID', $dataBell['uuid']);
-        $bell->setAttribute('noCertificadoSAT', $dataBell['numberCertificateSat']);
-        $bell->setAttribute('selloSAT', $dataBell['sealSat']);
-        $bell->setAttribute('selloCFD', $dataBell['sealCfd']);
-        $bell->setAttribute('version', $dataBell['version']);
-        $complemento->appendChild($bell);
-        $comprobante->appendChild($complemento);
-        return true;
-    }
-    
     public function getDataBell(&$bell)
     {
         $xmlTimbre = new \DOMDocument('1.0', 'UTF-8');
         $xmlTimbre->loadXML($bell);
-        $timbreElement = $xmlTimbre->getElementsByTagName('timbre');
-        
-        if( !$timbreElement->length || $timbreElement[0]->getAttribute('esValido') !== 'True') {
-            return $this->error('Respuesta invalida por parte de CI {r}', [
-                'r'=>$bell
-            ]);
-        }
         
         $c = $xmlTimbre->getElementsByTagNameNS('http://www.sat.gob.mx/TimbreFiscalDigital', 'TimbreFiscalDigital')->item(0); 
         return [
@@ -439,8 +360,8 @@ class InvoiceGenerate
     public function generateXmlCfd(Invoice &$invoice)
     {
         /* CI use RFC test */
-        if( env('CI_ENVIROMENT') === 'sandbox') {
-            $invoice->getTransmitter()->setRfc(env('CI_RFC_TRANSMITTER'));
+        if( env('PROFACT_ENVIROMENT') === 'sandbox') {
+            $invoice->getTransmitter()->setRfc(env('PROFACT_RFC_TRANSMITTER'));
         }
         
         $xml = view('layouts/ci/xml', [
@@ -448,26 +369,6 @@ class InvoiceGenerate
         ])->render();
         
         return $xml;
-//        return $this->cleanString($xml);
-    }
-    
-    public function getFileKey()
-    {
-//        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/CSD_Nerine_HECL831114N48_20131122_110931.key -passin pass:mzgcls01', $result, $code);
-//        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/Claveprivada_FIEL_HECL831114N48_20130830_070529.key -passin pass:WA2pfXHzUJPXKcPCe7dIJIrh', $result, $code);
-        exec('openssl pkcs8 -inform DER -in ' . __DIR__ . '/CSD01_AAA010101AAA.key -passin pass:12345678a', $result, $code);
-        
-        if( $code !== 0) {
-            return $this->error('Imposible obtener el archivo PEM');
-        }
-        
-        return implode(PHP_EOL, $result);
-    }
-    
-    public function getFileCer()
-    {
-//        return file_get_contents(__DIR__ . '/00001000000301379410.cer');
-        return file_get_contents(__DIR__ . '/CSD01_AAA010101AAA.cer');
     }
     
     public function saveFilePdf(&$invoice, &$stringPdf)
@@ -484,6 +385,18 @@ class InvoiceGenerate
             ->setOriginalName($name)
             ->setExtension('pdf')
             ->setContent($stringPdf);
+        
+        return $this->logicFile->init($file);
+    }
+    
+    public function saveFileQr($content, &$dataBell)
+    {
+        $file = new FileContent();
+        $file
+            ->setName($dataBell['uuid'] . '.jpg')
+            ->setOriginalName($dataBell['uuid'])
+            ->setExtension('jpg')
+            ->setContent($content);
         
         return $this->logicFile->init($file);
     }
@@ -516,85 +429,14 @@ class InvoiceGenerate
         return $result['GeneraPDFResult'];
     }
     
-    public function getNumberCertificate(&$fileKey)
-    {
-        $pem = '-----BEGIN CERTIFICATE-----' . 
-            PHP_EOL .
-            chunk_split(base64_encode($fileKey), 64).
-            '-----END CERTIFICATE-----' . 
-            PHP_EOL;
-        
-        $infoCertificate = openssl_x509_parse($pem);
-        
-        if( !$infoCertificate) {
-            return $this->error('Imposible obtener información del certificado');
-        }
-        
-//        $hex = $this->bcdechex($infoCertificate['serialNumber']);
-        $hex = $infoCertificate['serialNumberHex'];
-        
-        $numberCertificate = '';
-        for ($i = 1; $i < strlen($hex); $i = $i+2) {
-            $numberCertificate .= substr($hex, $i, 1);
-        }
-        
-        return $numberCertificate;
-    }
-    
-    private function bcdechex($dec) {
-        $last = bcmod($dec, 16);
-        $remain = bcdiv(bcsub($dec, $last), 16);
-        if($remain == 0) {
-            return dechex($last);
-        } else {
-            return $this->bcdechex($remain).dechex($last);
-        }
-    }
-    
-    public function getSealXml(&$xmlString, &$xsltString, $fileKey, &$fileCer, $numberCertificate)
-    {
-        // Crear un objeto DOMDocument para cargar el CFDI
-        $xml = new \DOMDocument('1.0', 'UTF-8'); 
-        // Cargar el CFDI
-        $xml->loadXML($xmlString);
-        
-        // Crear un objeto DOMDocument para cargar el archivo de transformación XSLT
-        $xsl = new \DOMDocument();
-        $xsl->loadXML($xsltString);
-        
-        // Crear el procesador XSLT que nos generará la cadena original con base en las reglas descritas en el XSLT
-        $proc = new \XSLTProcessor;
-        // Cargar las reglas de transformación desde el archivo XSLT.
-        @$proc->importStyleSheet($xsl);
-        
-        // Generar la cadena original y asignarla a una variable
-        $this->stringOriginal = $proc->transformToXML($xml);
-        
-        $private = openssl_pkey_get_private($fileKey);
-        
-        if( !$private) {
-            return $this->error('Al obtener clave privada');
-        }
-        
-        $certificate = base64_encode($fileCer);
-        
-        openssl_sign($this->stringOriginal, $sig, $private);
-        $seal = base64_encode($sig);
-        
-        $c = $xml->getElementsByTagNameNS('http://www.sat.gob.mx/cfd/3', 'Comprobante')->item(0); 
-        $c->setAttribute('sello', $seal);
-        $c->setAttribute('certificado', $certificate);
-        $c->setAttribute('noCertificado', $numberCertificate);
-        return $xml;
-    }
-    
     public function generateXml(&$client, $params)
     {
-        $params['CFD'] = utf8_encode($params['CFD']);
-        $result = $this->runRequest($client, 'Timbrar', $params);
+        $result = $this->runRequest($client, 'TimbraCFDI', [
+            'parameters'=>$params
+        ]);
         
         if( !$result) {
-            return $this->error('Imposible generar XML con CI');
+            return $this->error('Imposible generar XML con Profact');
         }
         
         return $result;
@@ -618,6 +460,7 @@ class InvoiceGenerate
         }, $invoice->getConcepts());
         
         $result = $this->repoInvoice->create([
+            'idVoucherType'=>1,
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
             'idSerie'=>$serie->id,
@@ -638,7 +481,7 @@ class InvoiceGenerate
             'expeditionPlace'=>$invoice->getExpeditionPlace(),
             'coin'=>$invoice->getCoin(),
             'numberCertificateSat'=>$dataBell['numberCertificateSat'],
-            'stringOriginal'=>$this->getStringOriginal($dataBell),
+            'stringOriginal'=>$dataBell['stringOriginal'],
             'version'=>$invoice->getVersion(),
             'rfcTransmitter'=>$invoice->getTransmitter()->getRfc(),
             'nameTransmitter'=>$invoice->getTransmitter()->getBusinessName(),

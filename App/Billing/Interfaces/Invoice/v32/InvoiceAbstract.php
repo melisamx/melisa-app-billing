@@ -47,6 +47,11 @@ abstract class InvoiceAbstract
         return $this->folio;
     }
     
+    public function getDate()
+    {
+        return $this->date;
+    }
+    
     public function getVersion()
     {
         return $this->version;

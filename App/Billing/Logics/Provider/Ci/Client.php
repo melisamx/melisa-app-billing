@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Logics\CI;
+namespace App\Billing\Logics\Provider\Ci;
 
 /**
  * Create client and get data default
