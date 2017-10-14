@@ -1,0 +1,15 @@
+{
+    "name": "Desactivar cliente",
+    "url": "/billing.php/customers/deactivate/",
+    "description": "Módulo para desactivar cliente",
+    "task": {
+        "key": "task.billing.customers.deactivate",
+        "name": "Acceso a desactivar cliente",
+        "description": "Permitir desactivar cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customers.deactivate.success",
+        "description": "Cliente desactivado"
+    }
+}

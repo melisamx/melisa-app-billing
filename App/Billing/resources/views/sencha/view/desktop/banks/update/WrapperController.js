@@ -15,6 +15,6 @@ Ext.define('Melisa.billing.view.desktop.banks.update.WrapperController', {
         update: 'Melisa.controller.Update'
     },
     
-    eventSuccess: 'event.insurance.banks.update.success'
+    eventSuccess: 'event.billing.banks.update.success'
     
 });

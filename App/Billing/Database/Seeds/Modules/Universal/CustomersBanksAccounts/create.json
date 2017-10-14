@@ -1,0 +1,15 @@
+{
+    "name": "Agregar cuenta bancaría a clientes",
+    "url": "/billing.php/customersBanksAccounts/",
+    "description": "Módulo para agregar cuenta bancaría clientes",
+    "task": {
+        "key": "task.billing.customersBanksAccounts.create",
+        "name": "Acceso a agregar cuenta bancaría a clientes",
+        "description": "Permitir agregar cuenta bancaría a clientes",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.customersBanksAccounts.create.success",
+        "description": "Cuenta bancaría de cliente agregada"
+    }
+}

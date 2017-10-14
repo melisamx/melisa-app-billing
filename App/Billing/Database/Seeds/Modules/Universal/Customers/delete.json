@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar clientes",
+    "url": "/forge.php/records/delete/default/sacInsurance/customers/",
+    "description": "Módulo para eliminar clientes",
+    "task": {
+        "key": "task.billing.customers.delete",
+        "name": "Acceso a eliminar clientes",
+        "description": "Permitir eliminar clientes",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.customers.delete.success",
+        "description": "Cliente eliminado"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cliente del grupo de clientes",
+    "url": "/billing.php/customerGroupsCustomers/delete/",
+    "description": "Módulo para eliminar cliente del grupo de clientes",
+    "task": {
+        "key": "task.billing.customerGroupsCustomers.delete",
+        "name": "Acceso a eliminar cliente del grupo de clientes",
+        "description": "Permitir eliminar cliente del grupo de clientes",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.customerGroupsCustomers.delete.success",
+        "description": "Cliente eliminado de grupo de clientes"
+    }
+}

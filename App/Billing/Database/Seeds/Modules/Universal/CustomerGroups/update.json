@@ -1,0 +1,15 @@
+{
+    "name": "Modificar grupo de cliente",
+    "url": "/billing.php/customerGroups/update/",
+    "description": "Módulo para modificar grupo de cliente",
+    "task": {
+        "key": "task.billing.customerGroups.update",
+        "name": "Acceso a modificar grupo de cliente",
+        "description": "Permitir modificargrupo de cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customerGroups.update.success",
+        "description": "Grupo de cliente modificado"
+    }
+}

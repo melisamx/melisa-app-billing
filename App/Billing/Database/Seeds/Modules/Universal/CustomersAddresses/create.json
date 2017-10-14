@@ -1,0 +1,15 @@
+{
+    "name": "Agregar direcciónes a clientes",
+    "url": "/billing.php/customersAddresses/",
+    "description": "Módulo para agregar direcciónes a clientes",
+    "task": {
+        "key": "task.billing.customersAddresses.create",
+        "name": "Acceso a agregar direcciónes a clientes",
+        "description": "Permitir agregar direcciónes a clientes",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.customers.addresses.create.success",
+        "description": "Dirección agregada al cliente"
+    }
+}

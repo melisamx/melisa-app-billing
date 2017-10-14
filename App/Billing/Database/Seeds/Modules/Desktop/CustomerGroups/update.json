@@ -1,0 +1,21 @@
+{
+    "name": "Modificar grupos de clientes",
+    "url": "/billing.php/modules/customerGroups/update/",
+    "description": "Módulo interfaz para modificar grupos de clientes",
+    "nameSpace": "Melisa.billing.view.desktop.customerGroups.update.Wrapper",
+    "task": {
+        "key": "task.billing.customerGroups.update.access",
+        "name": "Acceso a modificar grupos de clientes",
+        "description": "Permitir acceso a modificar grupos de clientes",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customerGroups.update.access",
+        "name": "Opción para modificar grupos de clientes",
+        "text": "Modificar grupos de clientes"
+    },
+    "event": {
+        "key": "event.billing.customerGroups.update.access",
+        "description": "Acceso al módulo modificar grupos de clientes"
+    }
+}

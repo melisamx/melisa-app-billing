@@ -1,0 +1,15 @@
+{
+    "name": "Modificar repositorio",
+    "url": "/billing.php/repositories/update/",
+    "description": "Módulo para modificar repositorio",
+    "task": {
+        "key": "task.billing.repositories.update",
+        "name": "Acceso a modificar repositorio",
+        "description": "Permitir modificar repositorio",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.repositories.update.success",
+        "description": "Repositorio modificado"
+    }
+}

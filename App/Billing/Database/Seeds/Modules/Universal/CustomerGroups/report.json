@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de grupo de clientes",
+    "url": "/billing.php/customerGroups/report/",
+    "description": "Módulo para ver reporte de grupo de clientes",
+    "task": {
+        "key": "task.billing.customerGroups.report",
+        "name": "Acceso a ver reporte de grupo de clientes",
+        "description": "Permitir ver reporte de grupo de clientes",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.customerGroups.report.success",
+        "description": "Acceso a reporte de grupo de clientes"
+    }
+}

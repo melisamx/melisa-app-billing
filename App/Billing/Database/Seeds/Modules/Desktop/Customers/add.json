@@ -1,0 +1,21 @@
+{
+    "name": "Agregar clientes",
+    "url": "/billing.php/modules/customers/add",
+    "description": "Módulo interfaz para agregar customers",
+    "nameSpace": "Melisa.billing.view.desktop.customers.add.Wrapper",
+    "task": {
+        "key": "task.billing.customers.add.access",
+        "name": "Acceso a agregar clientes",
+        "description": "Permitir acceso a agregar clientes",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customers.add.access",
+        "name": "Opción para agregar clientes",
+        "text": "Agregar clientes"
+    },
+    "event": {
+        "key": "event.billing.customers.add.access",
+        "description": "Acceso al módulo agregar clientes"
+    }
+}

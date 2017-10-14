@@ -8,8 +8,8 @@ Ext.define('Melisa.billing.view.desktop.banks.view.WrapperController', {
     
     listen: {
         global: {
-            'event.insurance.banks.update.success': 'onUpdatedRecord',
-            'event.insurance.banks.create.success': 'onUpdatedRecord'
+            'event.billing.banks.update.success': 'onUpdatedRecord',
+            'event.billing.banks.create.success': 'onUpdatedRecord'
         }
     },
     

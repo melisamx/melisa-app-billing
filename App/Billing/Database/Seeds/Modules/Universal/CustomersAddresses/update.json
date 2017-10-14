@@ -1,0 +1,15 @@
+{
+    "name": "Modificar dirección de cliente",
+    "url": "/billing.php/customersAddresses/update/",
+    "description": "Módulo para modificar dirección de cliente",
+    "task": {
+        "key": "task.billing.customersAddresses.update",
+        "name": "Acceso a modificar dirección de cliente",
+        "description": "Permitir modificar dirección de cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customersAddresses.update.success",
+        "description": "Dirección de cliente modificada"
+    }
+}

@@ -16,7 +16,9 @@ abstract class InvoiceAbstract extends BaseUuid
     /* incrementing */
     protected $fillable = [
         'id',
+        'idContributorAddress',
         'idCsd',
+        'idCustomer',
         'idInvoiceStatus',
         'idSerie',
         'idVoucherType',

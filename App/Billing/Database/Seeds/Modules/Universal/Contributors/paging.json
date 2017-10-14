@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de contribuyentes",
+    "url": "/billing.php/contributors",
+    "description": "Módulo para paginar lista de contribuyentes",
+    "task": {
+        "key": "task.billing.contributors.paging",
+        "name": "Paginar lista de contribuyentes",
+        "description": "Permitir paginar lista de contribuyentes",
+        "pattern": "read"
+    }
+}

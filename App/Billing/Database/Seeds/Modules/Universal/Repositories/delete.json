@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar repositorio",
+    "url": "/billing.php/repositories/delete/",
+    "description": "Módulo para eliminar repositorio",
+    "task": {
+        "key": "task.billing.repositories.delete",
+        "name": "Acceso a eliminar repositorio",
+        "description": "Permitir eliminar repositorio",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.repositories.delete.success",
+        "description": "Repositorio eliminado"
+    }
+}

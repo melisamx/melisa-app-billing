@@ -90,3 +90,59 @@ Route::group([
 ], function() {    
     require realpath(base_path() . '/routes/modules/exchangeRates.php');    
 });
+
+Route::group([
+    'prefix'=>'customers',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customers.php');    
+});
+
+Route::group([
+    'prefix'=>'customersContacts',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customersContacts.php');    
+});
+
+Route::group([
+    'prefix'=>'customersAddresses',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customersAddresses.php');    
+});
+
+Route::group([
+    'prefix'=>'customersBanksAccounts',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customersBanksAccounts.php');    
+});
+
+Route::group([
+    'prefix'=>'customerGroups',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customerGroups.php');    
+});
+
+Route::group([
+    'prefix'=>'customerGroupsCustomers',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customerGroupsCustomers.php');    
+});
+
+Route::group([
+    'prefix'=>'customerGroupsIdentities',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/customerGroupsIdentities.php');    
+});
+
+Route::group([
+    'prefix'=>'repositories',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/repositories.php');    
+});

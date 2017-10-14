@@ -13,12 +13,10 @@ class ModulesSeeder extends Seeder
 {
     
     public function run()
-    {
-        
+    {        
         $this->call(Modules\ModulesDesktopSeeder::class);
         $this->call(Modules\ModulesPhoneSeeder::class);
-        $this->call(Modules\ModulesUniversalSeeder::class);
-        
+        $this->call(Modules\ModulesUniversalSeeder::class);        
     }
     
 }

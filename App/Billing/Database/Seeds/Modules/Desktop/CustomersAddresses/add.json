@@ -1,0 +1,21 @@
+{
+    "name": "Agregar dirección de cliente",
+    "url": "/billing.php/modules/customersAddresses/add",
+    "description": "Módulo interfaz para asociar contacto a cliente",
+    "nameSpace": "Melisa.billing.view.desktop.customersAddresses.add.Wrapper",
+    "task": {
+        "key": "task.billing.customersAddresses.add.access",
+        "name": "Acceso a agregar dirección de cliente",
+        "description": "Permitir acceso a agregar dirección de cliente",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customersAddresses.add.access",
+        "name": "Opción para agregar dirección de cliente",
+        "text": "Agregar dirección de cliente"
+    },
+    "event": {
+        "key": "event.billing.customersAddresses.add.access",
+        "description": "Acceso al módulo agrega dirección de cliente"
+    }
+}

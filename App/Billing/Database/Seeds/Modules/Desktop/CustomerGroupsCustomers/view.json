@@ -1,0 +1,24 @@
+{
+    "name": "Ver grupos de clientes",
+    "url": "/billing.php/modules/customerGroupsCustomers/view",
+    "description": "Módulo interfaz para ver grupos de clientes",
+    "nameSpace": "Melisa.billing.view.desktop.customerGroupsCustomers.view.Wrapper",
+    "task": {
+        "key": "task.billing.customerGroupsCustomers.view.access",
+        "name": "Acceso a ver grupos de clientes",
+        "description": "Permitir acceso a ver grupos de clientes",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customerGroupsCustomers.view.access",
+        "name": "Opción para ver grupos de clientes",
+        "text": "Grupo de clientes",
+        "iconClassSmall": "x-fa fa fa-object-group",
+        "iconClassMedium": "x-fa fa fa-object-group",
+        "iconClassLarge": "x-fa fa fa-object-group"
+    },
+    "event": {
+        "key": "event.billing.customerGroupsCustomers.view.access",
+        "description": "Acceso al módulo ver grupos de clientes"
+    }
+}

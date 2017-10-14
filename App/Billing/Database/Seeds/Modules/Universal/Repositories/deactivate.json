@@ -1,0 +1,15 @@
+{
+    "name": "Desactivar repositorio",
+    "url": "/billing.php/repositories/deactivate/",
+    "description": "Módulo para desactivar repositorio",
+    "task": {
+        "key": "task.billing.repositories.deactivate",
+        "name": "Acceso a desactivar repositorio",
+        "description": "Permitir desactivar repositorio",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.repositories.deactivate.success",
+        "description": "Repositorio desactivado"
+    }
+}

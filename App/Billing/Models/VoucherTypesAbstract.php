@@ -18,6 +18,7 @@ abstract class VoucherTypesAbstract extends Base
     protected $fillable = [
         'id',
         'name',
+        'key',
         'valueV32',
         'valueV33'
     ];    

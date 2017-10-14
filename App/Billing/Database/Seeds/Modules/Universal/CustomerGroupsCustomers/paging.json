@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de clientes en grupo de clientes",
+    "url": "/billing.php/customerGroupsCustomers/",
+    "description": "Módulo para paginar lista de clientes en grupo de clientes",
+    "task": {
+        "key": "task.billing.customerGroupsCustomers.paging",
+        "name": "Paginar lista de clientes en grupo de clientes",
+        "description": "Permitir paginar lista de clientes en grupo de clientes",
+        "pattern": "read"
+    }
+}

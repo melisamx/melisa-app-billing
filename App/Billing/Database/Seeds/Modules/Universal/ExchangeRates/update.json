@@ -1,6 +1,6 @@
 {
     "name": "Modificar tipo de cambio",
-    "url": "/insurance.php/exchangeRates/update/",
+    "url": "/billing.php/exchangeRates/update/",
     "description": "Módulo para modificar tipo de cambio",
     "task": {
         "key": "task.billing.exchangeRates.update",

@@ -1,0 +1,15 @@
+{
+    "name": "Activar cliente",
+    "url": "/billing.php/customersBanksAccounts/activate/",
+    "description": "Módulo para activar cuenta bancaría del cliente",
+    "task": {
+        "key": "task.billing.customersBanksAccounts.activate",
+        "name": "Acceso a activar cuenta bancaría del cliente",
+        "description": "Permitir activar cuenta bancaría del cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customersBanksAccounts.activate.success",
+        "description": "Cuenta bancaría activada"
+    }
+}

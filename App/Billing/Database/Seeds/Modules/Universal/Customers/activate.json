@@ -1,0 +1,15 @@
+{
+    "name": "Activar cliente",
+    "url": "/billing.php/customers/activate/",
+    "description": "Módulo para activar cliente",
+    "task": {
+        "key": "task.billing.customers.activate",
+        "name": "Acceso a activar cliente",
+        "description": "Permitir activar cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customers.activate.success",
+        "description": "Cliente activado"
+    }
+}

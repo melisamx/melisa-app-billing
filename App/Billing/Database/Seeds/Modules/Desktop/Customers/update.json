@@ -1,0 +1,21 @@
+{
+    "name": "Modificar clientes",
+    "url": "/billing.php/modules/customers/update/",
+    "description": "Módulo interfaz para modificar clientes",
+    "nameSpace": "Melisa.billing.view.desktop.customers.update.Wrapper",
+    "task": {
+        "key": "task.billing.customers.update.access",
+        "name": "Acceso a modificar clientes",
+        "description": "Permitir acceso a modificar clientes",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customers.update.access",
+        "name": "Opción para modificar clientes",
+        "text": "Modificar clientes"
+    },
+    "event": {
+        "key": "event.billing.customers.update.access",
+        "description": "Acceso al módulo modificar clientes"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de contacto asociados al cliente",
+    "url": "/billing.php/customersContacts/",
+    "description": "Módulo para paginar lista de contacto asociados al cliente",
+    "task": {
+        "key": "task.billing.customersContacts.paging",
+        "name": "Paginar lista de contacto asociados al cliente",
+        "description": "Permitir paginar lista de contacto asociados al cliente",
+        "pattern": "read"
+    }
+}

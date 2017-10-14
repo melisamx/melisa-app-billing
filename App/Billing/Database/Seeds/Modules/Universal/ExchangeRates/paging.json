@@ -1,6 +1,6 @@
 {
     "name": "Paginar lista de tipo de cambio",
-    "url": "/insurance.php/exchangeRates/",
+    "url": "/billing.php/exchangeRates/",
     "description": "Módulo para paginar lista de tipo de cambio",
     "task": {
         "key": "task.billing.exchangeRates.paging",

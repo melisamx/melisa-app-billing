@@ -22,6 +22,79 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->exchangeRates();
         $this->banks();
         $this->referralNotes();
+        $this->customers();
+        $this->customersAddresses();
+        $this->customersContacts();
+        $this->customersBanksAccounts();
+        $this->customerGroups();
+        $this->customerGroupsCustomers();
+        $this->customerGroupsIdentities();
+        $this->repositories();
+    }    
+    
+    public function repositories()
+    {
+        $this->installModuleJson('Desktop/Repositories', [
+            'add',
+            'update',
+            'view',
+        ]);
+    }
+    
+    public function customerGroupsIdentities()
+    {
+        $this->installModuleJson('Desktop/CustomerGroupsIdentities', [
+            'add',
+            'view',
+        ]);
+    }
+    
+    public function customerGroupsCustomers()
+    {
+        $this->installModuleJson('Desktop/CustomerGroupsCustomers', [
+            'add',
+            'view',
+        ]);
+    }
+    
+    public function customerGroups()
+    {
+        $this->installModuleJson('Desktop/CustomerGroups', [
+            'add',
+            'update',
+            'view',
+        ]);
+    }
+    
+    public function customersBanksAccounts()
+    {
+        $this->installModuleJson('Desktop/CustomersBanksAccounts', [
+            'add',
+        ]);
+    }
+    
+    public function customersAddresses()
+    {
+        $this->installModuleJson('Desktop/CustomersAddresses', [
+            'add',
+            'update',
+        ]);
+    }
+    
+    public function customersContacts()
+    {
+        $this->installModuleJson('Desktop/CustomersContacts', [
+            'add',
+        ]);
+    }
+    
+    public function customers()
+    {
+        $this->installModuleJson('Desktop/Customers', [
+            'add',
+            'update',
+            'view',
+        ]);
     }
     
     public function referralNotes()

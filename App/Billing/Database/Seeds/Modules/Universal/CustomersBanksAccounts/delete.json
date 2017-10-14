@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cuenta bancaría del cliente",
+    "url": "/billing.php/customersBanksAccounts/delete/",
+    "description": "Módulo para eliminar cuenta bancaría del cliente",
+    "task": {
+        "key": "task.billing.customersBanksAccounts.delete",
+        "name": "Acceso a eliminar cuenta bancaría del cliente",
+        "description": "Permitir eliminar cuenta bancaría del cliente",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.customersBanksAccounts.delete.success",
+        "description": "Cuenta bancaría de cliente eliminada"
+    }
+}

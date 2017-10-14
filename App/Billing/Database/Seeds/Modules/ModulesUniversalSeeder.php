@@ -26,6 +26,108 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->waytopay();
         $this->exchangeRates();
         $this->referralNotes();
+        $this->contributors();
+        $this->customers();
+        $this->customersAddresses();
+        $this->customersContacts();        
+        $this->customersBanksAccounts();
+        $this->customerGroups();        
+        $this->customerGroupsCustomers();        
+        $this->customerGroupsIdentities();
+        $this->repositories();
+    }
+    
+    public function contributors()
+    {
+        $this->installModuleJson('Universal/Contributors', [
+            'paging',
+        ]);
+    }
+    
+    public function repositories()
+    {
+        $this->installModuleJson('Universal/Repositories', [
+            'create',
+            'report',
+            'update',
+            'delete',
+            'paging',
+            'activate',
+            'deactivate',
+        ]);
+    }
+    
+    public function customers()
+    {
+        $this->installModuleJson('Universal/Customers', [
+            'paging',
+            'create',
+            'delete',
+            'report',
+            'update',
+            'activate',
+            'deactivate',
+        ]);
+    }
+    
+    public function customerGroupsIdentities()
+    {
+        $this->installModuleJson('Universal/CustomerGroupsIdentities', [
+            'create',
+            'delete',
+            'paging',
+        ]);
+    }
+    
+    public function customersBanksAccounts()
+    {
+        $this->installModuleJson('Universal/CustomersBanksAccounts', [
+            'create',
+            'paging',
+            'delete',
+            'activate',
+            'deactivate',
+        ]);
+    }
+    
+    public function customersAddresses()
+    {
+        $this->installModuleJson('Universal/CustomersAddresses', [
+            'create',
+            'paging',
+            'delete',
+            'report',
+            'update',
+        ]);
+    }
+    
+    public function customersContacts()
+    {
+        $this->installModuleJson('Universal/CustomersContacts', [
+            'create',
+            'paging',
+            'delete',
+        ]);
+    }
+    
+    public function customerGroupsCustomers()
+    {
+        $this->installModuleJson('Universal/CustomerGroupsCustomers', [
+            'create',
+            'delete',
+            'paging',
+        ]);
+    }
+    
+    public function customerGroups()
+    {
+        $this->installModuleJson('Universal/CustomerGroups', [
+            'create',
+            'report',
+            'update',
+            'delete',
+            'paging',
+        ]);
     }
     
     public function referralNotes()

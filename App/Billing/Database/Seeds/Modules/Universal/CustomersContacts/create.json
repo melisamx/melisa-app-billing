@@ -1,0 +1,15 @@
+{
+    "name": "Asociar contacto a clientes",
+    "url": "/billing.php/customersContacts/",
+    "description": "Módulo para asociar contacto clientes",
+    "task": {
+        "key": "task.billing.customersContacts.create",
+        "name": "Acceso a asociar contacto a clientes",
+        "description": "Permitir asociar contacto a clientes",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.customersContacts.create.success",
+        "description": "Contacto asociado al cliente"
+    }
+}

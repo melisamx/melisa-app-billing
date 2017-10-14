@@ -1,0 +1,15 @@
+{
+    "name": "Crear grupo de clientes",
+    "url": "/billing.php/customerGroups/",
+    "description": "Módulo para crear grupo de clientes",
+    "task": {
+        "key": "task.billing.customerGroups.create",
+        "name": "Acceso a crear grupo de clientes",
+        "description": "Permitir crear grupo de clientes",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.customerGroups.create.success",
+        "description": "Grupo de cliente creado"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de direcciónes del cliente",
+    "url": "/billing.php/customersAddresses/",
+    "description": "Módulo para paginar lista de direcciónes del cliente",
+    "task": {
+        "key": "task.billing.customersAddresses.paging",
+        "name": "Paginar lista de direcciónes del cliente",
+        "description": "Permitir paginar lista de direcciónes del cliente",
+        "pattern": "read"
+    }
+}

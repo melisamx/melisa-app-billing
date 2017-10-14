@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de cuentas bancarías del cliente",
+    "url": "/billing.php/customersBanksAccounts/",
+    "description": "Módulo para paginar lista de cuentas bancarías del cliente",
+    "task": {
+        "key": "task.billing.customersBanksAccounts.paging",
+        "name": "Paginar lista de cuentas bancarías del cliente",
+        "description": "Permitir paginar lista de cuentas bancarías del cliente",
+        "pattern": "read"
+    }
+}

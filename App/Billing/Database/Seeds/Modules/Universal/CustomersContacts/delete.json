@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar contacto asociado al cliente",
+    "url": "/billing.php/customersContacts/delete/",
+    "description": "Módulo para eliminar contacto asociado al cliente",
+    "task": {
+        "key": "task.billing.customersContacts.delete",
+        "name": "Acceso a eliminar contacto asociado al cliente",
+        "description": "Permitir eliminar contacto asociado al cliente",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.customersContacts.delete.success",
+        "description": "Contacto asociado eliminado"
+    }
+}

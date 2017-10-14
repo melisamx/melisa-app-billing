@@ -1,0 +1,15 @@
+{
+    "name": "Desactivar cuenta bancaría del cliente",
+    "url": "/billing.php/customersBanksAccounts/deactivate/",
+    "description": "Módulo para desactivar cuenta bancaría del cliente",
+    "task": {
+        "key": "task.billing.customersBanksAccounts.deactivate",
+        "name": "Acceso a desactivar cuenta bancaría del cliente",
+        "description": "Permitir desactivar cuenta bancaría del cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.customersBanksAccounts.deactivate.success",
+        "description": "Cuenta bancaría desactivada"
+    }
+}

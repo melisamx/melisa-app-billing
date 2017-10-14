@@ -1,0 +1,21 @@
+{
+    "name": "Asociar contacto a cliente",
+    "url": "/billing.php/modules/customersContacts/add",
+    "description": "Módulo interfaz para asociar contacto a cliente",
+    "nameSpace": "Melisa.billing.view.desktop.customersContacts.add.Wrapper",
+    "task": {
+        "key": "task.billing.customersContacts.add.access",
+        "name": "Acceso a asociar contacto contacto a cliente",
+        "description": "Permitir acceso a asociar contacto a cliente",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.customersContacts.add.access",
+        "name": "Opción para asociar contacto a cliente",
+        "text": "Asociar contacto a cliente"
+    },
+    "event": {
+        "key": "event.billing.customersContacts.add.access",
+        "description": "Acceso al módulo asociar contacto a cliente"
+    }
+}

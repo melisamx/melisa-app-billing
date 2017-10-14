@@ -15,9 +15,11 @@ class CreateTableInvoice extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('idIdentityCreated');
+            $table->uuid('idCustomer');
+            $table->unsignedInteger('idContributorAddress');
             $table->smallInteger('idInvoiceStatus');
             $table->smallInteger('idVoucherType');
+            $table->uuid('idIdentityCreated');
             $table->string('serie', 10);
             $table->string('folio', 25);
             $table->uuid('uuid');
@@ -59,6 +61,16 @@ class CreateTableInvoice extends Migration
             $table->index('folio');
             $table->index('serie');
             $table->index('date');
+            
+            $table->foreign('idCustomer')
+                ->references('id')->on('customers')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idContributorAddress')
+                ->references('id')->on('contributorsAddresses')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             
             $table->foreign('idCsd')
                 ->references('id')->on('csd')
