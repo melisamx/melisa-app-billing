@@ -45,7 +45,7 @@ trait Client
         $xmlTimbrado = $result->TimbraCFDIResult->anyType[3];
         
         if( empty($xmlTimbrado)) {
-            return false;
+            return $this->error($result->TimbraCFDIResult->anyType[2]);
         }
         
         return [

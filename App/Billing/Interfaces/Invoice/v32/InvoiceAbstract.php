@@ -26,6 +26,7 @@ abstract class InvoiceAbstract
     protected $receiver;
     protected $transmitter;
     protected $version = 3.2;
+    protected $extraData;
 
     public function __construct(
         ReceiverAbstract $receiver,
@@ -34,6 +35,12 @@ abstract class InvoiceAbstract
     {
         $this->receiver = $receiver;
         $this->transmitter = $transmitter;
+    }
+    
+    public function setExtraData($data)
+    {
+        $this->extraData = $data;
+        return $this;
     }
     
     public function setFolio($folio)
@@ -45,6 +52,11 @@ abstract class InvoiceAbstract
     public function getFolio()
     {
         return $this->folio;
+    }
+    
+    public function getExtraData()
+    {
+        return $this->extraData;
     }
     
     public function getDate()

@@ -14,4 +14,8 @@ class Contributors extends ContributorsAbstract
         $this->attributes ['email']= strtolower($value);
     }
     
+    public function addresses()
+    {
+        return $this->hasMany('App\Billing\Models\ContributorsAddresses', 'idContributor', 'id');
+    }
 }

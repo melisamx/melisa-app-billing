@@ -458,6 +458,7 @@ class InvoiceGenerate
         $concepts = array_map(function($concept) {
             return $concept->toArray();
         }, $invoice->getConcepts());
+        $extraData = $invoice->getExtraData();
         
         $result = $this->repoInvoice->create([
             'idVoucherType'=>1,
@@ -468,6 +469,8 @@ class InvoiceGenerate
             'idFilePdf'=>$idFilePdfInvoice,
             'idFileCfdSeal'=>$idFileCfdSeal,
             'idFileCfdBeforeSeal'=>$idFileCfdBeforeSeal,
+            'idCustomer'=>$extraData->idCustomer,
+            'idContributorAddress'=>$extraData->idContributorAddress,
             'rfc'=>$invoice->getReceiver()->getRfc(),
             'name'=>$invoice->getReceiver()->getBusinessName(),
             'uuid'=>$dataBell['uuid'],
