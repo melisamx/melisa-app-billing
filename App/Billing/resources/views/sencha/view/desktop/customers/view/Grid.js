@@ -19,6 +19,14 @@ Ext.define('Melisa.billing.view.desktop.customers.view.Grid', {
             flex: 1
         },
         {
+            dataIndex: 'repository',
+            text: 'Cliente base',
+            flex: 1,
+            bind: {
+                hidden: '{hiddenColumns}'
+            }
+        },
+        {
             dataIndex: 'rfc',
             text: 'RFC',
             width: 150,
