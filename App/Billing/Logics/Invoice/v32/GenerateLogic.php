@@ -20,6 +20,7 @@ class GenerateLogic
     protected $serieRepo;
     protected $csdRepo;
     protected $fileRepo;
+    protected $eventSuccess = 'billing.invoice.create.success';
 
     public function __construct(
         SeriesRepository $serieRepo,
@@ -51,6 +52,10 @@ class GenerateLogic
         $result = $this->getInvoicePac($pac, $invoice, $serie, $csd);
         
         if( !$result) {
+            return false;
+        }
+        
+        if( !$this->fireEvent($result)) {
             return false;
         }
         
