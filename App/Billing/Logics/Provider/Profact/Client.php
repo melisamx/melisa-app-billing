@@ -20,7 +20,6 @@ trait Client
     {
         $params = [
             'usuarioIntegrador'=>env('PROFACT_USER'),
-            'idComprobante'=>rand(5, 999999)
         ];
         return array_merge($params, $extraParams);
     }
@@ -32,6 +31,28 @@ trait Client
         }
         
         return env('PROFACT_SERVER_PRODUCTION');
+    }
+    
+    public function runRequestCancel(&$client, $method, $params = [])
+    {
+        try {
+            $result = $client->__soapCall($method, [
+                'parameters'=>$params
+            ]);
+        } catch (\SoapFault $fault) {
+            return $this->error(utf8_decode($fault->faultcode."-".$fault->faultstring));
+        }
+        
+        if( $result->CancelaCFDIResult->anyType[1] !== '0') {
+            return $this->error($result->CancelaCFDIResult->anyType[2]);
+        }
+        
+        return [
+            'messageResult'=>$result->CancelaCFDIResult->anyType[2],
+            'xml'=>$result->CancelaCFDIResult->anyType[3],
+            'qr'=>$result->CancelaCFDIResult->anyType[4],
+            'stringOriginal'=>$result->CancelaCFDIResult->anyType[5],
+        ];
     }
     
     public function runRequest(&$client, $method, $params = [])

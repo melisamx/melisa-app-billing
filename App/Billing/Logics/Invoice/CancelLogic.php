@@ -5,7 +5,7 @@ namespace App\Billing\Logics\Invoice;
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Models\InvoiceStatus;
-use App\Billing\Logics\CI\InvoiceCancel;
+use App\Billing\Logics\Provider\Profact\InvoiceCancel;
 
 class CancelLogic
 {
