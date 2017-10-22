@@ -199,6 +199,7 @@ class ModulesUniversalSeeder extends InstallSeeder
             'paging',
             'report',
             'charged',
+            'autoregister',
         ]);
     }
     

@@ -5,5 +5,9 @@ Route::group([
     'middleware'=>'auth.basic',
     'namespace' =>'v1'
 ], function() {
-    
+    Route::group([
+        'prefix'=>'accountsReceivable',
+    ], function() {
+        require realpath(base_path() . '/routes/modules/accountsReceivable.php');    
+    });
 });

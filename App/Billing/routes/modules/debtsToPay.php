@@ -6,4 +6,5 @@ Route::post('payoff', 'DebtsToPayController@payoff')->middleware('gate:task.bill
 Route::get('/', 'DebtsToPayController@paging')->middleware('gate:task.billing.debtsToPay.paging');
 Route::get('view', 'DebtsToPayController@view')->middleware('gate:task.billing.debtsToPay.view.access');
 Route::get('add', 'DebtsToPayController@add')->middleware('gate:task.billing.debtsToPay.add.access');
+Route::get('payoff', 'DebtsToPayController@payoff')->middleware('gate:task.billing.debtsToPay.payoff.access');
 Route::get('report/{id}/{format?}', 'DebtsToPayController@report')->middleware('gate:task.billing.debtsToPay.report');

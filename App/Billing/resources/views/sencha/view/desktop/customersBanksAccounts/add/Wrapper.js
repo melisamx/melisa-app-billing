@@ -16,7 +16,7 @@ Ext.define('Melisa.billing.view.desktop.customersBanksAccounts.add.Wrapper', {
         'width < 1200': {
             width: '100%'
         },
-        'width >= 1400': {
+        'width >= 1200': {
             width: 1200
         }
     },

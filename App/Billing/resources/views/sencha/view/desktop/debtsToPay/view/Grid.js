@@ -72,14 +72,13 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.view.Grid', {
                 xtype: 'button',
                 iconCls: 'x-fa fa-ban',
                 tooltip: 'Saldar cuenta',
+                handler: 'moduleRun',
                 bind: {
                     melisa: '{modules.payoff}',
                     hidden: '{!modules.payoff.allowed}'
                 },
-                plugins: {
-                    ptype: 'buttonconfirmation',
-                    messageConfirmation: '¿Realmente desea saldar la cuenta?',
-                    messageSuccess: 'Cuenta saldada'
+                listeners: {
+                    loaded: 'onLoadedModuleUpdate'
                 }
             }
         }

@@ -1,0 +1,21 @@
+{
+    "name": "Saldar cuenta por pagar",
+    "url": "/billing.php/modules/debtsToPay/payoff/",
+    "description": "Módulo interfaz para saldar cuenta por pagar",
+    "nameSpace": "Melisa.billing.view.desktop.debtsToPay.payoff.Wrapper",
+    "task": {
+        "key": "task.billing.debtsToPay.payoff.access",
+        "name": "Acceso a saldar cuenta por pagar",
+        "description": "Permitir acceso a saldar cuenta por pagar",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.debtsToPay.payoff.access",
+        "name": "Opción para saldar cuenta por pagar",
+        "text": "Saldar cuenta por pagar"
+    },
+    "event": {
+        "key": "event.billing.debtsToPay.payoff.access",
+        "description": "Acceso al módulo saldar cuenta por pagar"
+    }
+}

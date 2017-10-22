@@ -16,6 +16,7 @@ class CreateTableDebtstopayStatus extends Migration
         Schema::create('debtsToPayStatus', function (Blueprint $table) {
             $table->smallInteger('id')->primary();
             $table->string('name', 75)->unique();
+            $table->string('key', 15)->unique();
             
             $table->index('name');
         });

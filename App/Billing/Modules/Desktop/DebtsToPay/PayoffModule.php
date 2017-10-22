@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Billing\Modules\Desktop\DebtsToPay;
 
@@ -9,11 +9,11 @@ use App\Core\Logics\Modules\Outbuildings;
  *
  * @author Luis Josafat Heredia Contreras
  */
-class ViewModule extends Outbuildings
+class PayoffModule extends Outbuildings
 {
     
-    public $event = 'billing.debtsToPay.view.access';
-
+    public $event = 'billing.debtsToPay.payoff.access';
+    
     public function dataDictionary()
     {        
         return [
@@ -21,13 +21,16 @@ class ViewModule extends Outbuildings
             'data'=>[
                 'token'=>csrf_token(),
                 'modules'=>[
-                    'debtsToPay'=>$this->module('task.billing.debtsToPay.paging'),
+                    'submit'=>$this->module('task.billing.debtsToPay.payoff'),
                     'report'=>$this->module('task.billing.debtsToPay.report'),
-                    'add'=>$this->module('task.billing.debtsToPay.add.access', false),
-                    'payoff'=>$this->module('task.billing.debtsToPay.payoff.access', false),
+                    'filesSelect'=>$this->module('task.drive.files.select.access', false),
                 ],
                 'wrapper'=>[
-                    'title'=>'Cuentas por pagar'
+                    'title'=>'Saldar cuenta por pagar'
+                ],
+                'i18n'=>[
+                    'success'=>'Cuenta saldada',
+                    'btnSave'=>'Saldar cuenta por pagar'
                 ]
             ]
         ];        

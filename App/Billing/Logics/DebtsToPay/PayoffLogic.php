@@ -39,12 +39,13 @@ class PayoffLogic
             return false;
         }
         
-        if( !$this->updateDebtsToPay($debtsToPay->id)) {
+        if( !$this->updateDebtsToPay($debtsToPay->id, $input)) {
             return $this->repoDebtsToPay->rollback();
         }
         
         $event = [
             'idDebtsToPay'=>$input['id'],
+            'idFilePayment'=>$input['idFilePayment'],
         ];
         
         if ( !$this->fireEvent($event)) {
@@ -79,10 +80,12 @@ class PayoffLogic
         ]);
     }
     
-    public function updateDebtsToPay($id)
+    public function updateDebtsToPay($id, $input)
     {
         $result = $this->repoDebtsToPay->update([
             'idDebtsToPayStatus'=>DebtsToPayStatus::PAYOFF,
+            'idFilePayment'=>$input['idFilePayment'],
+            'paymentDate'=>$input['paymentDate'],
             'idIdentityUpdated'=>$this->getIdentity(),
         ], $id);
         

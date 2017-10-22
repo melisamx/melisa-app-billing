@@ -29,7 +29,11 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Wrapper', {
                             operator: 'like',
                             minChars: 1
                         }
-                    }
+                    },
+                    filtersIgnore: [
+                        'dateVoucher',
+                        'dueDate'
+                    ]
                 }
             ]
         }

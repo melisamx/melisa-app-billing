@@ -28,8 +28,16 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.view.Wrapper', {
                         account: {
                             operator: 'like',
                             minChars: 1
+                        },
+                        amountPayable: {
+                            operator: 'like',
+                            minChars: 1
                         }
-                    }
+                    },
+                    filtersIgnore: [
+                        'dueDate',
+                        'dateVoucher'
+                    ]
                 },
                 {
                     ptype: 'floatingbutton',

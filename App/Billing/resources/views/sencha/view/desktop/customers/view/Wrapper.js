@@ -76,7 +76,7 @@ Ext.define('Melisa.billing.view.desktop.customers.view.Wrapper', {
                     region: 'south',
                     height: '50%'
                 },
-                'width >= 1400': {
+                'width >= 1200': {
                     region: 'east',
                     width: '80%'
                 }

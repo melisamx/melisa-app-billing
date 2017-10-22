@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 
 class CreateTableInvoice extends Migration
 {
@@ -89,6 +90,18 @@ class CreateTableInvoice extends Migration
             
             $table->foreign('idVoucherType')
                 ->references('id')->on('voucherTypes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $db = DB::connection('drive')->getDatabaseName();
+            
+            $table->foreign('idFileXml')
+                ->references('id')->on(new Expression("$db.files"))
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idFilePdf')
+                ->references('id')->on(new Expression("$db.files"))
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

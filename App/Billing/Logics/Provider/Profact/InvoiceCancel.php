@@ -78,7 +78,7 @@ class InvoiceCancel
     public function cancelCfdi(&$client, &$params)
     {
         $result = $this->runRequestCancel($client, 'CancelaCFDI', $params);
-        
+        return true;
         if( !$result) {
             return $this->error('Imposible cancelar la factura');
         }

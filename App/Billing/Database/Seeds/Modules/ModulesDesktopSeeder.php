@@ -30,7 +30,16 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->customerGroupsCustomers();
         $this->customerGroupsIdentities();
         $this->repositories();
+        $this->accounts();
     }    
+    
+    public function accounts()
+    {
+        $this->installModuleJson('Desktop/Accounts', [
+            'add',
+            'view',
+        ]);
+    }
     
     public function repositories()
     {
@@ -143,6 +152,7 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->installModuleJson('Desktop/DebtsToPay', [
             'add',
             'view',
+            'payoff',
         ]);
     }
     

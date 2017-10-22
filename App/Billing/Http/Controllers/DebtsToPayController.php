@@ -26,6 +26,7 @@ class DebtsToPayController extends CrudController
     
     protected $report = [
         'logic'=>'ReportLogic',
+        'module'=>'Universal\DebtsToPay\ReportModule',
     ];
     
     public function payoff(PayoffRequest $request, PayoffLogic $logic)

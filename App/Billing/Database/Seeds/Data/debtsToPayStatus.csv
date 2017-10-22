@@ -1,3 +1,4 @@
-id,name
-1,NEW
-2,PAYOFF
+id,name,key
+1,Nueva,new
+2,Pagada,paid
+3,Cancelada,cancelled

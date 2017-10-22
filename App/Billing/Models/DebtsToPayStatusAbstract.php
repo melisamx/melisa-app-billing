@@ -17,6 +17,7 @@ abstract class DebtsToPayStatusAbstract extends Base
     /* incrementing */
     protected $fillable = [
         'id',
-        'name'
+        'name',
+        'key'
     ];    
 }

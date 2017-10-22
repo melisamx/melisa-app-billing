@@ -3,6 +3,7 @@
 namespace App\Billing\Http\Controllers\Modules;
 
 use Melisa\Laravel\Http\Controllers\ModuleController;
+use App\Billing\Modules\Desktop\DebtsToPay\PayoffModule;
 
 /**
  * 
@@ -12,6 +13,9 @@ use Melisa\Laravel\Http\Controllers\ModuleController;
 class DebtsToPayController extends ModuleController
 {
     
-    
+    public function payoff(PayoffModule $module)
+    {
+        return $module->render();
+    }
     
 }

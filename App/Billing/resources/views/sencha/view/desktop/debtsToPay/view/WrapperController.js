@@ -9,7 +9,8 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.view.WrapperController', {
     listen: {
         global: {
             'event.billing.debtsToPay.cancel.success': 'onUpdatedRecord',
-            'event.billing.debtsToPay.create.success': 'onUpdatedRecord'
+            'event.billing.debtsToPay.create.success': 'onUpdatedRecord',
+            'event.billing.debtsToPay.payoff.success': 'onUpdatedRecord'
         }
     },
     
