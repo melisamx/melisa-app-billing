@@ -1,4 +1,9 @@
-id,name,key
-1,Nueva,new
-2,Cancelada,cancelled
-3,"Error al generar",error
+name,key
+"Pendiente generar CFDI",pendingGenerateCFDI
+"Generando CFDI",generatingCFDI
+"Error al generar CFDI",errorGenerateCFDI
+Nueva,new
+"Pendiente cancelar CFDI",pendingCancelCFDI
+"Cancelando CFDI",cancelingCFDI
+"Error al cancelar CFDI",errorCancellCFDI
+Cancelada,cancelled

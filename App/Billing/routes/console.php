@@ -11,3 +11,7 @@ Artisan::command('clean', function () {
         'limit'=>10
     ]);
 })->describe('Clean database');
+
+Artisan::command('sat', function () {
+    app(App\Billing\Database\Seeds\DataSatSeeder::class)->run();
+})->describe('Install concepts');

@@ -9,6 +9,9 @@ namespace App\Billing\Models;
 class Concepts extends ConceptsAbstract
 {
     
-    
+    public function key()
+    {
+        return $this->hasOne('App\Billing\Models\ConceptKeys', 'id', 'idConceptKey');
+    }
     
 }

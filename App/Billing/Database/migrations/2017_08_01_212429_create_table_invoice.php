@@ -16,34 +16,21 @@ class CreateTableInvoice extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('idCustomer');
-            $table->unsignedInteger('idContributorAddress');
+            $table->unsignedInteger('idTransmitter');
+            $table->unsignedInteger('idTransmitterAddress');
+            $table->unsignedInteger('idCustomerAddress');
             $table->smallInteger('idInvoiceStatus');
             $table->smallInteger('idVoucherType');
+            $table->smallInteger('idSerie');
+            $table->smallInteger('idCoin');
+            $table->smallInteger('idWaytopay');
+            $table->smallInteger('idPaymentMethod');
+            $table->uuid('idCustomer');
             $table->uuid('idIdentityCreated');
-            $table->string('serie', 10);
-            $table->string('folio', 25);
-            $table->uuid('uuid');
-            $table->string('rfc', 13);
-            $table->string('name', 150);
-            $table->string('rfcTransmitter', 13);
-            $table->string('nameTransmitter', 150);
-            $table->char('date', 19);
-            $table->text('transmitter');
-            $table->text('receiver');
-            $table->text('concepts');
-            $table->text('taxes');
-            $table->text('stringOriginal');
-            $table->text('sealCfd');
-            $table->text('sealSat');
-            $table->string('voucherType');
-            $table->string('coin');
-            $table->string('expeditionPlace');
-            $table->string('methodPayment');
-            $table->string('numberCertificateSat', 100);
+            $table->text('preInvoice');
             $table->decimal('subTotal', 15, 2);
             $table->decimal('total', 15, 2);
-            $table->decimal('version', 3, 1)->default(3.2);
+            $table->string('version', 10)->default('3.2');
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();
@@ -52,23 +39,46 @@ class CreateTableInvoice extends Migration
             $table->uuid('idFileCfdSeal')->nullable();
             $table->uuid('idFileCfdBeforeSeal')->nullable();
             $table->uuid('idCsd')->nullable();
-            $table->smallInteger('idSerie')->nullable();
-            $table->text('extraData')->nullable();
+            $table->string('folio', 25)->nullable();
+            $table->text('stringOriginal')->nullable();
+            $table->text('sealSat')->nullable();
+            $table->string('numberCertificateSat', 100)->nullable();
+            $table->text('sealCfd')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->text('cfdiResult')->nullable();
             $table->dateTime('updatedAt')->nullable();
             $table->dateTime('canceledAt')->nullable();
+            $table->char('dateCfdi', 19)->nullable();
             
-            $table->index('name');
-            $table->index('rfc');
-            $table->index('folio');
-            $table->index('serie');
-            $table->index('date');
+            $table->index('uuid');
+            $table->index('version');
+            
+            $table->foreign('idCoin')
+                ->references('id')->on('coins')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idPaymentMethod')
+                ->references('id')->on('paymentMethods')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             
             $table->foreign('idCustomer')
                 ->references('id')->on('customers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             
-            $table->foreign('idContributorAddress')
+            $table->foreign('idCustomerAddress')
+                ->references('id')->on('contributorsAddresses')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idTransmitter')
+                ->references('id')->on('contributors')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            
+            $table->foreign('idTransmitterAddress')
                 ->references('id')->on('contributorsAddresses')
                 ->onDelete('no action')
                 ->onUpdate('no action');

@@ -1,0 +1,23 @@
+key,description,applyPhysical,applyMoral
+G01,Adquisición de mercancias,1,1
+G02,"Devoluciones, descuentos o bonificaciones",1,1
+G03,Gastos en general,1,1
+I01,Construcciones,1,1
+I02,Mobilario y equipo de oficina por inversiones,1,1
+I03,Equipo de transporte,1,1
+I04,Equipo de computo y accesorios,1,1
+I05,"Dados, troqueles, moldes, matrices y herramental",1,1
+I06,Comunicaciones telefónicas,1,1
+I07,Comunicaciones satelitales,1,1
+I08,Otra maquinaria y equipo,1,1
+D01,"Honorarios médicos, dentales y gastos hospitalarios.",1,0
+D02,Gastos médicos por incapacidad o discapacidad,1,0
+D03,Gastos funerales.,1,0
+D04,Donativos.,1,0
+D05,Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).,1,0
+D06,Aportaciones voluntarias al SAR.,1,0
+D07,Primas por seguros de gastos médicos.,1,0
+D08,Gastos de transportación escolar obligatoria.,1,0
+D09,"Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.",1,0
+D10,Pagos por servicios educativos (colegiaturas),1,0
+P01,Por definir,1,1

@@ -3,10 +3,19 @@
 namespace App\Billing\Database\Seeds\Traits;
 
 use App\Billing\Models\Concepts;
+use App\Billing\Models\ConceptUnits;
 use App\Billing\Models\ConceptKeys;
 
 trait InstallConcept
 {
+    
+    public function installConceptUnit($key, $name)
+    {
+        return ConceptUnits::updateOrCreate([
+            'key'=>$key,
+            'name'=>$name,
+        ]);
+    }
     
     public function installConcept($key, $name, $conceptKey = null, $conceptKeyName = null)
     {

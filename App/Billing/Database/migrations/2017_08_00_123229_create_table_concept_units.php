@@ -17,6 +17,11 @@ class CreateTableConceptUnits extends Migration
             $table->increments('id');
             $table->string('key', 4);
             $table->string('name');
+            
+            $table->index([
+                'key',
+                'name'
+            ]);
         });
     }
 

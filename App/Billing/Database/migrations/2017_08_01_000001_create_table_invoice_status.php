@@ -14,9 +14,9 @@ class CreateTableInvoiceStatus extends Migration
     public function up()
     {
         Schema::create('invoiceStatus', function (Blueprint $table) {
-            $table->smallInteger('id')->primary();
+            $table->smallInteger('id', true);
             $table->string('name', 75)->unique();
-            $table->string('key', 15)->unique();
+            $table->string('key', 20)->unique();
             
             $table->index('name');
         });

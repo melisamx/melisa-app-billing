@@ -31,7 +31,6 @@ class InvoiceCancel
     {
         $params = $this->getClientParams([
             'folioUUID'=>$invoice->uuid,
-            'rfcEmisor'=>'AAA010101AAA'
         ]);
         
         $client = $this->createClient($params);
@@ -41,7 +40,7 @@ class InvoiceCancel
         }
         
         $result = $this->cancelCfdi($client, $params);
-        
+        dd($result);
         if( !$result) {
             return false;
         }
@@ -78,7 +77,7 @@ class InvoiceCancel
     public function cancelCfdi(&$client, &$params)
     {
         $result = $this->runRequestCancel($client, 'CancelaCFDI', $params);
-        return true;
+        
         if( !$result) {
             return $this->error('Imposible cancelar la factura');
         }

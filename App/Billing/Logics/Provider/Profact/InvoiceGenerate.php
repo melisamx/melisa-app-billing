@@ -100,15 +100,18 @@ class InvoiceGenerate
         $idFileXmlBell = $this->saveFileXmlBell($result['xml'], $dataBell);
         
         if( !$idFileXmlBell) {
-            return $this->error('Imposible guardar XML timbrado {t}', [
-                't'=>$result['xml']
+            return $this->error('Imposible guardar XML timbrado {t} de la factura {u}', [
+                't'=>$result['xml'],
+                'u'=>$dataBell['uuid'],
             ]);
         }
         
         $idFileQr = $this->saveFileQr($result['qr'], $dataBell);
         
         if( !$idFileQr) {
-            return $this->error('Imposible guardar imagen QR');
+            return $this->error('Imposible guardar imagen QR de la factura {u}', [
+                'u'=>$dataBell['uuid'],
+            ]);
         }
         
         $idFileHtmlInvoice = $this->createHtmlInvoice($invoice, $dataBell);
@@ -120,19 +123,23 @@ class InvoiceGenerate
         $fileHtml = $this->getFileDrive($idFileHtmlInvoice);
         
         if( !$fileHtml) {
-            return $this->error('Imposible obtener el archivo HTML de la factura');
+            return $this->error('Imposible obtener el archivo HTML de la factura {u}', [
+                'u'=>$dataBell['uuid'],
+            ]);
         }
         
-        $stringPdf = $this->createPdfInvoide($fileHtml);
+        $stringPdf = $this->createPdfInvoide($fileHtml, $dataBell['uuid']);
         
         if( !$stringPdf) {
             return false;
         }
         
-        $idFilePdfInvoice = $this->saveFilePdf($invoice, $stringPdf);
+        $idFilePdfInvoice = $this->saveFilePdf($invoice, $dataBell, $stringPdf);
         
         if( !$idFilePdfInvoice) {
-            return false;
+            return $this->error('Imposible guardar PDF de la factura {u}', [
+                'u'=>$dataBell['uuid'],
+            ]);
         }
         
         $idInvoice = $this->createInvoice(
@@ -149,7 +156,7 @@ class InvoiceGenerate
             return $this->repoInvoice->rollback();
         }
         
-        if( !$this->incrementFolio($serie)) {
+        if( !$this->incrementFolio($serie, $dataBell['uuid'])) {
             return $this->repoInvoice->rollback();
         }
         
@@ -161,7 +168,8 @@ class InvoiceGenerate
             'idFileCfdBeforeSeal'=>$idFileCfdBeforeSeal,
             'idFileQr'=>$idFileQr,
             'serie'=>$serie->serie,
-            'folio'=>$serie->folioCurrent
+            'folio'=>$serie->folioCurrent,
+            'uuid'=>$dataBell['uuid']
         ];
     }
     
@@ -180,7 +188,7 @@ class InvoiceGenerate
         return true;
     }
     
-    public function incrementFolio(&$serie)
+    public function incrementFolio(&$serie, $uuid)
     {
         $serie->folioCurrent ++;
         $result = $serie->save();
@@ -189,8 +197,9 @@ class InvoiceGenerate
             return true;
         }
         
-        return $this->error('Imposible incrementar el folio de la serie {s}', [
-            's'=>$serie->serie
+        return $this->error('Imposible incrementar el folio de la serie {s} al generar factura {u}', [
+            's'=>$serie->serie,
+            'u'=>$uuid
         ]);
     }
     
@@ -226,7 +235,7 @@ class InvoiceGenerate
         return app(ReportLogic::class)->init($idFile);
     }
     
-    public function createPdfInvoide(&$fileHtml)
+    public function createPdfInvoide(&$fileHtml, $uuid)
     {
         $nameOutput = pathinfo($fileHtml->originalFilename);
         $nameOutput = $fileHtml->unit->source .
@@ -246,8 +255,9 @@ class InvoiceGenerate
         exec($command, $output, $code);
         
         if( $code !== 0) {
-            return $this->error('Imposible generar factura en formato PDF: {e}', [
-                'e'=>explode(PHP_EOL, $output)
+            return $this->error('Imposible generar factura ({u}) en formato PDF: {e}', [
+                'e'=>explode(PHP_EOL, $output),
+                'u'=>$uuid
             ]);
         }
         
@@ -271,13 +281,32 @@ class InvoiceGenerate
             ->withInput($data)
             ->render();
         $htmlInvoice = $module->render();
-        $idFileHtmlInvoice = $this->saveHtmlInvoice($invoice, $htmlInvoice);
+        $idFileHtmlInvoice = $this->saveHtmlInvoice($invoice, $htmlInvoice, $dataBell);
         
         if( !$idFileHtmlInvoice) {
-            return $this->error('Imposible guardar reporte HTML para generar PDF');
+            return $this->error('Imposible guardar reporte HTML para generar PDF de la factura {u}', [
+                'u'=>$dataBell['uuid'],
+            ]);
         }
         
         return $idFileHtmlInvoice;
+    }
+    
+    public function saveHtmlInvoice(&$invoice, &$htmlInvoice, &$dataBell)
+    {
+        $name = implode('_', [
+            $dataBell['uuid'],
+            'html'
+        ]);
+        
+        $file = new FileContent();
+        $file
+            ->setName($name . '.html')
+            ->setOriginalName($name)
+            ->setExtension('html')
+            ->setContent($htmlInvoice);
+        
+        return $this->logicFile->init($file);
     }
     
     public function getDataBell(&$bell)
@@ -294,32 +323,6 @@ class InvoiceGenerate
             'sealSat'=>$c->getAttribute('selloSAT'),
             'uuid'=>$c->getAttribute('UUID')
         ];
-    }
-    
-    public function getNameFilesGenerate(&$invoice)
-    {
-        return implode('_', [
-            $invoice->getSeries(),
-            $invoice->getFolio(),
-            $invoice->getReceiver()->getRfc()
-        ]);
-    }
-    
-    public function saveHtmlInvoice(&$invoice, &$htmlInvoice)
-    {
-        $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
-            'html'
-        ]);
-        
-        $file = new FileContent();
-        $file
-            ->setName($name . '.html')
-            ->setOriginalName($name)
-            ->setExtension('html')
-            ->setContent($htmlInvoice);
-        
-        return $this->logicFile->init($file);
     }
     
     public function saveCfdSeal(&$invoice, &$xmlString)
@@ -342,7 +345,9 @@ class InvoiceGenerate
     public function saveCfdBeforeSeal(&$invoice, &$xmlString)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
+            $invoice->getSeries(),
+            $invoice->getFolio(),
+            $invoice->getReceiver()->getRfc(),
             'before',
             'sealing'
         ]);
@@ -371,12 +376,11 @@ class InvoiceGenerate
         return $xml;
     }
     
-    public function saveFilePdf(&$invoice, &$stringPdf)
+    public function saveFilePdf(&$invoice, &$dataBell, &$stringPdf)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
-            'before',
-            'sealing'
+            'invoice_',
+            $dataBell['uuid']
         ]);
         
         $file = new FileContent();
@@ -500,7 +504,9 @@ class InvoiceGenerate
             return $result;
         }
         
-        return $this->error('Imposible crear registro de la factura');
+        return $this->error('Imposible crear registro de la factura {u}', [
+            'u'=>$dataBell['uuid']
+        ]);
     }
     
     public function getRequestParamsPdf(&$dataXml)

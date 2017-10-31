@@ -20,6 +20,10 @@ class CreateTableConceptKeys extends Migration
             
             $table->index('key');
             $table->index('name');
+            $table->index([
+                'key',
+                'name'
+            ]);
         });
     }
 

@@ -25,10 +25,12 @@ class DataSeeder extends InstallSeeder
             'invoiceStatus',
             'debtsToPayStatus',
             'accountsReceivableStatus',
-            'conceptUnits',
             'waytopay',
             'coins',
             'banks',
+            'typesFactor',
+            'useCfdi',
+            'paymentMethods',
         ]);
         $this->call(SeriesSeeder::class);
         $this->call(AccountsSeeder::class);

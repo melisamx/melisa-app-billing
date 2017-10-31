@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTablePaymentMethods extends Migration
+class CreateTableUseCfdi extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTablePaymentMethods extends Migration
      */
     public function up()
     {
-        Schema::create('paymentMethods', function (Blueprint $table) {            
+        Schema::create('useCfdi', function (Blueprint $table) {
             $table->smallInteger('id', true);
-            $table->string('description', 90)->unique();
-            $table->string('key')->unique();
+            $table->string('key', 3);
+            $table->string('description', 90);
+            $table->boolean('applyPhysical');
+            $table->boolean('applyMoral');
             
-            $table->index('description');
             $table->index('key');
         });
     }
@@ -30,6 +31,6 @@ class CreateTablePaymentMethods extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paymentMethods');
+        Schema::dropIfExists('useCfdi');
     }
 }

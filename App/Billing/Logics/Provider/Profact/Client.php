@@ -21,6 +21,11 @@ trait Client
         $params = [
             'usuarioIntegrador'=>env('PROFACT_USER'),
         ];
+        
+        if( env('PROFACT_ENVIROMENT') === 'sandbox') {
+            $params ['rfcEmisor']= 'AAA010101AAA';
+        }
+        
         return array_merge($params, $extraParams);
     }
     
@@ -35,6 +40,12 @@ trait Client
     
     public function runRequestCancel(&$client, $method, $params = [])
     {
+        if( env('PROFACT_ENVIROMENT') === 'sandbox') {
+            return [
+                'messageResult'=>'ok'
+            ];
+        }
+        
         try {
             $result = $client->__soapCall($method, [
                 'parameters'=>$params
