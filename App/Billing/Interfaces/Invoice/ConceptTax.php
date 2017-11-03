@@ -65,4 +65,15 @@ class ConceptTax
         return $this;
     }
     
+    public function toArray()
+    {
+        return [
+            'tax'=>$this->getTax(),
+            'amount'=>$this->getAmount(),
+            'base'=>$this->getBase(),
+            'typeFactor'=>$this->getTypeFactor(),
+            'rateOrFee'=>$this->getRateOrFee(),
+        ];
+    }
+    
 }

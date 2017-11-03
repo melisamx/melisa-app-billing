@@ -136,4 +136,27 @@ class Concept
         return $this->taxes;
     }
     
+    public function toArray()
+    {
+        $taxes = $this->getTaxes();
+        $arrayTaxes = [];
+        foreach($taxes as $tax) {
+            $arrayTaxes []= $tax->toArray();
+        }
+        
+        return [
+            'id'=>$this->getId(),
+            'idConceptKey'=>$this->getIdConceptKey(),
+            'idConceptUnit'=>$this->getIdConceptUnit(),
+            'quantity'=>$this->getQuantity(),
+            'price'=>$this->getPrice(),
+            'discount'=>$this->getDiscount(),
+            'description'=>$this->getDescription(),
+            'amount'=>$this->getAmount(),
+            'unit'=>$this->getUnit(),
+            'extraData'=>$this->getExtraData(),
+            'taxes'=>$arrayTaxes,
+        ];
+    }
+    
 }

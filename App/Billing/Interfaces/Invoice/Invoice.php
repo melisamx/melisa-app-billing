@@ -34,6 +34,11 @@ class Invoice
         $this->transmitter = $transmitter;
     }
     
+    public function getVersion()
+    {
+        return $this->version;
+    }
+    
     public function getReceiver()
     {
         return $this->receiver;
@@ -141,6 +146,29 @@ class Invoice
     public function getConcepts()
     {
         return $this->concepts;
+    }
+    
+    public function toArray()
+    {
+        $concepts = $this->getConcepts();
+        $arrayConcepts = [];
+        
+        foreach($concepts as $concept) {
+            $arrayConcepts []= $concept->toArray();
+        }
+        
+        return [
+            'idCustomer'=>$this->getReceiver()->getIdCustomer(),
+            'idCustomerAddress'=>$this->getReceiver()->getIdContributorAddress(),
+            'idTransmitter'=>$this->getTransmitter()->getIdContributor(),
+            'idTransmitterAddress'=>$this->getTransmitter()->getIdContributorAddress(),
+            'idCoin'=>$this->getIdCoin(),
+            'total'=>$this->getTotal(),
+            'subtotal'=>$this->getSubtotal(),
+            'version'=>$this->getVersion(),
+            'concepts'=>$arrayConcepts,
+            'extraData'=>$this->getExtraData()
+        ];
     }
     
 }

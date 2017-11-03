@@ -14,4 +14,14 @@ class Invoice extends InvoiceAbstract
         return $this->hasOne('App\Billing\Models\InvoiceStatus', 'id', 'idInvoiceStatus');
     }
     
+    public function customer()
+    {
+        return $this->hasOne('App\Billing\Models\Customers', 'id', 'idCustomer');
+    }
+    
+    public function serie()
+    {
+        return $this->hasOne('App\Billing\Models\Series', 'id', 'idSerie');
+    }
+    
 }

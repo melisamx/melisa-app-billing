@@ -14,14 +14,28 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             hidden: true
         },
         {
-            dataIndex: 'rfc',
-            text: 'RFC',
-            width: 130
+            dataIndex: 'status',
+            text: 'Estatus',
+            width: 130,
+            renderer: function(value) {
+                return value.name;
+            }
         },
         {
-            dataIndex: 'name',
+            dataIndex: 'customer',
+            text: 'RFC',
+            width: 130,
+            renderer: function(value) {
+                return value.contributor.rfc;
+            }
+        },
+        {
+            dataIndex: 'customer',
             text: 'Razón social',
-            flex: 1
+            flex: 1,
+            renderer: function(value) {
+                return value.contributor.name;
+            }
         },
         {
             dataIndex: 'uuid',
@@ -36,7 +50,10 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
         {
             dataIndex: 'serie',
             text: 'Serie',
-            width: 80
+            width: 80,
+            renderer: function(value) {
+                return value.serie;
+            }            
         },
         {
             xtype: 'booleancolumn',
