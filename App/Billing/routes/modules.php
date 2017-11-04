@@ -1,6 +1,12 @@
 <?php 
 
 Route::group([
+    'prefix'=>'cfdi',
+], function() {    
+    require realpath(base_path() . '/routes/modules/cfdi.php');    
+});
+
+Route::group([
     'prefix'=>'customers',
 ], function() {    
     require realpath(base_path() . '/routes/modules/customers.php');    

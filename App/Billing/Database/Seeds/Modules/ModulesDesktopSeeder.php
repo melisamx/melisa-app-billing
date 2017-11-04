@@ -31,7 +31,15 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->customerGroupsIdentities();
         $this->repositories();
         $this->accounts();
+        $this->cfdi();
     }    
+    
+    public function cfdi()
+    {
+        $this->installModuleJson('Desktop/Cfdi', [
+            'add',
+        ]);
+    }
     
     public function accounts()
     {

@@ -35,6 +35,14 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->customerGroupsCustomers();        
         $this->customerGroupsIdentities();
         $this->repositories();
+        $this->cfdi();
+    }
+    
+    public function cfdi()
+    {
+        $this->installModuleJson('Universal/Cfdi', [
+            'create',
+        ]);
     }
     
     public function contributors()

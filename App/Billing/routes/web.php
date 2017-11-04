@@ -8,6 +8,13 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'cfdi',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/cfdi.php');    
+});
+
+Route::group([
     'prefix'=>'referralNotes',
     'middleware'=>'auth',
 ], function() {    
