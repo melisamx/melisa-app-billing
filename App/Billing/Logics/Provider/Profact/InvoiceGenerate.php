@@ -6,7 +6,6 @@ use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\ReportLogic;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
-use App\Billing\Interfaces\Invoice\v32\Invoice;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
@@ -45,30 +44,11 @@ class InvoiceGenerate
         $this->libNumberToLetter = $libNumberToLetter;
     }
     
-    public function init(Invoice $invoice, $serie, $csd)
+    public function init($invoice)
     {
-        $serie = $this->getSerie($serie);
-        
-        if( !$serie) {
-            return false;
-        }
-        
-        $csd = $this->getCsd($csd);
-        
-        if( !$csd) {
-            return false;
-        }
-        
-        if( !$this->setSeries($invoice, $serie)) {
-            return false;
-        }
-        
-        if( !$this->setDate($invoice)) {
-            return false;
-        }
-        
+        dd($invoice);        
         $xmlString = $this->generateXmlCfd($invoice);
-        
+        dd($xmlString);
         $idFileCfdBeforeSeal = $this->saveCfdBeforeSeal($invoice, $xmlString);
         
         if( !$idFileCfdBeforeSeal) {
@@ -171,21 +151,6 @@ class InvoiceGenerate
             'folio'=>$serie->folioCurrent,
             'uuid'=>$dataBell['uuid']
         ];
-    }
-    
-    public function setSeries(Invoice &$invoice, &$serie)
-    {
-        $invoice->setSeries($serie->serie);
-        $invoice->setFolio($serie->folioCurrent + 1);
-        return true;
-    }
-    
-    public function setDate(Invoice &$invoice)
-    {
-        $carbon = new \Carbon\Carbon('now');
-        $formatted = $carbon->toRfc3339String();
-        $invoice->setDate($formatted);
-        return true;
     }
     
     public function incrementFolio(&$serie, $uuid)
@@ -362,11 +327,11 @@ class InvoiceGenerate
         return $this->logicFile->init($file);
     }
     
-    public function generateXmlCfd(Invoice &$invoice)
+    public function generateXmlCfd(&$invoice)
     {
         /* CI use RFC test */
         if( env('PROFACT_ENVIROMENT') === 'sandbox') {
-            $invoice->getTransmitter()->setRfc(env('PROFACT_RFC_TRANSMITTER'));
+            $invoice->transmitter->rfc = env('PROFACT_RFC_TRANSMITTER');
         }
         
         $xml = view('layouts/ci/xml', [

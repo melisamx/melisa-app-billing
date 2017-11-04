@@ -9,22 +9,26 @@ use Melisa\Laravel\Models\Base;
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class ContributorsAbstract extends Base
+abstract class InvoiceConceptsAbstract extends Base
 {    
     protected $connection = 'billing';
-    protected $table = 'contributors';
+    protected $table = 'invoiceConcepts';
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [
         'id',
-        'idFiscalRegime',
+        'idConcept',
+        'idConceptKey',
+        'idConceptUnit',
+        'idInvoice',
         'idIdentityCreated',
-        'rfc',
-        'name',
-        'active',
+        'idIdentification',
+        'description',
+        'price',
+        'amount',
+        'discount',
         'createdAt',
         'idIdentityUpdated',
-        'updatedAt',
-        'email'
+        'updatedAt'
     ];    
 }

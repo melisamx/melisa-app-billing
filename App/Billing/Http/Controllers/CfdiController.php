@@ -14,7 +14,7 @@ class CfdiController extends CrudController
     
     protected $create = [
         'request'=>'Cfdi\CreateRequest',
-        'logic'=>'Cfdi\CreateLogic',
+        'logic'=>'CreateLogic',
         'repository'=>'InvoiceRepository',
     ];
     

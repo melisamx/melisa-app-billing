@@ -17,6 +17,7 @@ class CreateTableInvoiceConceptsTaxes extends Migration
             $table->increments('id');
             $table->unsignedInteger('idInvoiceConcept');
             $table->smallInteger('idTax');
+            $table->smallInteger('idTaxAction');
             $table->smallInteger('idTypeFactor');
             $table->uuid('idIdentityCreated');
             $table->decimal('base', 15, 2);
@@ -25,6 +26,11 @@ class CreateTableInvoiceConceptsTaxes extends Migration
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
+            
+            $table->foreign('idTaxAction')
+                ->references('id')->on('taxActions')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             
             $table->foreign('idInvoiceConcept')
                 ->references('id')->on('invoiceConcepts')

@@ -9,6 +9,11 @@ namespace App\Billing\Models;
 class VoucherTypes extends VoucherTypesAbstract
 {
     
+    const ENTRY = 'i';
     
+    public function scopeEntry()
+    {
+        return $this->where('key', self::ENTRY)->first();
+    }
     
 }

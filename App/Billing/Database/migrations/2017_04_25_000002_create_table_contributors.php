@@ -20,12 +20,18 @@ class CreateTableContributors extends Migration
             $table->string('name', 150);
             $table->boolean('active')->default(1);            
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->smallInteger('idFiscalRegime')->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             $table->string('email', 95)->nullable();
             
             $table->index('rfc');
-            $table->index('name');            
+            $table->index('name');
+            
+            $table->foreign('idFiscalRegime')
+                ->references('id')->on('fiscalRegime')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 

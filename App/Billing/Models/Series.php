@@ -9,6 +9,14 @@ namespace App\Billing\Models;
 class Series extends SeriesAbstract
 {
     
-    
+    public function scopeDefault()
+    {
+        return $this
+            ->where([
+                'isDefault'=>true,
+                'active'=>true
+            ])
+            ->first();
+    }
     
 }

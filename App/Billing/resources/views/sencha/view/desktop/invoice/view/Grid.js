@@ -123,6 +123,25 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                     messageSuccess: 'Factura cancelada'
                 }
             }
+        },
+        {
+            xtype: 'widgetcolumn',
+            width: 30,
+            widget: {
+                xtype: 'button',
+                iconCls: 'x-fa fa-money',
+                tooltip: 'Generar CFDI',
+                bind: {
+                    melisa: '{modules.cfdi}',
+                    hidden: '{!modules.cfdi.allowed}',
+                    disabled: '{record.uuid}'
+                },
+                plugins: {
+                    ptype: 'buttonconfirmation',
+                    messageConfirmation: '¿Realmente desea generar CFDI?',
+                    messageSuccess: 'CFDI generado'
+                }
+            }
         }
     ],
     selModel: {

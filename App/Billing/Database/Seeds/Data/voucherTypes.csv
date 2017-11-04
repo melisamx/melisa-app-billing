@@ -1,5 +1,5 @@
 name,key,valueV32,valueV33
-Ingreso,I,ingreso,I
-Traslado,T,traslado,T
-Nómina,N,nomina,N	
-Pago,P,pago,P
+Ingreso,i,ingreso,I
+Traslado,t,traslado,T
+Nómina,n,nomina,N	
+Pago,p,pago,P

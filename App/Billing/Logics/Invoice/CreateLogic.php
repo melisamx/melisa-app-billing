@@ -48,7 +48,7 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
-        $input ['idInvoiceStatus']= $this->getInvoiceStatus('new');
+        $input ['idInvoiceStatus']= $this->getInvoiceStatus();
         
         if( !isset($input['idSerie']) && !$this->getSerieDefault($input)) {
             return false;
@@ -65,43 +65,34 @@ class CreateLogic extends BaseCreateLogic
     {
         $result = $this->repoSeries
             ->getModel()
-            ->where([
-                'isDefault'=>true,
-                'active'=>true
-            ])
-            ->first();
+            ->default();
         
         if( $result) {
             $input ['idSerie']= $result->id;
-            $input ['folio']= ++$result->folioCurrent;
             return $result;
         }
         
         return $this->error('Imposible obtener la serie default a asignar a la factura');
     }
     
-    public function getInvoiceStatus($key)
+    public function getInvoiceStatus()
     {
         $result = $this->repoInvoiceStatus
             ->getModel()
-            ->where('key', $key)
-            ->first();
+            ->new();
         
         if( $result) {
             return $result->id;
         }
         
-        return $this->error('Imposible obtener el estatus {k} de facturación', [
-            'k'=>$key
-        ]);
+        return $this->error('Imposible obtener el estatus de pendiente generar CFDI');
     }
     
-    public function getVoucherType(&$input, $key = 'i')
+    public function getVoucherType(&$input)
     {
         $result = $this->repoVoucherTypes
             ->getModel()
-            ->where('key', $key)
-            ->first();
+            ->entry();
         
         if( $result) {
             $input ['idVoucherType']= $result->id;
@@ -113,12 +104,11 @@ class CreateLogic extends BaseCreateLogic
         ]);
     }
     
-    public function getPaymentMethod(&$input, $key = 'PUE')
+    public function getPaymentMethod(&$input)
     {
         $result = $this->repoPaymentMethod
             ->getModel()
-            ->where('key', $key)
-            ->first();
+            ->pue();
         
         if( $result) {
             $input ['idPaymentMethod']= $result->id;

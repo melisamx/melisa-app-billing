@@ -13,7 +13,7 @@ class CreateRequest extends Generic
 {
     
     protected $rules = [
-        'idInvoice'=>'required|xss|exists:billing.invoice,id',
+        'id'=>'required|xss|exists:billing.invoice,id',
     ];
     
 }

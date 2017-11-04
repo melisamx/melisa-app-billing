@@ -4,8 +4,6 @@ namespace App\Billing\Logics\Invoice;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Modules\Universal\Invoice\ReportModule;
-use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
  * Invoice report
@@ -19,35 +17,46 @@ class ReportLogic
     protected $repoInvoice;
 
     public function __construct(
-        InvoiceRepository $invoice
+        InvoiceRepository $repoInvoice
     )
     {
-        $this->repoInvoice = $invoice;
+        $this->repoInvoice = $repoInvoice;
     }
     
-    public function init($id, $format = 'html')
+    public function init($id)
     {
-        $invoice = $this->repoInvoice->with([
-            'status'
-        ])->findOrFail($id);
+        $record = $this->repoInvoice
+            ->with([
+                'status',
+                'serie',
+                'voucherType',
+                'transmitter',
+                'paymentMethod',
+                'wayTopay',
+                'concepts',
+                'transmitterAddress'=>function($query) {
+                    $query->with([
+                        'country',
+                        'state',
+                        'municipality',
+                    ]);
+                },
+                'customer',
+                'customerAddress'=>function($query) {
+                    $query->with([
+                        'country',
+                        'state',
+                        'municipality',
+                    ]);
+                },
+            ])
+            ->findOrFail($id);
         
-        return $this->renderModule($invoice);
-    }
-    
-    public function renderModule(&$invoice)
-    {
-        if( !$invoice) {
-            dd('error');
+        if( !$record) {
+            return false;
         }
         
-        $report = $invoice->toArray();
-        $report ['transmitter']= json_decode($report['transmitter']);
-        $report ['receiver']= json_decode($report['receiver']);
-        $report ['concepts']= json_decode($report['concepts']);
-        $report ['taxes']= json_decode($report['taxes']);
-        $report ['totalLetter']= app(NumberToLetterConverter::class)->convertir($report['total']);
-        
-        return json_decode(json_encode($report));
+        return json_decode(json_encode($record->toArray()));
     }
     
 }

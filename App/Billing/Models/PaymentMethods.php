@@ -8,7 +8,11 @@ namespace App\Billing\Models;
  */
 class PaymentMethods extends PaymentMethodsAbstract
 {
+    const PUE = 'PUE';
     
-    
+    public function scopePue()
+    {
+        return $this->where('key', self::PUE)->first();
+    }
     
 }

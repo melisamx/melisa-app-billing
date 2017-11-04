@@ -30,6 +30,8 @@ class CreateTableInvoice extends Migration
             $table->text('preInvoice');
             $table->decimal('subTotal', 15, 2);
             $table->decimal('total', 15, 2);
+            $table->decimal('totalTaxRetention', 15, 2);
+            $table->decimal('totalTaxTransfer', 15, 2);
             $table->string('version', 10)->default('3.2');
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -48,7 +50,7 @@ class CreateTableInvoice extends Migration
             $table->text('cfdiResult')->nullable();
             $table->dateTime('updatedAt')->nullable();
             $table->dateTime('canceledAt')->nullable();
-            $table->char('dateCfdi', 19)->nullable();
+            $table->char('dateCfdi', 25)->nullable();
             
             $table->index('uuid');
             $table->index('version');

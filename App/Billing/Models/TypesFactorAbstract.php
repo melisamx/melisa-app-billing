@@ -9,15 +9,14 @@ use Melisa\Laravel\Models\Base;
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class PaymentMethodsAbstract extends Base
+abstract class TypesFactorAbstract extends Base
 {    
     protected $connection = 'billing';
-    protected $table = 'paymentMethods';
+    protected $table = 'typesFactor';
     public $timestamps = false;
     public $incrementing = true;
     protected $fillable = [
         'id',
-        'description',
-        'key'
+        'name'
     ];    
 }
