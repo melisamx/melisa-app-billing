@@ -8,7 +8,14 @@ namespace App\Billing\Models;
  */
 class TypesFactor extends TypesFactorAbstract
 {
-    
-    
+        
+    public function getByName($name)
+    {
+        return $this
+            ->where([
+                'name'=>$name
+            ])
+            ->first();
+    }
     
 }

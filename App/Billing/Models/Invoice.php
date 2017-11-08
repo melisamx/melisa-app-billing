@@ -14,9 +14,20 @@ class Invoice extends InvoiceAbstract
         return $this->hasOne('App\Billing\Models\InvoiceStatus', 'id', 'idInvoiceStatus');
     }
     
+    public function coin()
+    {
+        return $this->hasOne('App\Billing\Models\Coins', 'id', 'idCoin');
+    }
+    
     public function customer()
     {
-        return $this->hasOne('App\Billing\Models\Customers', 'id', 'idCustomer');
+        return $this->hasOne('App\Billing\Models\Customers', 'id', 'idCustomer')
+            ->join('contributors as c', 'c.id', '=', 'customers.idContributor')
+            ->select([
+                'customers.*',
+                'c.rfc',
+                'c.name',
+            ]);
     }
     
     public function customerAddress()
@@ -56,7 +67,7 @@ class Invoice extends InvoiceAbstract
     
     public function concepts()
     {
-        return $this->hasMany('App\Insurance\Models\InvoiceConcepts', 'idInvoice', 'id');
+        return $this->hasMany('App\Billing\Models\InvoiceConcepts', 'idInvoice', 'id');
     }
     
 }

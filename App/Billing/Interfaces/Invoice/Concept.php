@@ -16,7 +16,7 @@ class Concept
     protected $quantity;
     protected $unit;
     protected $description;
-    protected $price;
+    protected $unitValue;
     protected $amount;
     protected $discount = 0;
     protected $extraData;
@@ -87,19 +87,19 @@ class Concept
         return $this->description;
     }
     
-    public function getPrice()
+    public function getUnitValue()
     {
-        return $this->price;
+        return $this->unitValue;
     }
     
     public function getAmount()
     {
-        return $this->quantity * $this->price;
+        return $this->quantity * $this->unitValue;
     }
     
-    public function setPrice($price)
+    public function setUnitValue($unitValue)
     {
-        $this->price = $price;
+        $this->unitValue = $unitValue;
         return $this;
     }
     
@@ -149,7 +149,7 @@ class Concept
             'idConceptKey'=>$this->getIdConceptKey(),
             'idConceptUnit'=>$this->getIdConceptUnit(),
             'quantity'=>$this->getQuantity(),
-            'price'=>$this->getPrice(),
+            'unitValue'=>$this->getUnitValue(),
             'discount'=>$this->getDiscount(),
             'description'=>$this->getDescription(),
             'amount'=>$this->getAmount(),

@@ -3,6 +3,7 @@
 namespace App\Billing\Logics\Cfdi;
 
 use Carbon\Carbon;
+use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Models\InvoiceStatus;
@@ -16,6 +17,7 @@ use App\Billing\Logics\Provider\Profact\InvoiceGenerate;
  */
 class CreateLogic
 {
+    use LogicBusiness;
     
     protected $repoInvoice;
     protected $repoSeries;

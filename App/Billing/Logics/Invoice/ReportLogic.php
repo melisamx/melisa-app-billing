@@ -33,7 +33,26 @@ class ReportLogic
                 'transmitter',
                 'paymentMethod',
                 'wayTopay',
-                'concepts',
+                'coin',
+                'concepts'=>function($query) {
+                    $query->with([
+                        'concept',
+                        'key',
+                        'unit',
+                        'taxes'=>function($query) {
+                            $query->with([
+                                'tax',
+                                'action',
+                                'typeFactor',
+                            ]);
+                        }
+                    ]);
+                },
+                'transmitter'=>function($query) {
+                    $query->with([
+                        'fiscalRegime',
+                    ]);
+                },
                 'transmitterAddress'=>function($query) {
                     $query->with([
                         'country',

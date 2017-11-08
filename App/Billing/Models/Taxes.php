@@ -9,6 +9,13 @@ namespace App\Billing\Models;
 class Taxes extends TaxesAbstract
 {
     
-    
+    public function getByName($name)
+    {
+        return $this
+            ->where([
+                'name'=>$name
+            ])
+            ->first();
+    }
     
 }

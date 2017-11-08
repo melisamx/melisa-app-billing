@@ -34,6 +34,32 @@ class Invoice
         $this->transmitter = $transmitter;
     }
     
+    public function getTotalRetention()
+    {
+        return $this->calculateTotalTax('r');
+    }
+    
+    public function calculateTotalTax($action)
+    {
+        $concepts = $this->getConcepts();
+        $sumTax = 0;
+        foreach($concepts as $concept) {
+            $taxes = $concept->getTaxes();
+            foreach($taxes as $tax) {
+                if( $tax->getAction() === $action) {
+                    $sumTax += $tax->getAmount();
+                }
+            }
+        }
+        
+        return $sumTax;
+    }
+    
+    public function getTotalTransfer()
+    {
+        return $this->calculateTotalTax('t');
+    }
+    
     public function getVersion()
     {
         return $this->version;

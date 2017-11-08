@@ -19,13 +19,14 @@ class CreateTableInvoiceConcepts extends Migration
             $table->smallInteger('idConcept');
             $table->unsignedInteger('idConceptKey');
             $table->uuid('idIdentityCreated');
-            $table->string('idIdentification');
             $table->string('description');
-            $table->decimal('price', 15, 2);
+            $table->decimal('unitValue', 15, 2);
             $table->decimal('amount', 15, 2);
             $table->decimal('discount', 15, 2);
+            $table->decimal('quantity', 15, 2);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->unsignedInteger('idConceptUnit')->nullable();
+            $table->string('idIdentification')->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             

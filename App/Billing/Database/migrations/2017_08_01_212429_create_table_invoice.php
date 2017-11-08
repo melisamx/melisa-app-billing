@@ -27,7 +27,6 @@ class CreateTableInvoice extends Migration
             $table->smallInteger('idPaymentMethod');
             $table->uuid('idCustomer');
             $table->uuid('idIdentityCreated');
-            $table->text('preInvoice');
             $table->decimal('subTotal', 15, 2);
             $table->decimal('total', 15, 2);
             $table->decimal('totalTaxRetention', 15, 2);
@@ -51,6 +50,7 @@ class CreateTableInvoice extends Migration
             $table->dateTime('updatedAt')->nullable();
             $table->dateTime('canceledAt')->nullable();
             $table->char('dateCfdi', 25)->nullable();
+            $table->text('preInvoice')->nullable();
             
             $table->index('uuid');
             $table->index('version');

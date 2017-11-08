@@ -17,6 +17,7 @@ abstract class TaxActionsAbstract extends Base
     public $incrementing = true;
     protected $fillable = [
         'id',
-        'name'
+        'name',
+        'key'
     ];    
 }

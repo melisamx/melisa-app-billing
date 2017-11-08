@@ -15,10 +15,27 @@ class ConceptTax
     protected $base;
     protected $amount;
     protected $rateOrFee;
+    protected $action = 'r';
     
     public function setTax($tax)
     {
         $this->tax = $tax;
+        return $this;
+    }
+    
+    public function getAction()
+    {
+        return $this->action;
+    }
+    
+    public function setAction($action)
+    {
+        if( $action === 'r') {
+            $this->action = 'r';
+        } else {
+            $this->action = 't';
+        }
+        
         return $this;
     }
     
@@ -51,7 +68,7 @@ class ConceptTax
     
     public function getAmount()
     {
-        return $this->amount * $this->rateOrFee;
+        return $this->base * $this->rateOrFee;
     }
     
     public function getRateOrFee()
@@ -73,6 +90,7 @@ class ConceptTax
             'base'=>$this->getBase(),
             'typeFactor'=>$this->getTypeFactor(),
             'rateOrFee'=>$this->getRateOrFee(),
+            'action'=>$this->getAction(),
         ];
     }
     

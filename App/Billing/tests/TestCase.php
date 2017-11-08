@@ -1,4 +1,6 @@
-<?php namespace App\Billing\tests;
+<?php
+
+namespace App\Billing\tests;
 
 abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
 {

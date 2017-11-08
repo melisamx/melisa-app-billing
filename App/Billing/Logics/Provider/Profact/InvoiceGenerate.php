@@ -46,7 +46,6 @@ class InvoiceGenerate
     
     public function init($invoice)
     {
-        dd($invoice);        
         $xmlString = $this->generateXmlCfd($invoice);
         dd($xmlString);
         $idFileCfdBeforeSeal = $this->saveCfdBeforeSeal($invoice, $xmlString);
@@ -333,8 +332,8 @@ class InvoiceGenerate
         if( env('PROFACT_ENVIROMENT') === 'sandbox') {
             $invoice->transmitter->rfc = env('PROFACT_RFC_TRANSMITTER');
         }
-        
-        $xml = view('layouts/ci/xml', [
+//        dd($invoice->concepts);
+        $xml = view('layouts/invoice/xml33', [
             'invoice'=>$invoice
         ])->render();
         

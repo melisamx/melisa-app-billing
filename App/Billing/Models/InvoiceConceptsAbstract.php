@@ -24,7 +24,7 @@ abstract class InvoiceConceptsAbstract extends Base
         'idIdentityCreated',
         'idIdentification',
         'description',
-        'price',
+        'unitValue',
         'amount',
         'discount',
         'createdAt',
