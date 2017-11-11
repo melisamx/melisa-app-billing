@@ -109,8 +109,8 @@ class TransformerLogic
                 'key'=>$this->getConceptKey($concept->getIdConceptKey()),
                 'concept'=>$this->getConcept($concept->getId()),
                 'unitKey'=>$this->getConceptUnit($concept->getIdConceptUnit()),
-                'price'=>$concept->getPrice(),
-                'amount'=>$concept->getPrice() * $concept->getQuantity(),
+                'price'=>$concept->getUnitValue(),
+                'amount'=>$concept->getUnitValue() * $concept->getQuantity(),
                 'taxes'=>$this->getConceptTaxes($concept->getTaxes()),
                 'discount'=>$concept->getDiscount()
             ];
