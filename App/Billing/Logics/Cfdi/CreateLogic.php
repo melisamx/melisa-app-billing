@@ -102,7 +102,7 @@ class CreateLogic
         if( !$this->updateInvoice($idInvoice, [
             'idInvoiceStatus'=>$status->id
         ])) {
-            return false;
+            return $this->repoInvoice->rollback();
         }
         
         $event = [
@@ -114,7 +114,7 @@ class CreateLogic
         }
         
         $this->repoInvoice->commit();
-        return $event;
+        return false;
     }
     
     public function setInvoiceNew($idInvoice, $uuid)
@@ -124,7 +124,7 @@ class CreateLogic
         if( !$this->updateInvoice($idInvoice, [
             'idInvoiceStatus'=>$status->id
         ])) {
-            return false;
+            return $this->repoInvoice->rollback();
         }
         
         $event = [
