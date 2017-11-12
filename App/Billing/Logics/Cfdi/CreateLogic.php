@@ -19,6 +19,9 @@ class CreateLogic
 {
     use LogicBusiness;
     
+    protected $eventSuccess = 'billing.invoice.new.success';
+    protected $eventError = 'billing.cfdi.error';
+    
     protected $repoInvoice;
     protected $repoSeries;
     protected $logicReport;
@@ -51,7 +54,7 @@ class CreateLogic
             return false;
         }
         
-        if( !$this->updateInvoice($invoice)) {
+        if( !$this->setInvoiceGeneratingCfdi($invoice)) {
             return false;
         }
         
@@ -59,9 +62,82 @@ class CreateLogic
             return false;
         }
         
-//        $this->repoInvoice->commit();
+        $uuid = $this->generateCfdi($invoice);
         
-        return $this->generateCfdi($invoice);
+        if( !$uuid) {
+            return $this->setCfdiError($invoice->id);
+        } else {
+            return $this->setInvoiceNew($invoice->id, $uuid);
+        }
+    }
+    
+    public function setInvoiceGeneratingCfdi(&$invoice)
+    {
+        $folio = $invoice->serie->folioCurrent + 1;
+        $carbon = Carbon::now();
+        $dateCfdi = $carbon->format('Y-m-d\TH:i:s');
+        $status = InvoiceStatus::generatingCfdi();
+        
+        $invoice->folio = $folio;
+        $invoice->dateCfdi = $dateCfdi;
+        
+        if( !$this->updateInvoice($invoice->id, [
+            'idInvoiceStatus'=>$status->id,
+            'folio'=>$folio,
+            'dateCfdi'=>$dateCfdi
+        ])) {
+            return $this->error('Imposible establecer estatus {s} a la factura {i}', [
+                's'=>$status->name,
+                'i'=>$invoice->id
+            ]);
+        }
+        
+        return true;
+    }
+    
+    public function setCfdiError($idInvoice)
+    {
+        $status = InvoiceStatus::errorGenerateCfdi();
+        
+        if( !$this->updateInvoice($idInvoice, [
+            'idInvoiceStatus'=>$status->id
+        ])) {
+            return false;
+        }
+        
+        $event = [
+            'idInvoice'=>$idInvoice,
+        ];
+        
+        if( !$this->emitEvent($this->eventError, $event)) {
+            return $this->repoInvoice->rollback();
+        }
+        
+        $this->repoInvoice->commit();
+        return $event;
+    }
+    
+    public function setInvoiceNew($idInvoice, $uuid)
+    {
+        $status = InvoiceStatus::newInvoice();
+        
+        if( !$this->updateInvoice($idInvoice, [
+            'idInvoiceStatus'=>$status->id
+        ])) {
+            return false;
+        }
+        
+        $event = [
+            'idInvoice'=>$idInvoice,
+            'uuid'=>$uuid,
+        ];
+        
+        if( !$this->emitEvent($this->eventSuccess, $event)) {
+            return $this->repoInvoice->rollback();
+        }
+        
+        $this->repoInvoice->commit();
+        return $event;
     }
     
     public function updateSerie(&$invoice)
@@ -79,26 +155,12 @@ class CreateLogic
         return true;
     }
     
-    public function updateInvoice(&$invoice)
+    public function updateInvoice($idInvoice, array $input)
     {
-        $folio = $invoice->serie->folioCurrent + 1;
-        $carbon = Carbon::now();
-        $dateCfdi = $carbon->toRfc3339String();
-        $status = InvoiceStatus::generatingCfdi();
-        
-        $invoice->folio = $folio;
-        $invoice->dateCfdi = $dateCfdi;
-        
-        $result = $this->repoInvoice->update([
-            'idInvoiceStatus'=>$status->id,
-            'folio'=>$folio,
-            'dateCfdi'=>$dateCfdi
-        ], $invoice->id);
+        $result = $this->repoInvoice->update($input, $idInvoice);
         
         if( $result === false) {
-            return $this->error('Imposible actualizar factura {f}', [
-                'i'=>$invoice->id,
-            ]);
+            return false;
         }
         
         return true;

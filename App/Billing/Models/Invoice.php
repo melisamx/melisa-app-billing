@@ -9,6 +9,13 @@ namespace App\Billing\Models;
 class Invoice extends InvoiceAbstract
 {
     
+    protected $casts = [
+        'total'=>'float',
+        'subTotal'=>'float',
+        'totalTaxRetention'=>'float',
+        'totalTaxTransfer'=>'float',
+    ];
+    
     public function status()
     {
         return $this->hasOne('App\Billing\Models\InvoiceStatus', 'id', 'idInvoiceStatus');
@@ -17,6 +24,11 @@ class Invoice extends InvoiceAbstract
     public function coin()
     {
         return $this->hasOne('App\Billing\Models\Coins', 'id', 'idCoin');
+    }
+    
+    public function useCfdi()
+    {
+        return $this->hasOne('App\Billing\Models\UseCfdi', 'id', 'idUseCfdi');
     }
     
     public function customer()

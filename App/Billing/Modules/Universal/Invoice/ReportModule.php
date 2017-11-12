@@ -12,7 +12,7 @@ use App\Core\Logics\Modules\Outbuildings;
 class ReportModule extends Outbuildings
 {
     
-    public $layout = 'layouts.invoice.preview';
+    public $layout = 'layouts.invoice.report';
 
     public function dataDictionary()
     {        

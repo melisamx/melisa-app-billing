@@ -13,10 +13,11 @@ use App\Billing\Models\Customers;
 use App\Billing\Models\Concepts;
 use App\Billing\Models\ConceptKeys;
 use App\Billing\Models\ConceptUnits;
+use App\Billing\Models\UseCfdi;
 use App\Billing\Models\InvoiceConcepts;
 use App\Billing\Models\Taxes;
 
-class InvoiceCase extends TestCase
+class CreateTest extends TestCase
 {
     use DatabaseTransactions,
         InstallUser;
@@ -28,7 +29,7 @@ class InvoiceCase extends TestCase
     
     /**
      * 
-     * @group dev
+     * @group completed
      */
     public function testCreate()
     {
@@ -42,6 +43,7 @@ class InvoiceCase extends TestCase
         $concept = Concepts::inRandomOrder()->first();
         $conceptKey = ConceptKeys::inRandomOrder()->first();
         $conceptUnit = ConceptUnits::inRandomOrder()->first();
+        $useCfdi = UseCfdi::inRandomOrder()->first();
         $concepts = [
             [
                 'id'=>$concept->id,
@@ -84,6 +86,7 @@ class InvoiceCase extends TestCase
                 'idWaytopay'=>$waytopay->id,
                 'idCustomer'=>$customer->id,
                 'idCustomerAddress'=>$customerAddress->id,
+                'idUseCfdi'=>$useCfdi->id,
                 'subTotal'=>4195.80,
                 'total'=>4000,
                 'totalTaxRetention'=>867.13,

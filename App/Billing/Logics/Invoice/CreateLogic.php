@@ -13,6 +13,7 @@ use App\Billing\Repositories\VoucherTypesRepository;
 use App\Billing\Repositories\TaxesRepository;
 use App\Billing\Repositories\TaxActionsRepository;
 use App\Billing\Repositories\TypesFactorRepository;
+use App\Billing\Repositories\UseCfdiRepository;
 
 class CreateLogic extends BaseCreateLogic
 {
@@ -27,6 +28,7 @@ class CreateLogic extends BaseCreateLogic
     protected $repoConceptsTax;
     protected $repoTaxActions;
     protected $repoTypesFactor;
+    protected $repoUseCfdi;
 
     public function __construct(
         InvoiceRepository $repository,
@@ -38,7 +40,8 @@ class CreateLogic extends BaseCreateLogic
         VoucherTypesRepository $repoVoucherTypes,
         TaxesRepository $repoTaxes,
         TaxActionsRepository $repoTaxActions,
-        TypesFactorRepository $repoTypesFactor
+        TypesFactorRepository $repoTypesFactor,
+        UseCfdiRepository $repoUseCfdi
     )
     {
         $this->repository = $repository;
@@ -51,6 +54,7 @@ class CreateLogic extends BaseCreateLogic
         $this->repoConceptsTax = $repoConceptsTax;
         $this->repoTaxActions = $repoTaxActions;
         $this->repoTypesFactor = $repoTypesFactor;
+        $this->repoUseCfdi = $repoUseCfdi;
     }
     
     public function create(&$input)
@@ -215,6 +219,10 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
+        if( !isset($input['idUseCfdi']) && !$this->getUseCfdi($input)) {
+            return false;
+        }
+        
         return true;
     }
     
@@ -241,7 +249,7 @@ class CreateLogic extends BaseCreateLogic
     {
         $result = $this->repoInvoiceStatus
             ->getModel()
-            ->generatingCfdi();
+            ->pendingGenerateCfdi();
         
         if( $result) {
             return $result->id;
@@ -266,6 +274,20 @@ class CreateLogic extends BaseCreateLogic
         ]);
     }
     
+    public function getUseCfdi(&$input)
+    {
+        $result = $this->repoUseCfdi
+            ->getModel()
+            ->toDefine();
+        
+        if( $result) {
+            $input ['idUseCfdi']= $result->id;
+            return $result;
+        }
+        
+        return $this->error('Imposible obtener el uso de cfdi a usar en la factura');
+    }
+    
     public function getPaymentMethod(&$input)
     {
         $result = $this->repoPaymentMethod
@@ -277,9 +299,7 @@ class CreateLogic extends BaseCreateLogic
             return $result;
         }
         
-        return $this->error('Imposible obtenr el metodo de pago {k}', [
-            'k'=>$key
-        ]);
+        return $this->error('Imposible obtener el metodo de pago a usar en la factura');
     }
     
 }

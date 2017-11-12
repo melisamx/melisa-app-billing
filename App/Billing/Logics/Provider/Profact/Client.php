@@ -83,7 +83,6 @@ trait Client
         return [
             'messageResult'=>$result->TimbraCFDIResult->anyType[2],
             'xml'=>$xmlTimbrado,
-            'qr'=>$result->TimbraCFDIResult->anyType[4],
             'stringOriginal'=>$result->TimbraCFDIResult->anyType[5],
         ];
     }

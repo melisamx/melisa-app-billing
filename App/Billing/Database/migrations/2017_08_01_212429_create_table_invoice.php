@@ -40,6 +40,7 @@ class CreateTableInvoice extends Migration
             $table->uuid('idFileCfdSeal')->nullable();
             $table->uuid('idFileCfdBeforeSeal')->nullable();
             $table->uuid('idCsd')->nullable();
+            $table->smallInteger('idUseCfdi')->nullable();
             $table->string('folio', 25)->nullable();
             $table->text('stringOriginal')->nullable();
             $table->text('sealSat')->nullable();
@@ -54,6 +55,11 @@ class CreateTableInvoice extends Migration
             
             $table->index('uuid');
             $table->index('version');
+            
+            $table->foreign('idUseCfdi')
+                ->references('id')->on('useCfdi')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             
             $table->foreign('idCoin')
                 ->references('id')->on('coins')

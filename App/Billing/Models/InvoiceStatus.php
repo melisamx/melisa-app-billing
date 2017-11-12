@@ -18,12 +18,17 @@ class InvoiceStatus extends InvoiceStatusAbstract
         return $this->where('key', self::PENDING_GENERATE_CFDI)->first();
     }
 
+    public function scopeErrorGenerateCfdi()
+    {
+        return $this->where('key', self::PENDING_GENERATE_CFDI)->first();
+    }
+
     public function scopeGeneratingCfdi()
     {
         return $this->where('key', self::GENERATING_CFDI)->first();
     }
 
-    public function scopeNew()
+    public function scopeNewInvoice()
     {
         return $this->where('key', self::NNEW)->first();
     }

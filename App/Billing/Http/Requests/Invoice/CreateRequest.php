@@ -28,6 +28,7 @@ class CreateRequest extends WithFilter
         'idVoucherType'=>'nullable|xss|numeric|exists:billing.voucherTypes,id',
         'idSerie'=>'nullable|xss|numeric|exists:billing.voucherTypes,id',
         'idPaymentMethod'=>'nullable|xss|numeric|exists:billing.paymentMethods,id',
+        'idUseCfdi'=>'nullable|xss|numeric|exists:billing.useCfdi,id',
     ];
     
     protected $rulesConcepts = [

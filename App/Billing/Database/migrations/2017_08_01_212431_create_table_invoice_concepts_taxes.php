@@ -21,7 +21,7 @@ class CreateTableInvoiceConceptsTaxes extends Migration
             $table->smallInteger('idTypeFactor');
             $table->uuid('idIdentityCreated');
             $table->decimal('base', 15, 2);
-            $table->decimal('rateOrFee', 15, 2);
+            $table->decimal('rateOrFee', 15, 6);
             $table->decimal('amount', 15, 2);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();

@@ -22,12 +22,13 @@ abstract class InvoiceConceptsAbstract extends Base
         'idConceptUnit',
         'idInvoice',
         'idIdentityCreated',
-        'idIdentification',
         'description',
         'unitValue',
         'amount',
         'discount',
+        'quantity',
         'createdAt',
+        'idIdentification',
         'idIdentityUpdated',
         'updatedAt'
     ];    

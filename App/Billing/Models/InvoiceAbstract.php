@@ -27,10 +27,10 @@ abstract class InvoiceAbstract extends BaseUuid
         'idSerie',
         'idTransmitter',
         'idTransmitterAddress',
+        'idUseCfdi',
         'idVoucherType',
         'idWaytopay',
         'idIdentityCreated',
-        'preInvoice',
         'subTotal',
         'total',
         'totalTaxRetention',
@@ -50,6 +50,7 @@ abstract class InvoiceAbstract extends BaseUuid
         'cfdiResult',
         'updatedAt',
         'canceledAt',
-        'dateCfdi'
+        'dateCfdi',
+        'preInvoice'
     ];    
 }
