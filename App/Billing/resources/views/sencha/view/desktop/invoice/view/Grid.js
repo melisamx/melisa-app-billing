@@ -16,7 +16,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
         {
             dataIndex: 'status',
             text: 'Estatus',
-            width: 130,
+            width: 180,
             renderer: function(value) {
                 return value.name;
             }
@@ -24,18 +24,23 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
         {
             dataIndex: 'customer',
             text: 'RFC',
-            width: 130,
+            flex: 1,
             renderer: function(value) {
-                return value.contributor.rfc;
+                return [
+                    '<p style="line-height: 15px"><b>',
+                    value.contributor.rfc,
+                    '</b><br>',
+                    value.contributor.name,
+                    '</p>'
+                ].join('');
             }
         },
         {
-            dataIndex: 'customer',
-            text: 'Razón social',
-            flex: 1,
-            renderer: function(value) {
-                return value.contributor.name;
-            }
+            dataIndex: 'total',
+            text: 'Total',
+            align: 'center',
+            width: 120,
+            renderer: Ext.util.Format.usMoney
         },
         {
             dataIndex: 'uuid',
@@ -45,15 +50,14 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
         {
             dataIndex: 'folio',
             text: 'Folio',
-            width: 80
-        },
-        {
-            dataIndex: 'serie',
-            text: 'Serie',
             width: 80,
-            renderer: function(value) {
-                return value.serie;
-            }            
+            renderer: function(value, a, record) {
+                return [
+                    record.data.serie.serie,
+                    ' - ',
+                    value
+                ].join('');
+            }
         },
         {
             xtype: 'booleancolumn',
@@ -98,6 +102,26 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             width: 30,
             widget: {
                 xtype: 'button',
+                iconCls: 'x-fa fa-trash',
+                tooltip: 'Eliminar factura',
+                bind: {
+                    
+                    melisa: '{modules.delete}',
+                    disabled: '{record.uuid ? true : false}'
+                },
+                plugins: {
+                    ptype: 'buttonconfirmation',
+                    messageConfirmation: '¿Realmente desea eliminar la factura?',
+                    messageSuccess: 'Factura eliminada',
+                    restFull: true
+                }
+            }
+        },
+        {
+            xtype: 'widgetcolumn',
+            width: 30,
+            widget: {
+                xtype: 'button',
                 iconCls: 'x-fa fa-file-pdf-o',
                 tooltip: 'Descargar factura PDF',
                 handler: 'onClickBtnDownloadInvoicePdf',
@@ -115,7 +139,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                 tooltip: 'Cancelar factura',
                 bind: {
                     melisa: '{modules.cancel}',
-                    hidden: '{!modules.cancel.allowed}'
+                    disabled: '{record.uuid ? false : true}'
                 },
                 plugins: {
                     ptype: 'buttonconfirmation',

@@ -25,15 +25,24 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Wrapper', {
                 {
                     ptype: 'autofilters',
                     filters: {
-                        key: {
+                        status: {
                             operator: 'like',
                             minChars: 1
                         },
-                        shortname: {
+                        customer: {
                             operator: 'like'
                         },
-                        name: {
-                            operator: 'like'
+                        total: {
+                            operator: 'like',
+                            minChars: 1
+                        },
+                        folio: {
+                            operator: 'like',
+                            minChars: 1
+                        },
+                        uuid: {
+                            operator: 'like',
+                            minChars: 1
                         }
                     }
                 }

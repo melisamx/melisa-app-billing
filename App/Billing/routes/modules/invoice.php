@@ -8,4 +8,5 @@ Route::get('view', 'InvoiceController@view')->middleware('gate:task.billing.invo
 Route::get('{id}/{format?}', 'InvoiceController@report')->middleware('gate:task.billing.invoice.report');
 
 Route::post('cancel', 'InvoiceController@cancel')->middleware('gate:task.billing.invoice.cancel');
+Route::delete('{id}', 'InvoiceController@delete')->middleware('gate:task.billing.invoice.delete');
 Route::post('/', 'InvoiceController@create')->middleware('gate:task.billing.invoice.create');

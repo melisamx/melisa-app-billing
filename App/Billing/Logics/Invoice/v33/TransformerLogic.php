@@ -78,7 +78,6 @@ class TransformerLogic
     {
         $this->invoice = $invoice;
         $receiver = $this->getReceiver();
-        
         return json_decode(json_encode([
             'dateTimeExpedition'=>\Carbon\Carbon::now(),
             'transmitter'=>$this->getTransmitter(),
@@ -94,7 +93,8 @@ class TransformerLogic
             'subTotal'=>$this->invoice->getSubtotal(),
             'total'=>$this->invoice->getTotal(),
             'totalLetter'=>$this->convertNumber->convertir($this->invoice->getTotal()),
-            'concepts'=>$this->getConcepts()
+            'concepts'=>$this->getConcepts(),
+            'taxes'=>$this->invoice->getTaxes(),
         ]));
     }
     
@@ -112,7 +112,9 @@ class TransformerLogic
                 'price'=>$concept->getUnitValue(),
                 'amount'=>$concept->getUnitValue() * $concept->getQuantity(),
                 'taxes'=>$this->getConceptTaxes($concept->getTaxes()),
-                'discount'=>$concept->getDiscount()
+                'discount'=>$concept->getDiscount(),
+                'totalTaxRetention'=>$concept->getTotalTaxRetention(),
+                'totalTaxTransfer'=>$concept->getTotalTaxTransfer()
             ];
         }
         

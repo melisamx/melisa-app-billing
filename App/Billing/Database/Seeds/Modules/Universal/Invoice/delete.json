@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar factura",
+    "url": "/billing.php/invoice/{id}",
+    "description": "Módulo para eliminar factura",
+    "task": {
+        "key": "task.billing.invoice.delete",
+        "name": "Acceso a eliminar factura",
+        "description": "Permitir eliminar factura",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.invoice.delete.success",
+        "description": "Factura eliminada"
+    }
+}

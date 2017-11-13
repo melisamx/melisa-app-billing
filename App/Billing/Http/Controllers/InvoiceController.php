@@ -32,6 +32,11 @@ class InvoiceController extends CrudController
         'module'=>'Universal\Invoice\ReportModule',
     ];
     
+    protected $delete = [
+        'logic'=>'DeleteLogic',
+        'request'=>'Invoice\DeleteRequest',
+    ];
+    
     public function cancel(CancelRequest $request, CancelLogic $logic)
     {
         $result = $logic->init($request->allValid());

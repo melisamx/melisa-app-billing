@@ -21,6 +21,8 @@ class Concept
     protected $discount = 0;
     protected $extraData;
     protected $taxes = [];
+    protected $totalTaxRetention = 0;
+    protected $totalTaxTransfer = 0;
     
     public function setId($id)
     {
@@ -125,9 +127,24 @@ class Concept
         $this->extraData = $data;
     }
     
+    public function getTotalTaxTransfer()
+    {
+        return $this->totalTaxTransfer;
+    }
+    
+    public function getTotalTaxRetention()
+    {
+        return $this->totalTaxRetention;
+    }
+    
     public function addTax(ConceptTax $tax)
     {
         $this->taxes []= $tax;
+        if( $tax->getAction() == 't') {
+            $this->totalTaxTransfer += $tax->getBase() * $tax->getRateOrFee();
+        } else {
+            $this->totalTaxRetention += $tax->getBase() * $tax->getRateOrFee();
+        }
         return $this;
     }
     
@@ -156,6 +173,8 @@ class Concept
             'unit'=>$this->getUnit(),
             'extraData'=>$this->getExtraData(),
             'taxes'=>$arrayTaxes,
+            'totalTaxRetention'=>$this->getTotalTaxRetention(),
+            'totalTaxTransfer'=>$this->getTotalTaxTransfer(),
         ];
     }
     

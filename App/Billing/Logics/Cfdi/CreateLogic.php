@@ -144,7 +144,7 @@ class CreateLogic
     {
         $result = $this->repoSeries->update([
             'folioCurrent'=>$invoice->folio
-        ], $invoice->id);
+        ], $invoice->idSerie);
         
         if( $result === false) {
             return $this->error('Imposible incrementar folio de la serie {s}', [
@@ -177,7 +177,7 @@ class CreateLogic
         
         if( !$invoice) {
             return $this->error('Imposible obtener reporte de la factura {f}', [
-                'f'=>$input['id']
+                'f'=>$id
             ]);
         }
         

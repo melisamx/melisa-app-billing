@@ -77,6 +77,7 @@ trait Client
         $xmlTimbrado = $result->TimbraCFDIResult->anyType[3];
         
         if( empty($xmlTimbrado)) {
+            $this->setErrors($result->TimbraCFDIResult->anyType[8]);
             return $this->error($result->TimbraCFDIResult->anyType[2]);
         }
         
@@ -85,6 +86,21 @@ trait Client
             'xml'=>$xmlTimbrado,
             'stringOriginal'=>$result->TimbraCFDIResult->anyType[5],
         ];
+    }
+    
+    public function setErrors($message)
+    {
+        $errors = json_decode($message);
+        if( !$errors) {
+            return false;
+        }
+        
+        foreach($errors as $error) {
+            if( $error->Key !== 'Mensaje') {
+                continue;
+            }
+            $this->error($error->Value);
+        }
     }
     
     public function getUser()

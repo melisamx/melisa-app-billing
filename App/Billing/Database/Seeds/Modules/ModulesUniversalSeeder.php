@@ -252,6 +252,7 @@ class ModulesUniversalSeeder extends InstallSeeder
             'paging',
             'pdf',
             'xml',
+            'delete',
         ]);
         
         $this->installAssetCss('billing.invoice.preview', [

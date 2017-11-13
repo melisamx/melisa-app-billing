@@ -32,6 +32,9 @@ class Invoice
     {
         $this->receiver = $receiver;
         $this->transmitter = $transmitter;
+        $this->taxes = new \stdClass();
+        $this->taxes->transfer = 0;
+        $this->taxes->retention = 0;
     }
     
     public function getTotalRetention()
@@ -130,26 +133,19 @@ class Invoice
         return $this;
     }
     
-    public function setSubtotal($subtotal)
-    {
-        $this->subtotal = $subtotal;
-        return $this;
-    }
-    
     public function getSubtotal()
     {
         return $this->subtotal;
     }
     
-    public function setTotal($total)
-    {
-        $this->total = $total;
-        return $this;
-    }
-    
     public function getTotal()
     {
         return $this->total;
+    }
+    
+    public function getTaxes()
+    {
+        return $this->taxes;
     }
     
     public function getExtraData()
@@ -166,7 +162,30 @@ class Invoice
     public function addConcept(Concept $concept)
     {
         $this->concepts []= $concept;
+        $this->subtotal += $this->calulateSubtotal($concept);
+        $this->total = $this->calculateTotal();
         return $this;    
+    }
+    
+    public function calulateSubtotal(Concept $concept)
+    {
+        return $concept->getQuantity() * $concept->getUnitValue();
+    }
+    
+    public function calculateTotal()
+    {
+        $concepts = $this->getConcepts();
+        $totalTaxRetention = 0;
+        $totalTaxTransfer = 0;
+        foreach($concepts as $concept) {
+            $totalTaxRetention += $concept->getTotalTaxRetention();
+            $totalTaxTransfer += $concept->getTotalTaxTransfer();
+        }
+        if( !$totalTaxRetention) {
+            return $this->getSubtotal() + $totalTaxTransfer;
+        }
+        
+        return $this->getSubtotal() - ($totalTaxRetention - $totalTaxTransfer);
     }
     
     public function getConcepts()
@@ -193,7 +212,8 @@ class Invoice
             'subtotal'=>$this->getSubtotal(),
             'version'=>$this->getVersion(),
             'concepts'=>$arrayConcepts,
-            'extraData'=>$this->getExtraData()
+            'extraData'=>$this->getExtraData(),
+            'taxes'=>$this->getTaxes(),
         ];
     }
     

@@ -14,8 +14,17 @@ class PagingCriteria extends FilterCriteria
     
     public function apply($model, $repository, array $input = [])
     {        
-        $builder = parent::apply($model, $repository, $input);
+        $builder = parent::apply($model, $repository, $input, [
+            'status'=>'s.name',
+            'customer'=>'co.rfc',
+        ]);
         return $builder
+            ->select([
+                'invoice.*'
+            ])
+            ->join('invoiceStatus as s', 's.id', 'invoice.idInvoiceStatus')
+            ->join('customers as c', 'c.id', 'invoice.idCustomer')
+            ->join('contributors as co', 'co.id', 'c.idContributor')
             ->with([
                 'serie',
                 'status',
