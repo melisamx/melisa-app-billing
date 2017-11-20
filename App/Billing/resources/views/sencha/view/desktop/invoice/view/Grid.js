@@ -93,7 +93,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                 tooltip: 'Descargar factura XML',
                 handler: 'onClickBtnDownloadInvoiceXml',
                 bind: {
-                    disabled: '{record.idFileXml ? false : true}'
+                    disabled: '{record.uuid ? false : true}'
                 }
             }
         },

@@ -26,7 +26,10 @@ class ViewModule extends Outbuildings
                     'cancel'=>$this->module('task.billing.invoice.cancel', false),
                     'delete'=>$this->module('task.billing.invoice.delete', false),
                     'cfdi'=>$this->module('task.billing.cfdi.create', false),
-                    'filesView'=>$this->module('task.drive.files.view'),
+                    'filesView'=>[
+                        'pdf'=>$this->module('task.billing.invoice.pdf'),
+                        'xml'=>$this->module('task.billing.invoice.xml'),
+                    ]
                 ],
                 'wrapper'=>[
                     'title'=>'Facturas'

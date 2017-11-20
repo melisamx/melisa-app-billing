@@ -27,16 +27,15 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.WrapperController', {
     
     downloadFile: function(button, format) {
         var me = this,
-            filesView = me.getViewModel().get('modules.filesView'),
+            filesView = me.getViewModel().get('modules.filesView.' + format),
             record = button.getViewModel().get('record'),
             url = [
-                filesView,
-                record.get('id'),
-                '/',
-                format,
+                new Ext.Template(filesView).apply({
+                    id: record.get('id')
+                }),
                 '?nc=',
                 new Date().toTimeString()
-            ].join('');console.log(url);return;
+            ].join('');
         window.open(url, '__blank');
     }
     
