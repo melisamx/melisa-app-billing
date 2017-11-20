@@ -8,9 +8,6 @@ use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
-use App\Billing\Models\InvoiceStatus;
-use App\Billing\Modules\Universal\Invoice\ReportModule;
-use App\Billing\Logics\Invoice\v32\PreviewLogic;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 

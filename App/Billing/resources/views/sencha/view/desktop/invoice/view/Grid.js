@@ -126,7 +126,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                 tooltip: 'Descargar factura PDF',
                 handler: 'onClickBtnDownloadInvoicePdf',
                 bind: {
-                    disabled: '{record.idFilePdf ? false : true}'
+                    disabled: '{record.uuid ? false : true}'
                 }
             }
         },

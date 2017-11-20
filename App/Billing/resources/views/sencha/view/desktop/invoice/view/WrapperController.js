@@ -18,23 +18,26 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.WrapperController', {
     },
     
     onClickBtnDownloadInvoicePdf: function(button) {
-        this.downloadFile(button, 'idFilePdf');
+        this.downloadFile(button, 'pdf');
     },
     
     onClickBtnDownloadInvoiceXml: function(button) {
-        this.downloadFile(button, 'idFileXml');
+        this.downloadFile(button, 'xml');
     },
     
-    downloadFile: function(button, field) {
+    downloadFile: function(button, format) {
         var me = this,
             filesView = me.getViewModel().get('modules.filesView'),
-            record = button.getViewModel().get('record');
-        window.open([
-            filesView,
-            record.get(field),
-            '/?nc=',
-            new Date().toTimeString()
-        ].join(''), '__blank');
+            record = button.getViewModel().get('record'),
+            url = [
+                filesView,
+                record.get('id'),
+                '/',
+                format,
+                '?nc=',
+                new Date().toTimeString()
+            ].join('');console.log(url);return;
+        window.open(url, '__blank');
     }
     
 });

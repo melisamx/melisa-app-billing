@@ -1,6 +1,6 @@
 {
     "name": "Ver XML de factura",
-    "url": "/billing.php/invoice/xml/",
+    "url": "/billing.php/invoice/{id}/xml/",
     "description": "Módulo para ver XML de factura",
     "task": {
         "key": "task.billing.invoice.xml",
