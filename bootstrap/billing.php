@@ -11,15 +11,9 @@
 |
 */
 
-require_once __DIR__ . '/../App/Billing/Application.php';
+use App\Billing\Application;
 
-$app = new App\Billing\Application(
-    [
-        'base'=>  realpath(__DIR__ . '/../App/Billing'),
-        'storage'=> realpath(__DIR__ . '/../App/Billing/storage'),
-        'storageSession'=>realpath(__DIR__ . '/../storage/framework/sessions'),
-    ]
-);
+$app = new App\Billing\Application(realpath(__DIR__ . '/../App/Billing'));
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +28,7 @@ $app = new App\Billing\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    Melisa\Laravel\Http\Kernel::class
+    Melisa\Laravel\Http\KernelSecure::class
 );
 
 $app->singleton(
