@@ -29,6 +29,13 @@ class AccountsSeeder extends InstallSeeder
             'expirationDays'=>21,
             'idIdentityCreated'=>$this->findIdentity()->id
         ]);
+        Accounts::updateOrCreate([
+            'name'=>'Facturación',
+            'key'=>'invoice',
+        ], [
+            'expirationDays'=>21,
+            'idIdentityCreated'=>$this->findIdentity()->id
+        ]);
     }
     
 }

@@ -16,4 +16,10 @@ class AccountsRepository extends Repository
         return 'App\Billing\Models\Accounts';        
     }
     
+    public function getDefaultInvoice()
+    {
+        return $this->findWhere([
+            'key'=>'invoice'
+        ])->first();
+    }
 }

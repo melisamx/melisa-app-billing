@@ -19,6 +19,11 @@ class AccountsReceivableController extends CrudController
         'criteria'=>'AccountsReceivable\PagingCriteria'
     ];
     
+    protected $create = [
+        'request'=>'AccountsReceivable\AutoRegisterRequest',
+        'logic'=>'AutoRegisterLogic'
+    ];
+    
     protected $report = [
         'logic'=>'ReportLogic',
     ];

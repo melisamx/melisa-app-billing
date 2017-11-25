@@ -2,7 +2,10 @@
 
 namespace App\Billing\tests;
 
-abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Contracts\Console\Kernel;
+
+abstract class TestCase extends BaseTestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -20,10 +23,7 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
     {
         
         $app = require __DIR__.'/../../../bootstrap/billing.php';
-        
-        $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-        $this->baseUrl = env('APP_URL');
-        
+        $app->make(Kernel::class)->bootstrap();
         return $app;
         
     }

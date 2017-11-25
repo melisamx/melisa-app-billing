@@ -3,6 +3,7 @@
 namespace App\Billing\Repositories;
 
 use Melisa\Repositories\Eloquent\Repository;
+use App\Billing\Models\AccountsReceivableStatus;
 
 /**
  * 
@@ -14,6 +15,12 @@ class AccountsReceivableRepository extends Repository
     public function model()
     {        
         return 'App\Billing\Models\AccountsReceivable';        
+    }
+    
+    public function createNew($input)
+    {
+        $input ['idAccountReceivableStatus']= AccountsReceivableStatus::NNEW;
+        return $this->create($input);
     }
     
 }

@@ -23,7 +23,7 @@
         </cfdi:Concepto>
     @endforeach
     </cfdi:Conceptos>
-    <cfdi:Impuestos{{ !$invoice->totalTaxRetention ? '' : ' TotalImpuestosRetenidos="' . number_format($invoice->totalTaxRetention, 2, '.', '') . '"' }} TotalImpuestosTrasladados="{{ number_format($invoice->totalTaxTransfer, 2, '.', '') }}">
+    <cfdi:Impuestos{!! !$invoice->totalTaxRetention ? '' : ' TotalImpuestosRetenidos="' . number_format($invoice->totalTaxRetention, 2, '.', '') . '"' !!} TotalImpuestosTrasladados="{{ number_format($invoice->totalTaxTransfer, 2, '.', '') }}">
     @if($invoice->totalTaxRetention > 0)
         <cfdi:Retenciones>
         @foreach($invoice->taxes->retention as $tax)

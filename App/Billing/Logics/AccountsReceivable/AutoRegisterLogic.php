@@ -4,7 +4,10 @@ namespace App\Billing\Logics\AccountsReceivable;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\AccountsReceivableRepository;
+use App\Billing\Logics\Invoice\ReportLogic;
+use App\Billing\Logics\Invoice\GeneratePdfLogic;
 use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\AccountsRepository;
 
 /**
  * Register debts to pay
@@ -17,14 +20,17 @@ class AutoRegisterLogic
     
     protected $eventSuccess = 'billing.accountsReceivable.autoregister.success';
     protected $accRecRepo;
-    protected $invoiceRepo;
+    protected $accountRepo;
+    protected $invoiceLogic;
 
     public function __construct(
         AccountsReceivableRepository $accRecRepo,
-        InvoiceRepository $invoiceRepo
+        AccountsRepository $accountRepo,
+        ReportLogic $invoiceLogic
     ) {
         $this->accRecRepo = $accRecRepo;
-        $this->invoiceRepo = $invoiceRepo;
+        $this->accountRepo = $accountRepo;
+        $this->invoiceLogic = $invoiceLogic;
     }
 
     public function init(array $input)
@@ -37,7 +43,21 @@ class AutoRegisterLogic
             return $this->accRecRepo->rollback();
         }
         
-        $idAccRec = $this->createAccountReceivable($invoice);
+        if( !$this->isValid($invoice)) {
+            return $this->accRecRepo->rollback();
+        }
+        
+        if( !$this->generateInvoicePdf($invoice)) {
+            return $this->accRecRepo->rollback();
+        }
+        
+        $account = $this->getAccount();
+        
+        if( !$account) {
+            return $this->accRecRepo->rollback();
+        }
+        
+        $idAccRec = $this->createAccountReceivable($invoice, $account);
         
         if( !$idAccRec) {
             return false;
@@ -56,36 +76,79 @@ class AutoRegisterLogic
         return $event;
     }
     
-    public function createAccountReceivable($cerApp)
+    public function getAccount()
     {
-        $dateVoucher = new \Carbon\Carbon($cerApp->invoice->createdAt);
+        $result = $this->accountRepo->getDefaultInvoice();
         
-        $result = $this->accRecRepo->init([
-            'idAccount'=>$cerApp->supplier->idAccountDebsToPay,
-            'idFileVoucher'=>$cerApp->invoice->idFilePdf,
-            'amountPayable'=>(float)$cerApp->supplier->certificateRight,
-            'dateVoucher'=>$cerApp->invoice->createdAt,
-            'dueDate'=>$dateVoucher->addDays($cerApp->supplier->accountDebtsToPay->expirationDays),
+        if( $result) {
+            return $result;
+        }
+        
+        return $this->error('Imposible get account use on invoice');
+    }
+    
+    public function generateInvoicePdf(&$invoice)
+    {
+        if( !empty($invoice->idFilePdf)) {
+            return true;
+        }
+        
+        $idFile = app(GeneratePdfLogic::class)->init($invoice);
+        
+        if( !$idFile) {
+            return $this->error('Imposible generar archivo PDF de la factura {i}', [
+                'i'=>$invoice->id
+            ]);
+        }
+        
+        if( !app(InvoiceRepository::class)->update([
+            'idFilePdf'=>$idFile
+        ], $invoice->id)) {
+            return $this->error('Imposible asignar archivo {f} PDF de la factura {i}', [
+                'i'=>$invoice->id,
+                'f'=>$idFile,
+            ]);
+        }
+        
+        $invoice->idFilePdf = $idFile;
+        return true;
+    }
+    
+    public function isValid(&$invoice)
+    {
+        if( empty($invoice->uuid)) {
+            return $this->error('No se ha generado el CFDI');
+        }
+        
+        return true;
+    }
+    
+    public function createAccountReceivable(&$invoice, &$account)
+    {
+        $dateVoucher = new \Carbon\Carbon($invoice->createdAt);
+        
+        $result = $this->accRecRepo->createNew([
+            'idIdentityCreated'=>$this->getIdentity(),
+            'idAccount'=>$account->id,
+            'idFileVoucher'=>$invoice->idFilePdf,
+            'idInvoice'=>$invoice->id,
+            'amountCharged'=>(float)$invoice->total,
+            'dueDate'=>$dateVoucher->addDays($account->expirationDays),
         ]);
         
         if( $result) {
-            return $result['id'];
+            return $result;
         }
         
-        return $this->error('Imposible auto registrar cuenta por pagar al proveedor {p} por la factura {f}', [
-            'p'=>$cerApp->supplier->name,
-            'f'=>$cerApp->idInvoice,
+        return $this->error('Imposible auto registrar cuenta por cobrar a la cuenta {a} por la factura {i}', [
+            'a'=>$account->id,
+            'i'=>$invoice->id,
         ]);
     }
     
     public function getInvoice($idInvoice)
     {
-        $result = $this->invoiceRepo
-            ->getModel()
-            ->where([
-                'id'=>$idInvoice
-            ])
-            ->first();
+        $result = $this->invoiceLogic->init($idInvoice);
         
         if( $result) {
             return $result;
