@@ -2,6 +2,10 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
     extend: 'Ext.grid.Panel',    
     alias: 'widget.billingInvoiceViewGrid',
     
+    requires: [
+        'Melisa.view.desktop.ButtonRecord'
+    ],
+    
     emptyText: 'No hay facturas registradas',
     deferEmptyText: true,
     bind: {
@@ -104,8 +108,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                 xtype: 'button',
                 iconCls: 'x-fa fa-trash',
                 tooltip: 'Eliminar factura',
-                bind: {
-                    
+                bind: {                    
                     melisa: '{modules.delete}',
                     disabled: '{record.uuid ? true : false}'
                 },
@@ -174,5 +177,32 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
     bbar: {
         xtype: 'pagingtoolbar',
         displayInfo: true
+    },
+    
+    actions: {
+        accountReceivable: {
+            xtype: 'buttonRecord',
+            text: 'Generar cuenta por cobrar',
+            disabled: true,
+            bind: {
+                disabled: '{!griInvoice.selection || !griInvoice.selection.uuid}',
+                melisa: '{modules.accountReceivable}',
+                record: '{griInvoice.selection}'
+            },
+            plugins: {
+                ptype: 'buttonconfirmation',
+                messageConfirmation: '¿Realmente desea generar a cuenta por cobrar?',
+                messageSuccess: 'Cuenta por cobrar generada',
+                fieldId: 'idInvoice',
+                fieldIdRecord: 'id'
+            }
+        }
+    },
+    tbar: {
+        xtype: 'toolbar',
+        defaultActionType: 'buttonRecord',
+        items: [
+            '@accountReceivable'
+        ]
     }
 });

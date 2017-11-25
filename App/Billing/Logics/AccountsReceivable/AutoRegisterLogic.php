@@ -133,6 +133,7 @@ class AutoRegisterLogic
             'idFileVoucher'=>$invoice->idFilePdf,
             'idInvoice'=>$invoice->id,
             'amountCharged'=>(float)$invoice->total,
+            'dateVoucher'=>new \Carbon\Carbon($dateVoucher),
             'dueDate'=>$dateVoucher->addDays($account->expirationDays),
         ]);
         

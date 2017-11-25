@@ -24,20 +24,20 @@ class PagingCriteria extends FilterCriteria
         
         return $builder
             ->select([
-                'accountsReceivableStatus.*',
+                'accountsReceivable.*',
                 'a.name as account',
                 \DB::raw(implode('', [
                     '(',
-                    'select sum(amountCharged) from accountsReceivableStatus where ',
-                    'idAccountReceivableStatus = ' . AccountsReceivableStatus::NNEW,
+                        'select sum(amountCharged) from accountsReceivable where ',
+                        'idAccountReceivableStatus = ' . AccountsReceivableStatus::NNEW,
                     ') as totalCharged'
                 ])),
                 \DB::raw(implode('', [
                     '(',
-                    'select sum(amountCharged) from accountsReceivableStatus where ',
-                    'idAccountReceivableStatus = ' . AccountsReceivableStatus::NNEW,
-                    ' and ',
-                    'expiredDate = 1',
+                        'select sum(amountCharged) from accountsReceivable where ',
+                        'idAccountReceivableStatus = ' . AccountsReceivableStatus::NNEW,
+                        ' and ',
+                        'expiredDate = 1',
                     ') as totalChargedExpired'
                 ]))
             ])

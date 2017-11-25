@@ -9,6 +9,9 @@ namespace App\Billing\Models;
 class AccountsReceivable extends AccountsReceivableAbstract
 {
     
-    
+    protected $casts = [
+        'totalCharged'=>'float',
+        'amountCharged'=>'float',
+    ];
     
 }

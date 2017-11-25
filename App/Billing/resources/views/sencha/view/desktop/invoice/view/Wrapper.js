@@ -18,6 +18,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Wrapper', {
         {
             xtype: 'billingInvoiceViewGrid',
             region: 'center',
+            reference: 'griInvoice',
             listeners: {
                 itemdblclick: 'onShowItemReport'
             },
