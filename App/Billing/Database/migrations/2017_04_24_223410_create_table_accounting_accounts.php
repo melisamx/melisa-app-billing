@@ -19,7 +19,7 @@ class CreateTableAccountingAccounts extends Migration
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();
-            $table->smallInteger('expirationDays')->default(14)->nullable();
+            $table->smallInteger('expirationDays')->default(21)->nullable();
             $table->string('groupingCode', 150)->nullable();
             $table->dateTime('updatedAt')->nullable();
 

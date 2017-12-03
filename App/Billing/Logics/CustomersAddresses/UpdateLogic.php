@@ -34,6 +34,7 @@ class UpdateLogic extends CreateLogic
         
         $result = $this->repository->update([
             'idContributor'=>$input['idContributor'],
+            'idAccountingAccount'=>$input['idAccountingAccount'],
             'idCountry'=>$input['idCountry'],
             'idState'=>$input['idState'],
             'idMunicipality'=>$input['idMunicipality'],

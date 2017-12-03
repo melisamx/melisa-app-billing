@@ -12,6 +12,7 @@ class InvoiceStatus extends InvoiceStatusAbstract
     const PENDING_GENERATE_CFDI = 'pendingGenerateCFDI';
     const GENERATING_CFDI = 'generatingCFDI';
     const NNEW = 'new';
+    const CANCELLED = 'cancelled';
 
     public function scopePendingGenerateCfdi()
     {

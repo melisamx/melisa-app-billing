@@ -14,6 +14,7 @@ use App\Billing\Repositories\TaxesRepository;
 use App\Billing\Repositories\TaxActionsRepository;
 use App\Billing\Repositories\TypesFactorRepository;
 use App\Billing\Repositories\UseCfdiRepository;
+use App\Billing\Repositories\ContributorsAddressesRepository;
 
 class CreateLogic extends BaseCreateLogic
 {
@@ -29,6 +30,7 @@ class CreateLogic extends BaseCreateLogic
     protected $repoTaxActions;
     protected $repoTypesFactor;
     protected $repoUseCfdi;
+    protected $repoContributorAddresses;
 
     public function __construct(
         InvoiceRepository $repository,
@@ -41,7 +43,8 @@ class CreateLogic extends BaseCreateLogic
         TaxesRepository $repoTaxes,
         TaxActionsRepository $repoTaxActions,
         TypesFactorRepository $repoTypesFactor,
-        UseCfdiRepository $repoUseCfdi
+        UseCfdiRepository $repoUseCfdi,
+        ContributorsAddressesRepository $repoContributorAddresses
     )
     {
         $this->repository = $repository;
@@ -55,10 +58,15 @@ class CreateLogic extends BaseCreateLogic
         $this->repoTaxActions = $repoTaxActions;
         $this->repoTypesFactor = $repoTypesFactor;
         $this->repoUseCfdi = $repoUseCfdi;
+        $this->repoContributorAddresses = $repoContributorAddresses;
     }
     
     public function create(&$input)
     {
+        if( !$this->isValid($input)) {
+            return false;
+        }
+        
         if( !$this->getDefaultsValue($input)) {
             return false;
         }
@@ -76,6 +84,32 @@ class CreateLogic extends BaseCreateLogic
         }
         
         return $idInvoice;
+    }
+    
+    public function isValid(&$input)
+    {
+        $result = $this->repoContributorAddresses->with([
+            'state',
+            'municipality',
+            'customer'=>function($query) {
+                $query->with([
+                    'contributor',
+                ]);
+            }
+        ])->find($input['idCustomerAddress']);
+        
+        if( !is_null($result['idAccountingAccount'])) {
+            return true;
+        }
+        
+        return $this->error('No se ha asignado cuenta contable al cliente {n} {r} en la dirección {a}, {s}, {m}, {c}', [
+            'n'=>$result->customer->contributor->name,
+            'r'=>$result->customer->contributor->rfc,
+            'a'=>$result->address,
+            's'=>$result->state->name,
+            'm'=>$result->municipality->name,
+            'c'=>$result->postalCode,
+        ]);
     }
     
     public function createConcepts($idInvoice, $concepts)
