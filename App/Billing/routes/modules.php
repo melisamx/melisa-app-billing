@@ -1,6 +1,18 @@
 <?php 
 
 Route::group([
+    'prefix'=>'bankAccounts',
+], function() {    
+    require realpath(base_path() . '/routes/modules/bankAccounts.php');    
+});
+
+Route::group([
+    'prefix'=>'accountingAccounts',
+], function() {    
+    require realpath(base_path() . '/routes/modules/accountingAccounts.php');    
+});
+
+Route::group([
     'prefix'=>'cfdi',
 ], function() {    
     require realpath(base_path() . '/routes/modules/cfdi.php');    
@@ -22,12 +34,6 @@ Route::group([
     'prefix'=>'series',
 ], function() {    
     require realpath(base_path() . '/routes/modules/series.php');    
-});
-
-Route::group([
-    'prefix'=>'accounts',
-], function() {    
-    require realpath(base_path() . '/routes/modules/accounts.php');    
 });
 
 Route::group([

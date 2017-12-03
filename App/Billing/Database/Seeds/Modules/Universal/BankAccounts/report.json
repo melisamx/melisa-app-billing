@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de cuentas bancarias",
+    "url": "/billing.php/bankAccounts/report/",
+    "description": "Módulo para ver reporte de cuentas bancarias",
+    "task": {
+        "key": "task.billing.bankAccounts.report",
+        "name": "Acceso a ver reporte de repositorios",
+        "description": "Permitir ver reporte de cuentas bancarias",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.report.success",
+        "description": "Acceso a reporte de cuentas bancarias"
+    }
+}

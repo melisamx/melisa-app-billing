@@ -16,7 +16,7 @@ abstract class DebtsToPayAbstract extends BaseUuid
     /* incrementing */
     protected $fillable = [
         'id',
-        'idAccount',
+        'idAccountingAccount',
         'idDebtsToPayStatus',
         'idFilePayment',
         'idFileVoucher',

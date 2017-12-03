@@ -17,7 +17,7 @@ class CreateTableDebtstopay extends Migration
         Schema::create('debtsToPay', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->smallInteger('idDebtsToPayStatus');
-            $table->smallInteger('idAccount');
+            $table->unsignedInteger('idAccountingAccount');
             $table->uuid('idIdentityCreated');
             $table->uuid('idFileVoucher');
             $table->uuid('idInvoice')->nullable();
@@ -34,10 +34,9 @@ class CreateTableDebtstopay extends Migration
             $table->foreign('idDebtsToPayStatus')
                 ->references('id')->on('debtsToPayStatus')
                 ->onDelete('no action')
-                ->onUpdate('no action');
-            
-            $table->foreign('idAccount')
-                ->references('id')->on('accounts')
+                ->onUpdate('no action');            
+            $table->foreign('idAccountingAccount')
+                ->references('id')->on('accountingAccounts')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             
@@ -46,8 +45,7 @@ class CreateTableDebtstopay extends Migration
             $table->foreign('idFileVoucher')
                 ->references('id')->on(new Expression("$db.files"))
                 ->onDelete('no action')
-                ->onUpdate('no action');
-            
+                ->onUpdate('no action');            
             $table->foreign('idFilePayment')
                 ->references('id')->on(new Expression("$db.files"))
                 ->onDelete('no action')

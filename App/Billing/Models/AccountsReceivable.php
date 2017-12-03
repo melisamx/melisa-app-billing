@@ -14,4 +14,9 @@ class AccountsReceivable extends AccountsReceivableAbstract
         'amountCharged'=>'float',
     ];
     
+    public function status()
+    {
+        return $this->hasOne('App\Billing\Models\DebtsToPayStatus', 'id', 'idDebtsToPayStatus');
+    }
+    
 }

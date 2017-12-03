@@ -29,4 +29,9 @@ class ContributorsAddresses extends ContributorsAddressesAbstract
         return $this->hasOne('App\People\Models\Municipalities', 'id', 'idMunicipality');
     }
     
+    public function accountingAccount()
+    {
+        return $this->hasOne('App\Billing\Models\AccountingAccounts', 'id', 'idAccountingAccount');
+    }
+    
 }

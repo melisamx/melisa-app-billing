@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cuenta contable",
+    "url": "/billing.php/accountingAccounts/delete/",
+    "description": "Módulo para eliminar cuenta contable",
+    "task": {
+        "key": "task.billing.accountingAccounts.delete",
+        "name": "Acceso a eliminar cuenta contable",
+        "description": "Permitir eliminar cuenta contable",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.delete.success",
+        "description": "Cuenta contable eliminada"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Modificar cuenta bancaria",
+    "url": "/billing.php/bankAccounts/update/",
+    "description": "Módulo para modificar cuenta bancaria",
+    "task": {
+        "key": "task.billing.bankAccounts.update",
+        "name": "Acceso a modificar cuenta bancaria",
+        "description": "Permitir modificar cuenta bancaria",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.update.success",
+        "description": "Cuenta bancaria modificado"
+    }
+}

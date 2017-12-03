@@ -1,0 +1,21 @@
+{
+    "name": "Modificar cuenta contable",
+    "url": "/billing.php/modules/accountingAccounts/update/",
+    "description": "Módulo interfaz para modificar cuenta contable",
+    "nameSpace": "Melisa.billing.view.desktop.accountingAccounts.update.Wrapper",
+    "task": {
+        "key": "task.billing.accountingAccounts.update.access",
+        "name": "Acceso a modificar cuenta contable",
+        "description": "Permitir acceso a modificar cuenta contable",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.accountingAccounts.update.access",
+        "name": "Opción para modificar cuenta contable",
+        "text": "Modificar cuenta contable"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.update.access",
+        "description": "Acceso al módulo modificar cuenta contable"
+    }
+}

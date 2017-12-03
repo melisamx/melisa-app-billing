@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de cuenta contable",
+    "url": "/billing.php/accountingAccounts/report/",
+    "description": "Módulo para ver reporte de cuenta contable",
+    "task": {
+        "key": "task.billing.accountingAccounts.report",
+        "name": "Acceso a ver reporte de cuenta contable",
+        "description": "Permitir ver reporte de cuenta contable",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.report.success",
+        "description": "Acceso a reporte de cuenta contable"
+    }
+}

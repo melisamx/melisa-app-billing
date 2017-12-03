@@ -1,0 +1,21 @@
+{
+    "name": "Agregar cuentas contables",
+    "url": "/billing.php/modules/accountingAccounts/add",
+    "description": "Módulo interfaz para agregar accountingAccounts",
+    "nameSpace": "Melisa.billing.view.desktop.accountingAccounts.add.Wrapper",
+    "task": {
+        "key": "task.billing.accountingAccounts.add.access",
+        "name": "Acceso a agregar cuentas contables",
+        "description": "Permitir acceso a agregar cuentas contables",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.accountingAccounts.add.access",
+        "name": "Opción para agregar cuentas contables",
+        "text": "Agregar cuentas contables"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.add.access",
+        "description": "Acceso al módulo agregar cuentas contables"
+    }
+}

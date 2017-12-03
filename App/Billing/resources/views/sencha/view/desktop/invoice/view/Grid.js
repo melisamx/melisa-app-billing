@@ -196,13 +196,31 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
                 fieldId: 'idInvoice',
                 fieldIdRecord: 'id'
             }
+        },
+        debtsToPay: {
+            xtype: 'buttonRecord',
+            text: 'Generar cuenta por pagar',
+            disabled: true,
+            bind: {
+                disabled: '{!griInvoice.selection || !griInvoice.selection.uuid}',
+                melisa: '{modules.debsToPay}',
+                record: '{griInvoice.selection}'
+            },
+            plugins: {
+                ptype: 'buttonconfirmation',
+                messageConfirmation: '¿Realmente desea generar a cuenta por pagar?',
+                messageSuccess: 'Cuenta por pagar generada',
+                fieldId: 'idInvoice',
+                fieldIdRecord: 'id'
+            }
         }
     },
     tbar: {
         xtype: 'toolbar',
         defaultActionType: 'buttonRecord',
         items: [
-            '@accountReceivable'
+            '@accountReceivable',
+            '@debtsToPay'
         ]
     }
 });

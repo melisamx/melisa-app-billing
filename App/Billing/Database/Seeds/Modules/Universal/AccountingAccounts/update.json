@@ -1,0 +1,15 @@
+{
+    "name": "Modificar cuenta contable",
+    "url": "/billing.php/accountingAccounts/update/",
+    "description": "Módulo para modificar cuenta contable",
+    "task": {
+        "key": "task.billing.accountingAccounts.update",
+        "name": "Acceso a modificar cuenta contable",
+        "description": "Permitir modificar cuenta contable",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.update.success",
+        "description": "Cuenta contable modificada"
+    }
+}

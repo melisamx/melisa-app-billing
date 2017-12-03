@@ -2,7 +2,7 @@ Ext.define('Melisa.billing.view.desktop.banks.view.Grid', {
     extend: 'Ext.grid.Panel',    
     alias: 'widget.billingBanksViewGrid',
     
-    emptyText: 'No hay repositorios registrados',
+    emptyText: 'No hay bancos registrados',
     deferEmptyText: true,
     bind: {
         store: '{banks}'

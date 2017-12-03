@@ -27,6 +27,7 @@ class CreateTableContributorsAddresses extends Migration
             $table->boolean('active')->default(1); 
             $table->boolean('isDefault')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->unsignedInteger('idAccountingAccount')->nullable();
             $table->integer('interiorNumber')->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
@@ -34,6 +35,10 @@ class CreateTableContributorsAddresses extends Migration
             $table->foreign('idContributor')
                 ->references('id')->on('contributors')
                 ->onDelete('cascade')
+                ->onUpdate('no action');
+            $table->foreign('idAccountingAccount')
+                ->references('id')->on('accountingAccounts')
+                ->onDelete('no action')
                 ->onUpdate('no action');
         });
     }

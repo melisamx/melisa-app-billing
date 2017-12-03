@@ -15,6 +15,20 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'bankAccounts',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/bankAccounts.php');    
+});
+
+Route::group([
+    'prefix'=>'accountingAccounts',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/accountingAccounts.php');    
+});
+
+Route::group([
     'prefix'=>'referralNotes',
     'middleware'=>'auth',
 ], function() {    
@@ -40,13 +54,6 @@ Route::group([
     'middleware'=>'auth',
 ], function() {    
     require realpath(base_path() . '/routes/modules/debtsToPay.php');    
-});
-
-Route::group([
-    'prefix'=>'accounts',
-    'middleware'=>'auth',
-], function() {    
-    require realpath(base_path() . '/routes/modules/accounts.php');    
 });
 
 Route::group([

@@ -1,11 +1,11 @@
 {
-    "name": "Paginar lista de repositorios",
+    "name": "Paginar lista de bancos",
     "url": "/billing.php/banks/",
-    "description": "Módulo para paginar lista de repositorios",
+    "description": "Módulo para paginar lista de bancos",
     "task": {
         "key": "task.billing.banks.paging",
-        "name": "Paginar lista de repositorios",
-        "description": "Permitir paginar lista de repositorios",
+        "name": "Paginar lista de bancos",
+        "description": "Permitir paginar lista de bancos",
         "pattern": "read"
     }
 }

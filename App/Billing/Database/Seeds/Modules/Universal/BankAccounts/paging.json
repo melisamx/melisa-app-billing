@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de repositorios",
+    "url": "/billing.php/bankAccounts/",
+    "description": "Módulo para paginar lista de cuentas bancarias",
+    "task": {
+        "key": "task.billing.bankAccounts.paging",
+        "name": "Paginar lista de cuentas bancarias",
+        "description": "Permitir paginar lista de cuentas bancarias",
+        "pattern": "read"
+    }
+}

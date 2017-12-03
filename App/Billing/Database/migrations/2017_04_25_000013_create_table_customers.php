@@ -17,8 +17,8 @@ class CreateTableCustomers extends Migration
             $table->uuid('id')->primary();
             $table->uuid('idRepository');
             $table->unsignedInteger('idContributor');
-            $table->uuid('idIdentityCreated');
             $table->smallInteger('idWaytopay');
+            $table->uuid('idIdentityCreated');
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();
@@ -35,6 +35,10 @@ class CreateTableCustomers extends Migration
                 ->onUpdate('no action');
             $table->foreign('idContributor')
                 ->references('id')->on('contributors')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            $table->foreign('idWaytopay')
+                ->references('id')->on('waytopay')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

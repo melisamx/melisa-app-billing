@@ -30,8 +30,9 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->customerGroupsCustomers();
         $this->customerGroupsIdentities();
         $this->repositories();
-        $this->accounts();
+        $this->accountingAccounts();
         $this->cfdi();
+        $this->bankAccounts();
     }    
     
     public function cfdi()
@@ -41,11 +42,21 @@ class ModulesDesktopSeeder extends InstallSeeder
         ]);
     }
     
-    public function accounts()
+    public function bankAccounts()
     {
-        $this->installModuleJson('Desktop/Accounts', [
+        $this->installModuleJson('Desktop/BankAccounts', [
             'add',
             'view',
+            'update',
+        ]);
+    }
+    
+    public function accountingAccounts()
+    {
+        $this->installModuleJson('Desktop/AccountingAccounts', [
+            'add',
+            'view',
+            'update',
         ]);
     }
     

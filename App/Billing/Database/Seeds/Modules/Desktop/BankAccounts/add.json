@@ -1,0 +1,21 @@
+{
+    "name": "Agregar cuentas bancarias",
+    "url": "/billing.php/modules/bankAccounts/add",
+    "description": "Módulo interfaz para agregar bankAccounts",
+    "nameSpace": "Melisa.billing.view.desktop.bankAccounts.add.Wrapper",
+    "task": {
+        "key": "task.billing.bankAccounts.add.access",
+        "name": "Acceso a agregar cuentas bancarias",
+        "description": "Permitir acceso a agregar cuentas bancarias",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.bankAccounts.add.access",
+        "name": "Opción para agregar cuentas bancarias",
+        "text": "Agregar cuentas bancarias"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.add.access",
+        "description": "Acceso al módulo agregar cuentas bancarias"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Crear cuenta bancaria",
+    "url": "/billing.php/bankAccounts/",
+    "description": "Módulo para crear cuenta bancaria",
+    "task": {
+        "key": "task.billing.bankAccounts.create",
+        "name": "Acceso a crear cuenta bancaria",
+        "description": "Permitir crear cuenta bancaria",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.create.success",
+        "description": "Cuenta bancaria creado"
+    }
+}

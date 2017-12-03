@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cuenta bancaria",
+    "url": "/billing.php/bankAccounts/delete/",
+    "description": "Módulo para eliminar cuenta bancaria",
+    "task": {
+        "key": "task.billing.bankAccounts.delete",
+        "name": "Acceso a eliminar cuenta bancaria",
+        "description": "Permitir eliminar cuenta bancaria",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.delete.success",
+        "description": "Cuenta bancaria eliminado"
+    }
+}

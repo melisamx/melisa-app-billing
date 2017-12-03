@@ -16,7 +16,7 @@ class ModulesUniversalSeeder extends InstallSeeder
     {        
         $this->invoice();
         $this->series();
-        $this->accounts();
+        $this->accountingAccounts();
         $this->debtsToPay();
         $this->accountsReceivable();
         $this->csd();
@@ -36,6 +36,18 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->customerGroupsIdentities();
         $this->repositories();
         $this->cfdi();
+        $this->bankAccounts();
+    }
+    
+    public function bankAccounts()
+    {
+        $this->installModuleJson('Universal/BankAccounts', [
+            'create',
+            'report',
+            'update',
+            'delete',
+            'paging',
+        ]);
     }
     
     public function cfdi()
@@ -221,9 +233,9 @@ class ModulesUniversalSeeder extends InstallSeeder
         ]);
     }
     
-    public function accounts()
+    public function accountingAccounts()
     {
-        $this->installModuleJson('Universal/Accounts', [
+        $this->installModuleJson('Universal/AccountingAccounts', [
             'create',
             'delete',
             'paging',

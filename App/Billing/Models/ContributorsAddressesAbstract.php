@@ -17,6 +17,7 @@ abstract class ContributorsAddressesAbstract extends Base
     public $incrementing = true;
     protected $fillable = [
         'id',
+        'idAccountingAccount',
         'idContributor',
         'idIdentityCreated',
         'idCountry',

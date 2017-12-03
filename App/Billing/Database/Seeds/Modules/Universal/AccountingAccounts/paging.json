@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de cuentas contables",
+    "url": "/billing.php/accountingAccounts/",
+    "description": "Módulo para paginar lista de cuentas contables",
+    "task": {
+        "key": "task.billing.accountingAccounts.paging",
+        "name": "Paginar lista de cuentas contables",
+        "description": "Permitir paginar lista de cuentas contables",
+        "pattern": "read"
+    }
+}

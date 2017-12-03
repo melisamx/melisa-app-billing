@@ -47,6 +47,13 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
             width: 130
         },
         {
+            dataIndex: 'balance',
+            text: 'Saldo',
+            formatter: 'usMoney',
+            align: 'center',
+            width: 130
+        },
+        {
             xtype: 'datecolumn',
             dataIndex: 'createdAt',
             text: 'Fecha creación',

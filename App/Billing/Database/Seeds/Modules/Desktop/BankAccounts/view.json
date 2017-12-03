@@ -1,0 +1,24 @@
+{
+    "name": "Ver cuentas bancarias",
+    "url": "/billing.php/modules/bankAccounts/view",
+    "description": "Módulo interfaz para ver cuentas bancarias",
+    "nameSpace": "Melisa.billing.view.desktop.bankAccounts.view.Wrapper",
+    "task": {
+        "key": "task.billing.bankAccounts.view.access",
+        "name": "Acceso a ver cuentas bancarias",
+        "description": "Permitir acceso a ver cuentas bancarias",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.bankAccounts.view.access",
+        "name": "Opción para ver cuentas bancarias",
+        "text": "Cuentas bancarias",
+        "iconClassSmall": "x-fa fa fa-credit-card",
+        "iconClassMedium": "x-fa fa fa-credit-card",
+        "iconClassLarge": "x-fa fa fa-credit-card"
+    },
+    "event": {
+        "key": "event.billing.bankAccounts.view.access",
+        "description": "Acceso al módulo ver cuentas bancarias"
+    }
+}

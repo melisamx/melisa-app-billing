@@ -1,0 +1,15 @@
+{
+    "name": "Crear cuenta contable",
+    "url": "/billing.php/accountingAccounts/",
+    "description": "Módulo para crear cuenta contable",
+    "task": {
+        "key": "task.billing.accountingAccounts.create",
+        "name": "Acceso a crear cuenta contable",
+        "description": "Permitir crear cuenta contable",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.accountingAccounts.create.success",
+        "description": "Cuenta contable creada"
+    }
+}
