@@ -49,6 +49,17 @@ Ext.define('Melisa.billing.view.universal.customersAddresses.add.WrapperModel', 
                     rootProperty: 'data'
                 }
             }
+        },
+        accountingAccounts: {
+            remoteFilter: true,
+            proxy: {
+                type: 'ajax',
+                url: '{modules.accountingAccounts}',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                }
+            }
         }
     }    
 });

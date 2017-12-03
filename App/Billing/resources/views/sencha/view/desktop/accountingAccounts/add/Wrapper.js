@@ -6,8 +6,8 @@ Ext.define('Melisa.billing.view.desktop.accountingAccounts.add.Wrapper', {
         'Melisa.billing.view.desktop.accountingAccounts.add.WrapperController'
     ],
     
-    iconCls: 'x-fa fa-users',
-    defaultFocus: 'txtKey',
+    iconCls: 'x-fa fa-copyright',
+    defaultFocus: 'txtName',
     controller: 'billingAccountingAccountsAdd',
     width: 400,
     height: 500,

@@ -10,6 +10,7 @@ Ext.define('Melisa.billing.view.desktop.accountingAccounts.add.Form', {
         {
             xtype: 'textfield',
             name: 'name',
+            itemId: 'txtName',
             fieldLabel: 'Nombre (se usara para mostrarse en los listados)'
         },
         {

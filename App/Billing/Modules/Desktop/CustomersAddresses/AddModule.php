@@ -40,6 +40,8 @@ class AddModule extends Outbuildings
             'states'=>$this->module('task.people.states.paging'),
             'municipalities'=>$this->module('task.people.municipalities.paging'),
             'settlements'=>$this->module('task.people.settlements.paging'),
+            'accountingAccounts'=>$this->module('task.billing.accountingAccounts.paging'),
+            'accountingAccountsAdd'=>$this->module('task.billing.accountingAccounts.add.access', false),
         ];
     }
     

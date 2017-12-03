@@ -32,6 +32,7 @@ class ReportLogic
                 'country',
                 'municipality',
                 'state',
+                'accountingAccount',
             ])
             ->findOrFail($id);
         
