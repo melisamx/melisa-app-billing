@@ -3,8 +3,6 @@
 namespace App\Billing\Logics\Provider\Profact;
 
 use Melisa\core\LogicBusiness;
-use App\Drive\Logics\Files\ReportLogic;
-use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
 use App\Billing\Repositories\InvoiceRepository;
 use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
@@ -94,6 +92,7 @@ class InvoiceGenerate
         if( env('PROFACT_ENVIROMENT') === 'sandbox') {
             $invoice->transmitter->rfc = env('PROFACT_RFC_TRANSMITTER');
             $invoice->transmitter->fiscal_regime->key = '601';
+            $invoice->customer->rfc = env('PROFACT_RFC_CUSTOMER');
         }
         
         $xml = view('layouts/invoice/xml33', [

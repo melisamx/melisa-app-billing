@@ -70,6 +70,7 @@ class ReportLogic
                         'country',
                         'state',
                         'municipality',
+                        'accountingAccount',
                     ]);
                 },
             ])

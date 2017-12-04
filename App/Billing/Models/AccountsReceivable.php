@@ -19,4 +19,9 @@ class AccountsReceivable extends AccountsReceivableAbstract
         return $this->hasOne('App\Billing\Models\DebtsToPayStatus', 'id', 'idDebtsToPayStatus');
     }
     
+    public function invoice()
+    {
+        return $this->hasOne('App\Billing\Models\Invoice', 'id', 'idInvoice');
+    }
+    
 }

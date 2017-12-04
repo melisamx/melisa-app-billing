@@ -7,7 +7,7 @@ use App\Billing\Repositories\AccountsReceivableRepository;
 use App\Billing\Logics\Invoice\ReportLogic;
 use App\Billing\Logics\Invoice\GeneratePdfLogic;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Repositories\AccountsRepository;
+use App\Billing\Repositories\AccountingAccountsRepository;
 
 /**
  * Register debts to pay
@@ -25,7 +25,7 @@ class AutoRegisterLogic
 
     public function __construct(
         AccountsReceivableRepository $accRecRepo,
-        AccountsRepository $accountRepo,
+        AccountingAccountsRepository $accountRepo,
         ReportLogic $invoiceLogic
     ) {
         $this->accRecRepo = $accRecRepo;
@@ -51,13 +51,7 @@ class AutoRegisterLogic
             return $this->accRecRepo->rollback();
         }
         
-        $account = $this->getAccount();
-        
-        if( !$account) {
-            return $this->accRecRepo->rollback();
-        }
-        
-        $idAccRec = $this->createAccountReceivable($invoice, $account);
+        $idAccRec = $this->createAccountReceivable($invoice);
         
         if( !$idAccRec) {
             return false;
@@ -74,17 +68,6 @@ class AutoRegisterLogic
         
         $this->accRecRepo->commit();
         return $event;
-    }
-    
-    public function getAccount()
-    {
-        $result = $this->accountRepo->getDefaultInvoice();
-        
-        if( $result) {
-            return $result;
-        }
-        
-        return $this->error('Imposible get account use on invoice');
     }
     
     public function generateInvoicePdf(&$invoice)
@@ -123,18 +106,19 @@ class AutoRegisterLogic
         return true;
     }
     
-    public function createAccountReceivable(&$invoice, &$account)
+    public function createAccountReceivable(&$invoice)
     {
         $dateVoucher = new \Carbon\Carbon($invoice->createdAt);
         
         $result = $this->accRecRepo->createNew([
             'idIdentityCreated'=>$this->getIdentity(),
-            'idAccount'=>$account->id,
+            'idAccountingAccount'=>$invoice->customer_address->accounting_account->id,
             'idFileVoucher'=>$invoice->idFilePdf,
             'idInvoice'=>$invoice->id,
             'amountCharged'=>(float)$invoice->total,
             'dateVoucher'=>new \Carbon\Carbon($dateVoucher),
-            'dueDate'=>$dateVoucher->addDays($account->expirationDays),
+            'balance'=>(float)$invoice->total,
+            'dueDate'=>$dateVoucher->addDays($invoice->customer_address->accounting_account->expirationDays),
         ]);
         
         if( $result) {
@@ -142,7 +126,7 @@ class AutoRegisterLogic
         }
         
         return $this->error('Imposible auto registrar cuenta por cobrar a la cuenta {a} por la factura {i}', [
-            'a'=>$account->id,
+            'a'=>$invoice->customer_address->accounting_account->id,
             'i'=>$invoice->id,
         ]);
     }

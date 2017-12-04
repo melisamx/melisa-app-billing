@@ -19,6 +19,18 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
             flex: 1
         },
         {
+            dataIndex: 'invoice',
+            text: 'Factura',
+            flex: 1,
+            renderer: function(v, x, record) {
+                var invoice = record.get('invoice');
+                return [
+                    invoice.serie.serie,
+                    invoice.folio
+                ].join('-');
+            }
+        },
+        {
             dataIndex: 'dateVoucher',
             text: 'Diás para vencer',
             align: 'center',

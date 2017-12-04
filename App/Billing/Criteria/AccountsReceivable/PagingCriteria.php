@@ -18,7 +18,8 @@ class PagingCriteria extends FilterCriteria
     public function apply($model, $repository, array $input = [])
     {
         $builder = parent::apply($model, $repository, $input, [
-            'account'=>'a.name'
+            'account'=>'a.name',
+            'invoice'=>'i.folio',
         ]);
         $builder = $this->applySort($builder, $input);
         
@@ -41,7 +42,26 @@ class PagingCriteria extends FilterCriteria
                     ') as totalChargedExpired'
                 ]))
             ])
-            ->join('accounts as a', 'a.id', '=', 'accountsReceivable.idAccount')
+            ->with([
+                'invoice'=>function($query) {
+                    $query
+                        ->select([
+                            'id',
+                            'idSerie',
+                            'folio'
+                        ])
+                        ->with([
+                            'serie'=>function($query) {
+                                $query->select([
+                                    'id',
+                                    'serie'
+                                ]);
+                            }
+                        ]);
+                }
+            ])
+            ->join('accountingAccounts as a', 'a.id', '=', 'accountsReceivable.idAccountingAccount')
+            ->leftjoin('invoice as i', 'i.id', '=', 'accountsReceivable.idInvoice')
             ->where('idAccountReceivableStatus', AccountsReceivableStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }
