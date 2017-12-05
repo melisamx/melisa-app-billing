@@ -191,7 +191,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             },
             plugins: {
                 ptype: 'buttonconfirmation',
-                messageConfirmation: '¿Realmente desea generar a cuenta por cobrar?',
+                messageConfirmation: '¿Realmente desea generar cuenta(s) por cobrar?',
                 messageSuccess: 'Cuenta por cobrar generada',
                 fieldId: 'idInvoice',
                 fieldIdRecord: 'id'
@@ -208,7 +208,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             },
             plugins: {
                 ptype: 'buttonconfirmation',
-                messageConfirmation: '¿Realmente desea generar a cuenta por pagar?',
+                messageConfirmation: '¿Realmente desea generar cuenta(s) por pagar?',
                 messageSuccess: 'Cuenta por pagar generada',
                 fieldId: 'idInvoice',
                 fieldIdRecord: 'id'
