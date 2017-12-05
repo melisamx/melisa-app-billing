@@ -85,7 +85,8 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.add.Form', {
         {
             items: [
                 {
-                    xtype: 'billingAccountingAccountsCombo'
+                    xtype: 'billingAccountingAccountsCombo',
+                    allowBlank: true
                 }
             ]
         },
