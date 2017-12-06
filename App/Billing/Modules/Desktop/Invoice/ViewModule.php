@@ -27,6 +27,7 @@ class ViewModule extends Outbuildings
                     'delete'=>$this->module('task.billing.invoice.delete', false),
                     'cfdi'=>$this->module('task.billing.cfdi.create', false),
                     'accountReceivable'=>$this->module('task.billing.accountsReceivable.create', false),
+                    'debtsToPay'=>$this->module('task.billing.debtsToPay.create', false),
                     'filesView'=>[
                         'pdf'=>$this->module('task.billing.invoice.pdf'),
                         'xml'=>$this->module('task.billing.invoice.xml'),

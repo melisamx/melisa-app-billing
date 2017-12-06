@@ -203,7 +203,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
             disabled: true,
             bind: {
                 disabled: '{!griInvoice.selection || !griInvoice.selection.uuid}',
-                melisa: '{modules.debsToPay}',
+                melisa: '{modules.debtsToPay}',
                 record: '{griInvoice.selection}'
             },
             plugins: {

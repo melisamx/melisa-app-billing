@@ -41,7 +41,7 @@ class PagingCriteria extends FilterCriteria
                     ') as totalPayableExpired'
                 ]))
             ])
-            ->join('accounts as a', 'a.id', '=', 'debtsToPay.idAccount')
+            ->join('accountingAccounts as a', 'a.id', '=', 'debtsToPay.idAccountingAccount')
             ->where('idDebtsToPayStatus', DebtsToPayStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }
