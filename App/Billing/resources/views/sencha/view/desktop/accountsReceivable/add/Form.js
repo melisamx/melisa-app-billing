@@ -1,6 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.debtsToPay.add.Form', {
+Ext.define('Melisa.billing.view.desktop.accountsReceivable.add.Form', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.billingDebtsToPayAddForm',
+    alias: 'widget.billingAccountsReceivableAddForm',
     
     defaults: {
         allowBlank: false,
@@ -9,11 +9,11 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.add.Form', {
     items: [
         {
             xtype: 'combodefault',
-            name: 'idAccount',
-            itemId: 'cmbAccounts',
-            fieldLabel: 'Cuenta',
+            name: 'idContributorAddress',
+            itemId: 'cmbCustomers',
+            fieldLabel: 'Cliente',
             bind: {
-                store: '{accounts}'
+                store: '{customers}'
             }
         },
         {

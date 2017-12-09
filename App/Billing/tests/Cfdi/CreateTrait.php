@@ -17,16 +17,17 @@ trait CreateTrait
         $response = $this->actingAs($user)
             ->json('post', 'cfdi', [
                 'id'=>$idInvoice
-            ])
-            ->assertStatus(200)
-            ->assertJson([
-                'success'=>true
             ]);
         
+        $this->responseSuccess($response);
         $result = json_decode($response->getContent());
         
+        $this->assertTrue(isset($result->data));
+        $this->assertTrue(isset($result->data->idDocument));
+        $this->assertTrue(isset($result->data->uuid));
+        
         $this->assertDatabaseHas('documents', [
-            'id'=>$result->data->idInvoice,
+            'id'=>$result->data->idDocument,
             'uuid'=>$result->data->uuid
         ], 'billing');
         

@@ -15,11 +15,13 @@ class CreateTableProviders extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {            
             $table->uuid('id')->primary();
+            $table->uuid('idIdentityCreated');
             $table->string('name', 95)->unique();
             $table->string('slug', 150)->unique();
-            $table->uuid('idIdentityCreated');
+            $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('accountingAccount', 20)->nullable();
+            $table->smallInteger('expirationDays')->default(30)->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             

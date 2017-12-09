@@ -13,25 +13,25 @@ class DocumentStatus extends DocumentStatusAbstract
     const GENERATING_CFDI = 'generatingCFDI';
     const NNEW = 'new';
     const CANCELLED = 'cancelled';
-
-    public function scopePendingGenerateCfdi()
+    
+    public function scopePendingGenerateCfdi($query)
     {
-        return $this->where('key', self::PENDING_GENERATE_CFDI)->first();
+        return $query->where('key', self::PENDING_GENERATE_CFDI);
+    }
+    
+    public function scopeErrorGenerateCfdi($query)
+    {
+        return $query->where('key', self::PENDING_GENERATE_CFDI);
     }
 
-    public function scopeErrorGenerateCfdi()
+    public function scopeGeneratingCfdi($query)
     {
-        return $this->where('key', self::PENDING_GENERATE_CFDI)->first();
+        return $query->where('key', self::GENERATING_CFDI);
     }
 
-    public function scopeGeneratingCfdi()
+    public function scopeNewInvoice($query)
     {
-        return $this->where('key', self::GENERATING_CFDI)->first();
-    }
-
-    public function scopeNewInvoice()
-    {
-        return $this->where('key', self::NNEW)->first();
+        return $query->where('key', self::NNEW);
     }
     
 }

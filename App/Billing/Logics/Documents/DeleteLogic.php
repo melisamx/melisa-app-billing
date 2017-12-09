@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Documents;
 
 use Melisa\Laravel\Logics\DeleteLogic as BaseDeleteLogic;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Logics\Documents\ReportLogic;
 use App\Billing\Models\InvoiceStatus;
 
@@ -20,7 +20,7 @@ class DeleteLogic extends BaseDeleteLogic
     protected $logicReport;
     
     public function __construct(
-        InvoiceRepository $repository
+        DocumentsRepository $repository
     )
     {
         parent::__construct($repository);
@@ -29,7 +29,7 @@ class DeleteLogic extends BaseDeleteLogic
     
     public function delete(&$input)
     {        
-        $documents = $this->getInvoice($input['id']);
+        $documents = $this->getDocument($input['id']);
         
         if( !$documents) {
             return false;
@@ -42,12 +42,12 @@ class DeleteLogic extends BaseDeleteLogic
         return parent::delete($input);
     }
     
-    public function getInvoice($id)
+    public function getDocument($id)
     {
         $documents = $this->logicReport->init($id);
         
         if( !$documents) {
-            return $this->error('Imposible obtener reporte de la factura {f}', [
+            return $this->error('Imposible obtener reporte del documento {f}', [
                 'f'=>$id
             ]);
         }

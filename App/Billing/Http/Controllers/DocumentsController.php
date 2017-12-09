@@ -17,7 +17,7 @@ class DocumentsController extends CrudController
 {    
     
     protected $create = [
-        'logic'=>'CreateLogic'
+        'logic'=>'Invoice\CreateLogic'
     ];
     
     protected $update = [

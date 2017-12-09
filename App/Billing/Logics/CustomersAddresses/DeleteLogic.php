@@ -4,7 +4,7 @@ namespace App\Billing\Logics\CustomersAddresses;
 
 use Melisa\Laravel\Logics\DeleteLogic as BaseDeleteLogic;
 use App\Billing\Repositories\ContributorsAddressesRepository;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 
 /**
  * Delete addresse contributor
@@ -14,15 +14,15 @@ use App\Billing\Repositories\InvoiceRepository;
 class DeleteLogic extends BaseDeleteLogic
 {
     
-    protected $invoiceRepo;
+    protected $repoDocuments;
     
     public function __construct(
         ContributorsAddressesRepository $repo,
-        InvoiceRepository $invoiceRepo
+        DocumentsRepository $repoDocuments
     )
     {
         $this->repository = $repo;
-        $this->invoiceRepo = $invoiceRepo;
+        $this->repoDocuments = $repoDocuments;
     }
     
     public function delete(&$input)
@@ -36,7 +36,7 @@ class DeleteLogic extends BaseDeleteLogic
     
     public function isValidDelete($input)
     {
-        $documents = $this->invoiceRepo->findWhere([
+        $documents = $this->repoDocuments->findWhere([
             'idContributorAddress'=>$input['id']
         ]);
         

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Logics\Fake;
+namespace App\Billing\Logics\Fake\Documents;
 
 use Melisa\Laravel\Database\InstallSeeder;
 use App\People\Models\Countries;
@@ -17,7 +17,7 @@ use App\Billing\Models\FiscalRegime;
 use App\Billing\Models\Repositories;
 
 /**
- * Fake documents
+ * Fake invoice
  *
  * @author Luis Josafat Heredia Contreras
  */

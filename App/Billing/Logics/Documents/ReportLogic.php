@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Documents;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
@@ -15,20 +15,20 @@ class ReportLogic
 {
     use LogicBusiness;
       
-    protected $repoInvoice;
+    protected $repoDocuments;
     protected $convertNumber;
 
     public function __construct(
-        InvoiceRepository $repoInvoice
+        DocumentsRepository $repoDocuments
     )
     {
-        $this->repoInvoice = $repoInvoice;
+        $this->repoDocuments = $repoDocuments;
         $this->convertNumber = new NumberToLetterConverter();
     }
     
     public function init($id)
     {
-        $record = $this->repoInvoice
+        $record = $this->repoDocuments
             ->with([
                 'status',
                 'serie',
@@ -70,7 +70,6 @@ class ReportLogic
                         'country',
                         'state',
                         'municipality',
-                        'accountingAccount',
                     ]);
                 },
             ])

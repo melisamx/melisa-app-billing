@@ -6,7 +6,7 @@ namespace App\Billing\Models;
  * 
  * @author Luis Josafat Heredia Contreras
  */
-class DocumentConceptsTaxes extends DocumentConceptsTaxesAbstract
+class DocumentsConceptsTaxes extends DocumentsConceptsTaxesAbstract
 {
     
     protected $casts = [

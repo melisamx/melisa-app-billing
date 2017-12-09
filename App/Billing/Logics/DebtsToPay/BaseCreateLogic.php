@@ -4,8 +4,8 @@ namespace App\Billing\Logics\DebtsToPay;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\DebtsToPayRepository;
-use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Models\InvoiceStatus;
+use App\Billing\Repositories\DocumentsRepository;
+use App\Billing\Models\DocumentStatus;
 
 /**
  * Base debts to pay create
@@ -17,16 +17,16 @@ class BaseCreateLogic
     use LogicBusiness;
     
     protected $eventSuccess = 'billing.debtsToPay.create.success';
-    protected $repoInvoice;
+    protected $repoDocuments;
     protected $repoDebtsToPay;
 
     public function __construct(
         DebtsToPayRepository $repoDebtsToPay,
-        InvoiceRepository $repoInvoice
+        DocumentsRepository $repoDocuments
     )
     {
         $this->repoDebtsToPay = $repoDebtsToPay;
-        $this->repoInvoice = $repoInvoice;
+        $this->repoDocuments = $repoDocuments;
     }
     
     public function init(array $input)
@@ -45,16 +45,16 @@ class BaseCreateLogic
     
     public function isValid(&$input)
     {
-        $documents = $this->repoInvoice
+        $documents = $this->repoDocuments
             ->getModel()
             ->with('status')
-            ->find($input['idInvoice']);
+            ->find($input['idDocument']);
         
         if( !$documents) {
             return $this->error('No existe la factura');
         }
         
-        if( $documents->status->key === InvoiceStatus::NNEW) {
+        if( $documents->status->key === DocumentStatus::NNEW) {
             return true;
         }
         

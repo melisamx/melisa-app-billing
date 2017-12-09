@@ -1,8 +1,8 @@
-Ext.define('Melisa.billing.view.desktop.debtsToPay.add.WrapperController', {
+Ext.define('Melisa.billing.view.desktop.accountsReceivable.add.WrapperController', {
     extend: 'Melisa.controller.Create',
-    alias: 'controller.billingDebtsToPayAdd',
+    alias: 'controller.billingAccountsReceivableAddForm',
     
-    eventSuccess: 'event.billing.debtsToPay.create.success',
+    eventSuccess: 'event.billing.accountsReceivable.create.success',
     
     listeners: {
         selectedfile: 'onSelectedFile'

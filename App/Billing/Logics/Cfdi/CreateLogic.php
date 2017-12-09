@@ -19,7 +19,7 @@ class CreateLogic
 {
     use LogicBusiness;
     
-    protected $eventSuccess = 'billing.documents.new.success';
+    protected $eventSuccess = 'billing.cfdi.success';
     protected $eventError = 'billing.cfdi.error';
     
     protected $repoDocument;
@@ -76,7 +76,7 @@ class CreateLogic
         $folio = $document->serie->folioCurrent + 1;
         $carbon = Carbon::now();
         $dateCfdi = $carbon->format('Y-m-d\TH:i:s');
-        $status = DocumentStatus::generatingCfdi();
+        $status = DocumentStatus::generatingCfdi()->first();
         
         $document->folio = $folio;
         $document->dateCfdi = $dateCfdi;
@@ -97,7 +97,7 @@ class CreateLogic
     
     public function setStatusError($idDocument)
     {
-        $status = DocumentStatus::errorGenerateCfdi();
+        $status = DocumentStatus::errorGenerateCfdi()->first();
         
         if( !$this->updateDocument($idDocument, [
             'idDocumentStatus'=>$status->id
@@ -119,7 +119,7 @@ class CreateLogic
     
     public function setStatusNew($idDocument, $uuid)
     {
-        $status = DocumentStatus::newInvoice();
+        $status = DocumentStatus::newInvoice()->first();
         
         if( !$this->updateDocument($idDocument, [
             'idDocumentStatus'=>$status->id

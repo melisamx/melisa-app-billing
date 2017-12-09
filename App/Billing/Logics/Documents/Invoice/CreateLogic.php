@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Billing\Logics\Documents;
+namespace App\Billing\Logics\Documents\Invoice;
 
 use Melisa\Laravel\Logics\CreateLogic as BaseCreateLogic;
-use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Repositories\InvoiceConceptsRepository;
-use App\Billing\Repositories\InvoiceConceptsTaxesRepository;
+use App\Billing\Repositories\DocumentsRepository;
+use App\Billing\Repositories\DocumentsConceptsRepository;
+use App\Billing\Repositories\DocumentsConceptsTaxesRepository;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Repositories\PaymentMethodsRepository;
-use App\Billing\Repositories\InvoiceStatusRepository;
+use App\Billing\Repositories\DocumentStatusRepository;
 use App\Billing\Repositories\VoucherTypesRepository;
 use App\Billing\Repositories\TaxesRepository;
 use App\Billing\Repositories\TaxActionsRepository;
 use App\Billing\Repositories\TypesFactorRepository;
 use App\Billing\Repositories\UseCfdiRepository;
 use App\Billing\Repositories\ContributorsAddressesRepository;
+use App\Billing\Repositories\DocumentTypesRepository;
 
 class CreateLogic extends BaseCreateLogic
 {
     
-    protected $fireEvent = 'billing.documents.success';
+    protected $fireEvent = 'billing.documents.invoice.success';
     protected $repoSeries;
     protected $repoPaymentMethod;
-    protected $repoInvoiceStatus;
+    protected $repoDocumentStatus;
     protected $repoVoucherTypes;
     protected $repoConcepts;
     protected $repoTaxes;
@@ -31,26 +32,28 @@ class CreateLogic extends BaseCreateLogic
     protected $repoTypesFactor;
     protected $repoUseCfdi;
     protected $repoContributorAddresses;
+    protected $repoDocTypes;
 
     public function __construct(
-        InvoiceRepository $repository,
-        InvoiceConceptsRepository $repoConcepts,
-        InvoiceConceptsTaxesRepository $repoConceptsTax,
+        DocumentsRepository $repository,
+        DocumentsConceptsRepository $repoConcepts,
+        DocumentsConceptsTaxesRepository $repoConceptsTax,
         SeriesRepository $repoSeries,
         PaymentMethodsRepository $repoPaymentMethod,
-        InvoiceStatusRepository $repoInvoiceStatus,
+        DocumentStatusRepository $repoDocumentStatus,
         VoucherTypesRepository $repoVoucherTypes,
         TaxesRepository $repoTaxes,
         TaxActionsRepository $repoTaxActions,
         TypesFactorRepository $repoTypesFactor,
         UseCfdiRepository $repoUseCfdi,
-        ContributorsAddressesRepository $repoContributorAddresses
+        ContributorsAddressesRepository $repoContributorAddresses,
+        DocumentTypesRepository $repoDocTypes
     )
     {
         $this->repository = $repository;
         $this->repoSeries = $repoSeries;
         $this->repoPaymentMethod = $repoPaymentMethod;
-        $this->repoInvoiceStatus = $repoInvoiceStatus;
+        $this->repoDocumentStatus = $repoDocumentStatus;
         $this->repoVoucherTypes = $repoVoucherTypes;
         $this->repoConcepts = $repoConcepts;
         $this->repoTaxes = $repoTaxes;
@@ -59,67 +62,38 @@ class CreateLogic extends BaseCreateLogic
         $this->repoTypesFactor = $repoTypesFactor;
         $this->repoUseCfdi = $repoUseCfdi;
         $this->repoContributorAddresses = $repoContributorAddresses;
+        $this->repoDocTypes = $repoDocTypes;
     }
     
     public function create(&$input)
-    {
-        if( !$this->isValid($input)) {
-            return false;
-        }
-        
+    {        
         if( !$this->getDefaultsValue($input)) {
             return false;
         }
         
-        $idInvoice = parent::create($input);
+        $idDocument = parent::create($input);
         
-        if( !$idInvoice) {
+        if( !$idDocument) {
             return false;
         }
         
-        $result = $this->createConcepts($idInvoice, $input['concepts']);
+        $result = $this->createConcepts($idDocument, $input['concepts']);
         
         if( !$result) {
             return false;
         }
         
-        return $idInvoice;
+        return $idDocument;
     }
     
-    public function isValid(&$input)
-    {
-        $result = $this->repoContributorAddresses->with([
-            'state',
-            'municipality',
-            'customer'=>function($query) {
-                $query->with([
-                    'contributor',
-                ]);
-            }
-        ])->find($input['idCustomerAddress']);
-        
-        if( !is_null($result['idAccountingAccount'])) {
-            return true;
-        }
-        
-        return $this->error('No se ha asignado cuenta contable al cliente {n} {r} en la dirección {a}, {s}, {m}, {c}', [
-            'n'=>$result->customer->contributor->name,
-            'r'=>$result->customer->contributor->rfc,
-            'a'=>$result->address,
-            's'=>$result->state->name,
-            'm'=>$result->municipality->name,
-            'c'=>$result->postalCode,
-        ]);
-    }
-    
-    public function createConcepts($idInvoice, $concepts)
+    public function createConcepts($idDocument, $concepts)
     {
         $idIdentity = $this->getIdentity();
         
         foreach($concepts as $concept) {
             $idConcept = $this->repoConcepts->create([
                 'idIdentityCreated'=>$idIdentity,
-                'idInvoice'=>$idInvoice,
+                'idDocument'=>$idDocument,
                 'idConcept'=>$concept['id'],
                 'idConceptKey'=>$concept['idConceptKey'],
                 'idConceptUnit'=>$concept['idConceptUnit'],
@@ -133,7 +107,7 @@ class CreateLogic extends BaseCreateLogic
             if( !$idConcept) {
                 return $this->error('Imposible registrar concepto {c} de la factura {i}', [
                     'c'=>$concept['id'],
-                    'i'=>$idInvoice
+                    'i'=>$idDocument
                 ]);
             }
             
@@ -147,7 +121,7 @@ class CreateLogic extends BaseCreateLogic
         return true;
     }
     
-    public function createConceptTaxes($idInvoiceConcept, $taxes)
+    public function createConceptTaxes($idDocumentConcept, $taxes)
     {
         $ids = [];
         $idIdentity = $this->getIdentity();
@@ -181,7 +155,7 @@ class CreateLogic extends BaseCreateLogic
             }
             
             if( !$this->repoConceptsTax->create([
-                'idInvoiceConcept'=>$idInvoiceConcept,
+                'idDocumentConcept'=>$idDocumentConcept,
                 'idIdentityCreated'=>$idIdentity,
                 'idTax'=>$idTax,
                 'idTaxAction'=>$idTaxAction,
@@ -242,7 +216,8 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
-        $input ['idInvoiceStatus']= $this->getInvoiceStatus();
+        $input ['idDocumentStatus']= $this->getInvoiceStatus();
+        $input ['idDocumentType']= $this->getDocumentType();
         $input ['version']= $this->getVersion();
         
         if( !isset($input['idSerie']) && !$this->getSerieDefault($input)) {
@@ -258,6 +233,20 @@ class CreateLogic extends BaseCreateLogic
         }
         
         return true;
+    }
+    
+    public function getDocumentType()
+    {
+        $result = $this->repoDocTypes
+            ->getModel()
+            ->invoice()
+            ->first();
+        
+        if( $result) {
+            return $result->id;
+        }
+        
+        return $this->error('Imposible obtener el tipo de documento factura');
     }
     
     public function getVersion()
@@ -281,9 +270,10 @@ class CreateLogic extends BaseCreateLogic
     
     public function getInvoiceStatus()
     {
-        $result = $this->repoInvoiceStatus
+        $result = $this->repoDocumentStatus
             ->getModel()
-            ->pendingGenerateCfdi();
+            ->pendingGenerateCfdi()
+            ->first();
         
         if( $result) {
             return $result->id;

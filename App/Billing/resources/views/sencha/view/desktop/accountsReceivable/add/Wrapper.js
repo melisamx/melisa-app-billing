@@ -1,24 +1,24 @@
-Ext.define('Melisa.billing.view.desktop.debtsToPay.add.Wrapper', {
+Ext.define('Melisa.billing.view.desktop.accountsReceivable.add.Wrapper', {
     extend: 'Melisa.view.desktop.wrapper.window.Add',
     
     requires: [
-        'Melisa.billing.view.desktop.debtsToPay.add.Form',
-        'Melisa.billing.view.desktop.debtsToPay.add.WrapperController',
-        'Melisa.billing.view.universal.debtsToPay.add.WrapperModel'
+        'Melisa.billing.view.desktop.accountsReceivable.add.Form',
+        'Melisa.billing.view.desktop.accountsReceivable.add.WrapperController',
+        'Melisa.billing.view.universal.accountsReceivable.add.WrapperModel'
     ],
     
     iconCls: 'x-fa fa-hand-paper-o',
-    defaultFocus: 'cmbAccounts',
-    controller: 'billingDebtsToPayAdd',
+    defaultFocus: 'cmbCustomers',
+    controller: 'billingAccountsReceivableAdd',
     width: 500,
     height: 600,
     scrollable: true,
     viewModel: {
-        type: 'billingDebtsToPayAdd'
+        type: 'billingAccountsReceivableAdd'
     },
     items: [
         {
-            xtype: 'billingDebtsToPayAddForm'
+            xtype: 'billingAccountsReceivableAddForm'
         }
     ]
 });

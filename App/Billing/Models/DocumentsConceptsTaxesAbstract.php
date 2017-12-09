@@ -9,10 +9,10 @@ use Melisa\Laravel\Models\Base;
  *
  * @author Luis Josafat Heredia Contreras
  */
-abstract class DocumentConceptsTaxesAbstract extends Base
+abstract class DocumentsConceptsTaxesAbstract extends Base
 {    
     protected $connection = 'billing';
-    protected $table = 'documentConceptsTaxes';
+    protected $table = 'documentsConceptsTaxes';
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [

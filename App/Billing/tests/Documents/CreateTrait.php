@@ -2,9 +2,9 @@
 
 namespace App\Billing\tests\Documents;
 
-use App\Billing\Models\InvoiceConcepts;
+use App\Billing\Models\DocumentsConcepts;
 use App\Billing\Models\Taxes;
-use App\Billing\Logics\Fake\InvoiceLogic;
+use App\Billing\Logics\Fake\Documents\InvoiceLogic;
 
 /**
  * 
@@ -20,12 +20,9 @@ trait CreateTrait
         $data = app(InvoiceLogic::class)->getData();
         
         $response = $this->actingAs($user)
-            ->json('post', 'documents', $data)
-            ->assertStatus(200)
-            ->assertJson([
-                'success'=>true
-            ]);
+            ->json('post', 'documents', $data);
         
+        $this->responseCreatedSuccess($response);
         $result = json_decode($response->getContent());
         
         $this->assertDatabaseHas('documents', [
@@ -33,22 +30,22 @@ trait CreateTrait
         ], 'billing');
         
         foreach(json_decode($data['concepts'], true) as $concept) {
-            $this->assertDatabaseHas('invoiceConcepts', [
-                'idInvoice'=>$result->data->id,
+            $this->assertDatabaseHas('documentsConcepts', [
+                'idDocument'=>$result->data->id,
                 'idConcept'=>$concept['id'],
                 'amount'=>$concept['quantity'] * $concept['unitValue'],
             ], 'billing');
             
-            $recordConcept = InvoiceConcepts::where([
-                'idInvoice'=>$result->data->id,
+            $recordConcept = DocumentsConcepts::where([
+                'idDocument'=>$result->data->id,
                 'idConcept'=>$concept['id'],
             ])->first();
             
             foreach($concept['taxes'] as $tax) {
                 $recordTax = Taxes::where('name', $tax['tax'])->first();
                 
-                $this->assertDatabaseHas('invoiceConceptsTaxes', [
-                    'idInvoiceConcept'=>$recordConcept->id,
+                $this->assertDatabaseHas('documentsConceptsTaxes', [
+                    'idDocumentConcept'=>$recordConcept->id,
                     'idTax'=>$recordTax->id,
                     'amount'=>round($tax['base'] * $tax['rateOrFee'], 2),
                 ], 'billing');

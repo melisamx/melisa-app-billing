@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Documents;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Models\DocumentStatus;
 use App\Billing\Logics\Provider\Profact\InvoiceCancel;
 
@@ -14,39 +14,39 @@ class CancelLogic
     protected $repoDocument;
 
     public function __construct(
-        InvoiceRepository $documents
+        DocumentsRepository $repoDocuments
     )
     {
-        $this->repoDocument = $documents;
+        $this->repoDocument = $repoDocuments;
     }
     
     public function init(array $input)
     {
-        $documents = $this->getDocument($input['id']);
+        $document = $this->getDocument($input['id']);
         
-        if( !$documents) {
+        if( !$document) {
             return $this->error('Imposible obtener el documento a cancelar');
         }
         
-        if( !$this->isValidDocument($documents)) {
+        if( !$this->isValidDocument($document)) {
             return false;
         }
         
-        return $this->cancelLogic($documents);
+        return $this->cancelLogic($document);
     }
     
-    public function cancelLogic(&$documents)
+    public function cancelLogic(&$repoDocuments)
     {
-        switch ($documents->version)
+        switch ($repoDocuments->version)
         {
             default:
-                return app(InvoiceCancel::class)->init($documents);
+                return app(InvoiceCancel::class)->init($repoDocuments);
         }
     }
     
-    public function isValidDocument(&$documents)
+    public function isValidDocument(&$repoDocuments)
     {
-        if( $documents->idDocumentStatus === DocumentStatus::NNEW) {
+        if( $repoDocuments->idDocumentStatus === DocumentStatus::NNEW) {
             return true;
         }
         

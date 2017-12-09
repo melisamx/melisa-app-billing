@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\CustomersAddresses;
 
 use App\Billing\Logics\CustomersAddresses\CreateLogic;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Repositories\ContributorsAddressesRepository;
 
 /**
@@ -15,15 +15,15 @@ class UpdateLogic extends CreateLogic
 {
     
     protected $fieldIdIdentityCreated = 'idIdentityUpdated';
-    protected $invoiceRepo;
+    protected $repoDocuments;
     
     public function __construct(
         ContributorsAddressesRepository $repo,
-        InvoiceRepository $invoiceRepo
+        DocumentsRepository $repoDocuments
     )
     {
         $this->repository = $repo;
-        $this->invoiceRepo = $invoiceRepo;
+        $this->repoDocuments = $repoDocuments;
     }
     
     public function create(&$input)
@@ -65,7 +65,7 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate($input)
     {
-        $documents = $this->invoiceRepo->findWhere([
+        $documents = $this->repoDocuments->findWhere([
             'idCustomerAddress'=>$input['id']
         ]);
         

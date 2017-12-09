@@ -9,11 +9,11 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.add.Form', {
     items: [
         {
             xtype: 'combodefault',
-            name: 'idAccount',
-            itemId: 'cmbAccounts',
-            fieldLabel: 'Cuenta',
+            name: 'idProvider',
+            itemId: 'cmbProviders',
+            fieldLabel: 'Provedor',
             bind: {
-                store: '{accounts}'
+                store: '{providers}'
             }
         },
         {

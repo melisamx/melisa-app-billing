@@ -9,6 +9,11 @@ namespace App\Billing\Models;
 class DocumentTypes extends DocumentTypesAbstract
 {
     
+    const INVOICE = 'Factura';
     
+    public function scopeInvoice(&$query)
+    {
+        return $query->where('name', 'Factura');
+    }
     
 }

@@ -8,12 +8,12 @@ use Melisa\Repositories\Eloquent\Repository;
  * 
  * @author Luis Josafat Heredia Contreras
  */
-class DocumentConceptsTaxesRepository extends Repository
+class DocumentsConceptsTaxesRepository extends Repository
 {
     
     public function model()
     {        
-        return 'App\Billing\Models\DocumentConceptsTaxes';        
+        return 'App\Billing\Models\DocumentsConceptsTaxes';        
     }
     
 }

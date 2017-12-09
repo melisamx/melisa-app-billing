@@ -13,7 +13,7 @@ class CreateTableDocumentsConceptsTaxes extends Migration
      */
     public function up()
     {
-        Schema::create('documentConceptsTaxes', function (Blueprint $table) {
+        Schema::create('documentsConceptsTaxes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idDocumentConcept');
             $table->smallInteger('idTax');
@@ -53,6 +53,6 @@ class CreateTableDocumentsConceptsTaxes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documentConceptsTaxes');
+        Schema::dropIfExists('documentsConceptsTaxes');
     }
 }

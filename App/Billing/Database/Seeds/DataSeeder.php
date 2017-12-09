@@ -4,7 +4,7 @@ namespace App\Billing\Database\Seeds;
 
 use Melisa\Laravel\Database\InstallSeeder;
 use App\Billing\Database\Seeds\Data\SeriesSeeder;
-use App\Billing\Database\Seeds\Data\AccountingAccountsSeeder;
+use App\Billing\Database\Seeds\Data\ProvidersSeeder;
 use App\Billing\Database\Seeds\Data\RepositoriesSeeder;
 use App\Billing\Database\Seeds\Data\RepositoriesIdentitiesSeeder;
 
@@ -22,7 +22,8 @@ class DataSeeder extends InstallSeeder
             'voucherTypes',
             'fiscalRegime',
             'taxes',
-            'invoiceStatus',
+            'documentStatus',
+            'documentTypes',
             'debtsToPayStatus',
             'accountsReceivableStatus',
             'waytopay',
@@ -34,7 +35,7 @@ class DataSeeder extends InstallSeeder
             'taxActions',
         ]);
         $this->call(SeriesSeeder::class);
-        $this->call(AccountingAccountsSeeder::class);
+        $this->call(ProvidersSeeder::class);
         $this->call(RepositoriesSeeder::class);
         $this->call(RepositoriesIdentitiesSeeder::class);
     }

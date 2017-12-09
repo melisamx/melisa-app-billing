@@ -4,8 +4,7 @@ namespace App\Billing\Logics\Provider\Profact;
 
 use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\StringCreateLogic;
-use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 
@@ -18,22 +17,20 @@ class InvoiceGenerate
 {
     use LogicBusiness, Client;
     
-    protected $repoInvoice;
+    protected $repoDocuments;
     protected $readerXml;
     protected $logicFile;
     protected $repoSeries;
     protected $libNumberToLetter;
 
     public function __construct(
-        InvoiceRepository $repoInvoice,
-        InvoiceXmlReader $readerXml,
+        DocumentsRepository $repoDocuments,
         StringCreateLogic $logicFile,
         SeriesRepository $repoSeries,
         NumberToLetterConverter $libNumberToLetter
     )
     {
-        $this->repoInvoice = $repoInvoice;
-        $this->readerXml = $readerXml;
+        $this->repoDocuments = $repoDocuments;
         $this->logicFile = $logicFile;
         $this->repoSeries = $repoSeries;
         $this->libNumberToLetter = $libNumberToLetter;
@@ -57,17 +54,17 @@ class InvoiceGenerate
         
         $dataBell = $this->getDataBell($result['xml']);
         
-        $this->repoInvoice->beginTransaction();
+        $this->repoDocuments->beginTransaction();
         
-        if( !$this->updateInvoice($documents->id, [
+        if( !$this->updateDocument($documents->id, [
             'uuid'=>$dataBell['uuid'],
             'stringOriginal'=>$result['stringOriginal'],
             'cfdiResult'=>base64_encode(serialize($result)),
         ])) {
-            return $this->repoInvoice->rollback();
+            return $this->repoDocuments->rollback();
         }
         
-        $this->repoInvoice->commit();        
+        $this->repoDocuments->commit();        
         return $dataBell['uuid'];
     }
     
@@ -102,13 +99,13 @@ class InvoiceGenerate
         return $xml;
     }
     
-    public function updateInvoice($idInvoice, $data)
+    public function updateDocument($idDocument, $data)
     {
-        $result = $this->repoInvoice->update($data, $idInvoice);
+        $result = $this->repoDocuments->update($data, $idDocument);
         
         if( $result === false) {
-            return $this->error('Imposible modificar registro de factura {i}', [
-                'i'=>$idInvoice
+            return $this->error('Imposible modificar documento {i}', [
+                'i'=>$idDocument
             ]);
         }
         

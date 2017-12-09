@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Provider\Profact;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Models\InvoiceStatus;
 use App\Drive\Logics\Files\GetContentLogic;
 
@@ -20,11 +20,11 @@ class InvoiceCancel
 
     public function __construct(
         GetContentLogic $logicGetContentFile,
-        InvoiceRepository $invoiceRepo
+        DocumentsRepository $repoDocuments
     )
     {
         $this->logicGetContentFile = $logicGetContentFile;
-        $this->invoiceRepo = $invoiceRepo;
+        $this->repoDocuments = $repoDocuments;
     }
     
     public function init($documents)

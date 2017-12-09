@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Documents;
 
 use App\Billing\Logics\Documents\PdfLogic;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Logics\Documents\GenerateXmlLogic;
 
 /**
@@ -36,15 +36,15 @@ class XmlLogic extends PdfLogic
         return $idFile;
     }
     
-    public function updateInvoice($idFile, $idInvoice)
+    public function updateInvoice($idFile, $idDocument)
     {
-        $result = app(InvoiceRepository::class)->update([
+        $result = app(DocumentsRepository::class)->update([
             'idFileXml'=>$idFile
-        ], $idInvoice);
+        ], $idDocument);
         
         if( $result === false) {
             return $this->error('Imposible asociar el archivo XML a la factura {i}', [
-                'i'=>$idInvoice
+                'i'=>$idDocument
             ]);
         }
         

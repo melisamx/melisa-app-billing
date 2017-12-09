@@ -2,7 +2,7 @@
 
 namespace App\Billing\Logics\Documents\v32;
 
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 
 /**
  * Documents cancel version 3.2
@@ -15,7 +15,7 @@ class CancelLogic
     protected $repoInvoice;
 
     public function __construct(
-        InvoiceRepository $repoInvoice
+        DocumentsRepository $repoInvoice
     )
     {
         $this->repoInvoice = $repoInvoice;

@@ -19,8 +19,10 @@ abstract class ProvidersAbstract extends BaseUuid
         'name',
         'slug',
         'idIdentityCreated',
+        'active',
         'createdAt',
         'accountingAccount',
+        'expirationDays',
         'idIdentityUpdated',
         'updatedAt'
     ];    

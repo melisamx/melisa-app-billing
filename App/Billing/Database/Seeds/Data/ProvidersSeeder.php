@@ -3,29 +3,32 @@
 namespace App\Billing\Database\Seeds\Data;
 
 use Melisa\Laravel\Database\InstallSeeder;
-use App\Billing\Models\AccountingAccounts;
+use App\Billing\Models\Providers;
 
 /**
- * Install default accounting accounts
+ * Install default providers
  *
  * @author Luis Josafat Heredia Contreras
  */
-class AccountingAccountsSeeder extends InstallSeeder
+class ProvidersSeeder extends InstallSeeder
 {
     
     public function run()
     {
-        AccountingAccounts::updateOrCreate([
+        $idIdentity = $this->findIdentity()->id;
+        Providers::updateOrCreate([
             'name'=>'TELMEX',
+            'slug'=>'telmex',
         ], [
             'expirationDays'=>21,
-            'idIdentityCreated'=>$this->findIdentity()->id
+            'idIdentityCreated'=>$idIdentity
         ]);
-        AccountingAccounts::updateOrCreate([
+        Providers::updateOrCreate([
             'name'=>'CFE',
+            'slug'=>'cfe',
         ], [
             'expirationDays'=>21,
-            'idIdentityCreated'=>$this->findIdentity()->id
+            'idIdentityCreated'=>$idIdentity
         ]);
     }
     

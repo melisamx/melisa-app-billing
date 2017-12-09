@@ -4,7 +4,7 @@ namespace App\Billing\Logics\Customers;
 
 use App\Billing\Logics\Contributors\UpdateLogic as UpdateContributor;
 use App\Billing\Repositories\CustomersRepository;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 
 /**
  * Update customer
@@ -15,17 +15,17 @@ class UpdateLogic extends CreateLogic
 {
     
     protected $eventSuccess = 'billing.customers.update.success';
-    protected $invoiceRepo;
+    protected $repoDocuments;
     
     public function __construct(
         CustomersRepository $customers,
         UpdateContributor $contributors,
-        InvoiceRepository $invoiceRepo
+        DocumentsRepository $repoDocuments
     )
     {
         $this->customers = $customers;
         $this->contributors = $contributors;
-        $this->invoiceRepo = $invoiceRepo;
+        $this->repoDocuments = $repoDocuments;
     }
     
     public function createCustomer($idContributor, &$input)
@@ -62,7 +62,7 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate(&$input)
     {
-        $documents = $this->invoiceRepo->findWhere([
+        $documents = $this->repoDocuments->findWhere([
             'idCustomer'=>$input['id']
         ]);
         

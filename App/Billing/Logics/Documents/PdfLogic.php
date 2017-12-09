@@ -5,7 +5,7 @@ namespace App\Billing\Logics\Documents;
 use App\Drive\Logics\Files\ViewLogic;
 use App\Billing\Logics\Documents\ReportLogic;
 use App\Billing\Logics\Documents\GeneratePdfLogic;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 
 /**
  * Get or generate file PDF
@@ -29,10 +29,10 @@ class PdfLogic
     
     public function init($id)
     {
-        $documents = $this->getInvoice($id);
+        $documents = $this->getDocument($id);
         
         if( !$documents) {
-            return $this->error('Imposible obtener la información de la factura');
+            return $this->error('Imposible obtener la información del documento');
         }
         
         $idFile = $this->getFileId($documents);
@@ -74,7 +74,7 @@ class PdfLogic
     
     public function updateInvoice($idFile, $idInvoice)
     {
-        $result = app(InvoiceRepository::class)->update([
+        $result = app(DocumentsRepository::class)->update([
             'idFilePdf'=>$idFile
         ], $idInvoice);
         
@@ -92,7 +92,7 @@ class PdfLogic
         return $this->filesView->init($idFile);
     }
     
-    public function getInvoice($id)
+    public function getDocument($id)
     {
         return $this->reportLogic->init($id);
     }
