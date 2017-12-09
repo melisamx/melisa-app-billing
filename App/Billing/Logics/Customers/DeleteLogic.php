@@ -36,10 +36,10 @@ class DeleteLogic extends BaseDeleteLogic
     
     public function isValidDelete(&$input)
     {
-        $invoice = $this->invoiceRepo->findWhere([
+        $documents = $this->invoiceRepo->findWhere([
             'idCustomer'=>$input['id']
         ]);
-        dd($invoice);
+        dd($documents);
     }
     
 }

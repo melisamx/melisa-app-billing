@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Billing\Interfaces\Invoice\v32;
+namespace App\Billing\Interfaces\Documents\v32;
 
 /**
- * Invoice version 32
+ * Documents version 32
  *
  * @author Luis Josafat Heredia Contreras
  */
-class Invoice extends InvoiceAbstract
+class Documents extends InvoiceAbstract
 {
     
     

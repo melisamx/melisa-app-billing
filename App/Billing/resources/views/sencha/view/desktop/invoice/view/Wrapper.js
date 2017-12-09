@@ -1,15 +1,15 @@
-Ext.define('Melisa.billing.view.desktop.invoice.view.Wrapper', {
+Ext.define('Melisa.billing.view.desktop.documents.view.Wrapper', {
     extend: 'Melisa.view.desktop.wrapper.panel.View',
     
     requires: [
         'Melisa.view.desktop.wrapper.panel.View',
-        'Melisa.billing.view.desktop.invoice.view.Grid',
-        'Melisa.billing.view.desktop.invoice.view.WrapperController',
-        'Melisa.billing.view.universal.invoice.view.WrapperModel'
+        'Melisa.billing.view.desktop.documents.view.Grid',
+        'Melisa.billing.view.desktop.documents.view.WrapperController',
+        'Melisa.billing.view.universal.documents.view.WrapperModel'
     ],
     
     iconCls: 'x-fa fa-money',
-    cls: 'billing-invoice-view',
+    cls: 'billing-documents-view',
     controller: 'billingInvoiceView',
     viewModel: {
         type: 'billingInvoiceView'

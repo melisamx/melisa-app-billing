@@ -3,10 +3,10 @@
 namespace App\Billing\Logics\Digifact;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Interfaces\Invoice\v32\Invoice;
-use App\Billing\Interfaces\Digifact\v32\Invoice as InvoicePac;
+use App\Billing\Interfaces\Documents\v32\Documents;
+use App\Billing\Interfaces\Digifact\v32\Documents as InvoicePac;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
+use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
@@ -15,7 +15,7 @@ use App\Drive\Logics\Files\StringCreateLogic;
 require_once base_path() . '../../../nusoap/nusoap.php';
 
 /**
- * Invoice cancel
+ * Documents cancel
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -38,7 +38,7 @@ class InvoiceCancel
         $this->logicFile = $logicFile;
     }
     
-    public function init($invoice)
+    public function init($documents)
     {        
         $client = $this->createClient();
         
@@ -46,7 +46,7 @@ class InvoiceCancel
             return false;
         }
         
-        $params = $this->getRequestParams($invoice);
+        $params = $this->getRequestParams($documents);
         
         $result = $this->cancelCfdi($client, $params);
         dd($result);
@@ -117,12 +117,12 @@ class InvoiceCancel
         return $this->repoInvoice->update($data, $idInvoice);
     }    
         
-    public function getRequestParams(&$invoice)
+    public function getRequestParams(&$documents)
     {
         return [
             'Usuario'=>$this->getUser(),
             'Contrasena'=>$this->getPass(),
-            'uuid'=>$invoice->uuid
+            'uuid'=>$documents->uuid
         ];
     }    
     

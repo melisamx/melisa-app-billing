@@ -17,7 +17,7 @@ use App\Billing\Models\FiscalRegime;
 use App\Billing\Models\Repositories;
 
 /**
- * Fake invoice
+ * Fake documents
  *
  * @author Luis Josafat Heredia Contreras
  */

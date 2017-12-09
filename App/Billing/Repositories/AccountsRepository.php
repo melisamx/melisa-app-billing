@@ -19,7 +19,7 @@ class AccountsRepository extends Repository
     public function getDefaultInvoice()
     {
         return $this->findWhere([
-            'key'=>'invoice'
+            'key'=>'documents'
         ])->first();
     }
 }

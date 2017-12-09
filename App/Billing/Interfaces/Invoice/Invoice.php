@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Billing\Interfaces\Invoice;
+namespace App\Billing\Interfaces\Documents;
 
 /**
- * Invoice interface
+ * Documents interface
  *
  * @author Luis Josafat Heredia Contreras
  */
-class Invoice
+class Documents
 {
     
     protected $idSerie;

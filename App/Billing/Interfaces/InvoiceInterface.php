@@ -3,7 +3,7 @@
 namespace App\Billing\Interfaces;
 
 /**
- * Invoice abstract class
+ * Documents abstract class
  *
  * @author Luis Josafat Heredia Contreras
  */

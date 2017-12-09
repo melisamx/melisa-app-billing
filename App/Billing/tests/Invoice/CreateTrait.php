@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Invoice;
+namespace App\Billing\tests\Documents;
 
 use App\Billing\Models\InvoiceConcepts;
 use App\Billing\Models\Taxes;
@@ -20,7 +20,7 @@ trait CreateTrait
         $data = app(InvoiceLogic::class)->getData();
         
         $response = $this->actingAs($user)
-            ->json('post', 'invoice', $data)
+            ->json('post', 'documents', $data)
             ->assertStatus(200)
             ->assertJson([
                 'success'=>true
@@ -28,7 +28,7 @@ trait CreateTrait
         
         $result = json_decode($response->getContent());
         
-        $this->assertDatabaseHas('invoice', [
+        $this->assertDatabaseHas('documents', [
             'id'=>$result->data->id
         ], 'billing');
         

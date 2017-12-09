@@ -17,15 +17,14 @@ class CreateTableAccountsReceivable extends Migration
         Schema::create('accountsReceivable', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->smallInteger('idAccountReceivableStatus');
+            $table->unsignedInteger('idContributorAddress');
+            $table->uuid('idDocument');
             $table->uuid('idIdentityCreated');
             $table->decimal('amountCharged', 15, 2);
             $table->decimal('balance', 15, 2);
             $table->dateTime('dateVoucher');
             $table->boolean('expiredDate')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->uuid('idInvoice')->nullable();
-            $table->uuid('idReferralNote')->nullable();
-            $table->unsignedInteger('idAccountingAccount')->nullable();
             $table->unsignedInteger('idBankAccount')->nullable();
             $table->smallInteger('idPaymentMethod')->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
@@ -38,20 +37,16 @@ class CreateTableAccountsReceivable extends Migration
                 ->references('id')->on('accountsReceivableStatus')
                 ->onDelete('no action')
                 ->onUpdate('no action');            
-            $table->foreign('idAccountingAccount')
-                ->references('id')->on('accountingAccounts')
+            $table->foreign('idContributorAddress')
+                ->references('id')->on('contributorsAddresses')
+                ->onDelete('no action')
+                ->onUpdate('no action');            
+            $table->foreign('idDocument')
+                ->references('id')->on('documents')
                 ->onDelete('no action')
                 ->onUpdate('no action');            
             $table->foreign('idBankAccount')
                 ->references('id')->on('bankAccounts')
-                ->onDelete('no action')
-                ->onUpdate('no action');            
-            $table->foreign('idInvoice')
-                ->references('id')->on('invoice')
-                ->onDelete('no action')
-                ->onUpdate('no action');            
-            $table->foreign('idReferralNote')
-                ->references('id')->on('referralNotes')
                 ->onDelete('no action')
                 ->onUpdate('no action');            
             $table->foreign('idPaymentMethod')

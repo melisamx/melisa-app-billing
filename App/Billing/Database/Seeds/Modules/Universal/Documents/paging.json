@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de facturas",
+    "url": "/billing.php/documents/",
+    "description": "Módulo para paginar lista de facturas",
+    "task": {
+        "key": "task.billing.documents.paging",
+        "name": "Paginar lista de facturas",
+        "description": "Permitir paginar lista de facturas",
+        "pattern": "read"
+    }
+}

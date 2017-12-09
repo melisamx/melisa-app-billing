@@ -3,7 +3,7 @@
 namespace App\Billing\Libraries;
 
 /**
- * Ajust convert to invoice text
+ * Ajust convert to documents text
  * @author Luis Josafat Heredia Contreras
  *
  */

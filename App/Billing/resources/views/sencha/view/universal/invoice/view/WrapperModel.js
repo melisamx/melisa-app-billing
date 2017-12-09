@@ -1,14 +1,14 @@
-Ext.define('Melisa.billing.view.universal.invoice.view.WrapperModel', {
+Ext.define('Melisa.billing.view.universal.documents.view.WrapperModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.billingInvoiceView',
     
     stores: {
-        invoice: {
+        documents: {
             autoLoad: true,
             remoteFilter: true,
             proxy: {
                 type: 'ajax',
-                url: '{modules.invoice}',
+                url: '{modules.documents}',
                 reader: {
                     type: 'json',
                     rootProperty: 'data'

@@ -13,7 +13,7 @@ class AutoRegisterRequest extends Generic
 {
     
     protected $rules = [
-        'idInvoice'=>'required|xss|exists:billing.invoice,id',
+        'idInvoice'=>'required|xss|exists:billing.documents,id',
     ];
     
 }

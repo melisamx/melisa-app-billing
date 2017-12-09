@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Modules\Universal\Invoice;
+namespace App\Billing\Modules\Universal\Documents;
 
 use App\Core\Logics\Modules\Outbuildings;
 
@@ -12,7 +12,7 @@ use App\Core\Logics\Modules\Outbuildings;
 class ReportModule extends Outbuildings
 {
     
-    public $layout = 'layouts.invoice.report';
+    public $layout = 'layouts.documents.report';
 
     public function dataDictionary()
     {        
@@ -30,7 +30,7 @@ class ReportModule extends Outbuildings
                     'bootstrap.reports.print',
                     'fontawesome',
                     'insurance.report',
-                    'billing.invoice.preview',
+                    'billing.documents.preview',
                     'qrcodejs'
                 ]),
                 'powerbyImage'=>$this->asset('powerby.image')

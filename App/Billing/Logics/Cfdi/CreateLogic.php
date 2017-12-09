@@ -4,10 +4,10 @@ namespace App\Billing\Logics\Cfdi;
 
 use Carbon\Carbon;
 use Melisa\core\LogicBusiness;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Repositories\SeriesRepository;
-use App\Billing\Models\InvoiceStatus;
-use App\Billing\Logics\Invoice\ReportLogic;
+use App\Billing\Models\DocumentStatus;
+use App\Billing\Logics\Documents\ReportLogic;
 use App\Billing\Logics\Provider\Profact\InvoiceGenerate;
 
 /**
@@ -19,22 +19,22 @@ class CreateLogic
 {
     use LogicBusiness;
     
-    protected $eventSuccess = 'billing.invoice.new.success';
+    protected $eventSuccess = 'billing.documents.new.success';
     protected $eventError = 'billing.cfdi.error';
     
-    protected $repoInvoice;
+    protected $repoDocument;
     protected $repoSeries;
     protected $logicReport;
     protected $logicGenerate;
 
     public function __construct(
-        InvoiceRepository $repoInvoice,
+        DocumentsRepository $repoDocument,
         SeriesRepository $repoSeries,
         ReportLogic $logicReport,
         InvoiceGenerate $logicGenerate
     )
     {
-        $this->repoInvoice = $repoInvoice;
+        $this->repoDocument = $repoDocument;
         $this->repoSeries = $repoSeries;
         $this->logicReport = $logicReport;
         $this->logicGenerate = $logicGenerate;
@@ -42,122 +42,122 @@ class CreateLogic
     
     public function init(array $input)
     {
-        $this->repoInvoice->beginTransaction();
+        $this->repoDocument->beginTransaction();
         
-        $invoice = $this->getInvoice($input['id']);
+        $document = $this->getDocument($input['id']);
         
-        if( !$invoice) {
+        if( !$document) {
             return false;
         }
         
-        if( !$this->isValid($invoice)) {
+        if( !$this->isValid($document)) {
             return false;
         }
         
-        if( !$this->setInvoiceGeneratingCfdi($invoice)) {
+        if( !$this->setInvoiceGeneratingCfdi($document)) {
             return false;
         }
         
-        if( !$this->updateSerie($invoice)) {
+        if( !$this->updateSerie($document)) {
             return false;
         }
         
-        $uuid = $this->generateCfdi($invoice);
+        $uuid = $this->generateCfdi($document);
         
         if( !$uuid) {
-            return $this->setCfdiError($invoice->id);
+            return $this->setStatusError($document->id);
         } else {
-            return $this->setInvoiceNew($invoice->id, $uuid);
+            return $this->setStatusNew($document->id, $uuid);
         }
     }
     
-    public function setInvoiceGeneratingCfdi(&$invoice)
+    public function setInvoiceGeneratingCfdi(&$document)
     {
-        $folio = $invoice->serie->folioCurrent + 1;
+        $folio = $document->serie->folioCurrent + 1;
         $carbon = Carbon::now();
         $dateCfdi = $carbon->format('Y-m-d\TH:i:s');
-        $status = InvoiceStatus::generatingCfdi();
+        $status = DocumentStatus::generatingCfdi();
         
-        $invoice->folio = $folio;
-        $invoice->dateCfdi = $dateCfdi;
+        $document->folio = $folio;
+        $document->dateCfdi = $dateCfdi;
         
-        if( !$this->updateInvoice($invoice->id, [
-            'idInvoiceStatus'=>$status->id,
+        if( !$this->updateDocument($document->id, [
+            'idDocumentStatus'=>$status->id,
             'folio'=>$folio,
             'dateCfdi'=>$dateCfdi
         ])) {
-            return $this->error('Imposible establecer estatus {s} a la factura {i}', [
+            return $this->error('Imposible establecer estatus {s} al documento {d}', [
                 's'=>$status->name,
-                'i'=>$invoice->id
+                'd'=>$document->id
             ]);
         }
         
         return true;
     }
     
-    public function setCfdiError($idInvoice)
+    public function setStatusError($idDocument)
     {
-        $status = InvoiceStatus::errorGenerateCfdi();
+        $status = DocumentStatus::errorGenerateCfdi();
         
-        if( !$this->updateInvoice($idInvoice, [
-            'idInvoiceStatus'=>$status->id
+        if( !$this->updateDocument($idDocument, [
+            'idDocumentStatus'=>$status->id
         ])) {
-            return $this->repoInvoice->rollback();
+            return $this->repoDocument->rollback();
         }
         
         $event = [
-            'idInvoice'=>$idInvoice,
+            'idDocument'=>$idDocument,
         ];
         
         if( !$this->emitEvent($this->eventError, $event)) {
-            return $this->repoInvoice->rollback();
+            return $this->repoDocument->rollback();
         }
         
-        $this->repoInvoice->commit();
+        $this->repoDocument->commit();
         return false;
     }
     
-    public function setInvoiceNew($idInvoice, $uuid)
+    public function setStatusNew($idDocument, $uuid)
     {
-        $status = InvoiceStatus::newInvoice();
+        $status = DocumentStatus::newInvoice();
         
-        if( !$this->updateInvoice($idInvoice, [
-            'idInvoiceStatus'=>$status->id
+        if( !$this->updateDocument($idDocument, [
+            'idDocumentStatus'=>$status->id
         ])) {
-            return $this->repoInvoice->rollback();
+            return $this->repoDocument->rollback();
         }
         
         $event = [
-            'idInvoice'=>$idInvoice,
+            'idDocument'=>$idDocument,
             'uuid'=>$uuid,
         ];
         
         if( !$this->emitEvent($this->eventSuccess, $event)) {
-            return $this->repoInvoice->rollback();
+            return $this->repoDocument->rollback();
         }
         
-        $this->repoInvoice->commit();
+        $this->repoDocument->commit();
         return $event;
     }
     
-    public function updateSerie(&$invoice)
+    public function updateSerie(&$documents)
     {
         $result = $this->repoSeries->update([
-            'folioCurrent'=>$invoice->folio
-        ], $invoice->idSerie);
+            'folioCurrent'=>$documents->folio
+        ], $documents->idSerie);
         
         if( $result === false) {
             return $this->error('Imposible incrementar folio de la serie {s}', [
-                's'=>$invoice->serie->name
+                's'=>$documents->serie->name
             ]);
         }
         
         return true;
     }
     
-    public function updateInvoice($idInvoice, array $input)
+    public function updateDocument($idDocument, array $input)
     {
-        $result = $this->repoInvoice->update($input, $idInvoice);
+        $result = $this->repoDocument->update($input, $idDocument);
         
         if( $result === false) {
             return false;
@@ -166,32 +166,32 @@ class CreateLogic
         return true;
     }
     
-    public function generateCfdi(&$invoice)
+    public function generateCfdi(&$documents)
     {
-        return $this->logicGenerate->init($invoice);
+        return $this->logicGenerate->init($documents);
     }
     
-    public function getInvoice($id)
+    public function getDocument($id)
     {
-        $invoice = $this->logicReport->init($id);
+        $documents = $this->logicReport->init($id);
         
-        if( !$invoice) {
+        if( !$documents) {
             return $this->error('Imposible obtener reporte de la factura {f}', [
                 'f'=>$id
             ]);
         }
         
-        return $invoice;
+        return $documents;
     }
     
-    public function isValid(&$invoice)
+    public function isValid(&$documents)
     {
-        if( $invoice->status->key === InvoiceStatus::PENDING_GENERATE_CFDI) {
+        if( $documents->status->key === DocumentStatus::PENDING_GENERATE_CFDI) {
             return true;
         }
         
-        switch ($invoice->status->key) {
-            case InvoiceStatus::GENERATING_CFDI:
+        switch ($documents->status->key) {
+            case DocumentStatus::GENERATING_CFDI:
                 return $this->error('Ya se encuentra generando el CFDI');
                 break;
 

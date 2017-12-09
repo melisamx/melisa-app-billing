@@ -1,4 +1,4 @@
-Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
+Ext.define('Melisa.billing.view.desktop.documents.view.Grid', {
     extend: 'Ext.grid.Panel',    
     alias: 'widget.billingInvoiceViewGrid',
     
@@ -9,7 +9,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.Grid', {
     emptyText: 'No hay facturas registradas',
     deferEmptyText: true,
     bind: {
-        store: '{invoice}'
+        store: '{documents}'
     },
     columns: [
         {

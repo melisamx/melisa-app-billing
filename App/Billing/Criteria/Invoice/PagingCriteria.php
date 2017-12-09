@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Criteria\Invoice;
+namespace App\Billing\Criteria\Documents;
 
 use Melisa\Laravel\Criteria\FilterCriteria;
 
@@ -20,10 +20,10 @@ class PagingCriteria extends FilterCriteria
         ]);
         return $builder
             ->select([
-                'invoice.*'
+                'documents.*'
             ])
-            ->join('invoiceStatus as s', 's.id', 'invoice.idInvoiceStatus')
-            ->join('customers as c', 'c.id', 'invoice.idCustomer')
+            ->join('invoiceStatus as s', 's.id', 'documents.idInvoiceStatus')
+            ->join('customers as c', 'c.id', 'documents.idCustomer')
             ->join('contributors as co', 'co.id', 'c.idContributor')
             ->with([
                 'serie',

@@ -36,10 +36,10 @@ Route::group([
 });
 
 Route::group([
-    'prefix'=>'invoice',
+    'prefix'=>'documents',
     'middleware'=>'auth',
 ], function() {    
-    require realpath(base_path() . '/routes/modules/invoice.php');    
+    require realpath(base_path() . '/routes/modules/documents.php');    
 });
 
 Route::group([

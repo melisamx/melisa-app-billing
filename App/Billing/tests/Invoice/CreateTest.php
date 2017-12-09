@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Invoice;
+namespace App\Billing\tests\Documents;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
@@ -20,7 +20,7 @@ class CreateTest extends TestCase
     /**
      * 
      * @group completed
-     * @group invoice
+     * @group documents
      */
     public function testCreate()
     {

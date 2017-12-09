@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Modules\Desktop\Invoice;
+namespace App\Billing\Modules\Desktop\Documents;
 
 use App\Core\Logics\Modules\Outbuildings;
 
@@ -12,7 +12,7 @@ use App\Core\Logics\Modules\Outbuildings;
 class ViewModule extends Outbuildings
 {
     
-    public $event = 'billing.invoice.view.access';
+    public $event = 'billing.documents.view.access';
 
     public function dataDictionary()
     {        
@@ -21,16 +21,16 @@ class ViewModule extends Outbuildings
             'data'=>[
                 'token'=>csrf_token(),
                 'modules'=>[
-                    'invoice'=>$this->module('task.billing.invoice.paging'),
-                    'report'=>$this->module('task.billing.invoice.report'),
-                    'cancel'=>$this->module('task.billing.invoice.cancel', false),
-                    'delete'=>$this->module('task.billing.invoice.delete', false),
+                    'documents'=>$this->module('task.billing.documents.paging'),
+                    'report'=>$this->module('task.billing.documents.report'),
+                    'cancel'=>$this->module('task.billing.documents.cancel', false),
+                    'delete'=>$this->module('task.billing.documents.delete', false),
                     'cfdi'=>$this->module('task.billing.cfdi.create', false),
                     'accountReceivable'=>$this->module('task.billing.accountsReceivable.create', false),
                     'debtsToPay'=>$this->module('task.billing.debtsToPay.create', false),
                     'filesView'=>[
-                        'pdf'=>$this->module('task.billing.invoice.pdf'),
-                        'xml'=>$this->module('task.billing.invoice.xml'),
+                        'pdf'=>$this->module('task.billing.documents.pdf'),
+                        'xml'=>$this->module('task.billing.documents.xml'),
                     ]
                 ],
                 'wrapper'=>[

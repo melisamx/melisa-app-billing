@@ -12,5 +12,5 @@
         "key": "event.billing.accountsReceivable.autoregister.success",
         "description": "Se auto registro cuenta por cobrar al generarse factura"
     },
-    "listener": "event.billing.invoice.success"
+    "listener": "event.billing.documents.success"
 }

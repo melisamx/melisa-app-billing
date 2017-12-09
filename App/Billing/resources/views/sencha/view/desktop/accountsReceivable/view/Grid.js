@@ -19,14 +19,14 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
             flex: 1
         },
         {
-            dataIndex: 'invoice',
+            dataIndex: 'documents',
             text: 'Factura',
             flex: 1,
             renderer: function(v, x, record) {
-                var invoice = record.get('invoice');
+                var documents = record.get('documents');
                 return [
-                    invoice.serie.serie,
-                    invoice.folio
+                    documents.serie.serie,
+                    documents.folio
                 ].join('-');
             }
         },

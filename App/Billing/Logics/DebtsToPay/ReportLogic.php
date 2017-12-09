@@ -30,7 +30,7 @@ class ReportLogic
                 'status',
                 'account',
                 'voucher',
-                'invoice',
+                'documents',
             ])
             ->findOrFail($id);
         

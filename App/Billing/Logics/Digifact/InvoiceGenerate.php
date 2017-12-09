@@ -3,10 +3,10 @@
 namespace App\Billing\Logics\Digifact;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Interfaces\Invoice\v32\Invoice;
-use App\Billing\Interfaces\Digifact\v32\Invoice as InvoicePac;
+use App\Billing\Interfaces\Documents\v32\Documents;
+use App\Billing\Interfaces\Digifact\v32\Documents as InvoicePac;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
+use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
@@ -15,7 +15,7 @@ use App\Drive\Logics\Files\StringCreateLogic;
 require_once base_path() . '../../../nusoap/nusoap.php';
 
 /**
- * Invoice generate
+ * Documents generate
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -38,9 +38,9 @@ class InvoiceGenerate
         $this->logicFile = $logicFile;
     }
     
-    public function init(Invoice $invoice)
+    public function init(Documents $documents)
     {
-        $invoicePac = new InvoicePac($invoice);
+        $invoicePac = new InvoicePac($documents);
         $formatInvoice = $invoicePac->format();
         
         $client = $this->createClient();
@@ -70,7 +70,7 @@ class InvoiceGenerate
             return $this->error('Imposible guardar XML de la factura');
         }
         
-        $idInvoice = $this->createInvoice($idFileXml, $dataXml, $invoice);
+        $idInvoice = $this->createInvoice($idFileXml, $dataXml, $documents);
         
         if( !$idInvoice) {
             return $this->repoInvoice->rollback();
@@ -158,15 +158,15 @@ class InvoiceGenerate
         return $result['GeneraCFDResult'];
     }
     
-    public function createInvoice($idFileXml, &$dataXml, &$invoice)
+    public function createInvoice($idFileXml, &$dataXml, &$documents)
     {        
         return $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
             'idInvoiceStatus'=>InvoiceStatus::NNEW,
             'idFileXml'=>$idFileXml,
             'idFilePdf'=>$idFileXml,
-            'rfc'=>$invoice->getReceiver()->getRfc(),
-            'name'=>$invoice->getReceiver()->getBusinessName(),
+            'rfc'=>$documents->getReceiver()->getRfc(),
+            'name'=>$documents->getReceiver()->getBusinessName(),
             'uuid'=>$dataXml['uuid'],
             'folio'=>$dataXml['folio'],
             'serie'=>$dataXml['serie'],

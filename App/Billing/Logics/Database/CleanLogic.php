@@ -2,7 +2,7 @@
 
 namespace App\Billing\Logics\Database;
 
-use App\Billing\Models\Invoice;
+use App\Billing\Models\Documents;
 use App\Billing\Models\Customers;
 use App\Billing\Models\Contributors;
 
@@ -16,7 +16,7 @@ class CleanLogic
     
     public function init()
     {
-        Invoice::whereNotNull('id')->delete();
+        Documents::whereNotNull('id')->delete();
         Customers::whereNotNull('id')->delete();
         Contributors::whereNotNull('id')->delete();
     }

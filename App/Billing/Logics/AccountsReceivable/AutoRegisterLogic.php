@@ -4,9 +4,9 @@ namespace App\Billing\Logics\AccountsReceivable;
 
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\AccountsReceivableRepository;
-use App\Billing\Logics\Invoice\ReportLogic;
-use App\Billing\Logics\Invoice\GeneratePdfLogic;
-use App\Billing\Repositories\InvoiceRepository;
+use App\Billing\Logics\Documents\ReportLogic;
+use App\Billing\Logics\Documents\GeneratePdfLogic;
+use App\Billing\Repositories\DocumentsRepository;
 use App\Billing\Repositories\AccountingAccountsRepository;
 
 /**
@@ -21,37 +21,37 @@ class AutoRegisterLogic
     protected $eventSuccess = 'billing.accountsReceivable.autoregister.success';
     protected $accRecRepo;
     protected $accountRepo;
-    protected $invoiceLogic;
+    protected $logicDocument;
 
     public function __construct(
         AccountsReceivableRepository $accRecRepo,
         AccountingAccountsRepository $accountRepo,
-        ReportLogic $invoiceLogic
+        ReportLogic $logicDocument
     ) {
         $this->accRecRepo = $accRecRepo;
         $this->accountRepo = $accountRepo;
-        $this->invoiceLogic = $invoiceLogic;
+        $this->logicDocument = $logicDocument;
     }
 
     public function init(array $input)
     {
         $this->accRecRepo->beginTransaction();
         
-        $invoice = $this->getInvoice($input['idInvoice']);
+        $document = $this->getDocument($input['idDocument']);
         
-        if( !$invoice) {
+        if( !$document) {
             return $this->accRecRepo->rollback();
         }
         
-        if( !$this->isValid($invoice)) {
+        if( !$this->isValid($document)) {
             return $this->accRecRepo->rollback();
         }
         
-        if( !$this->generateInvoicePdf($invoice)) {
+        if( !$this->generatePdf($document)) {
             return $this->accRecRepo->rollback();
         }
         
-        $idAccRec = $this->createAccountReceivable($invoice);
+        $idAccRec = $this->createAccountReceivable($document);
         
         if( !$idAccRec) {
             return false;
@@ -59,7 +59,7 @@ class AutoRegisterLogic
         
         $event = [
             'idAccountReceivable'=>$idAccRec,
-            'idInvoice'=>$invoice->id
+            'idDocument'=>$document->id
         ];
         
         if( !$this->fireEvent($event)) {
@@ -70,55 +70,55 @@ class AutoRegisterLogic
         return $event;
     }
     
-    public function generateInvoicePdf(&$invoice)
+    public function generatePdf(&$documents)
     {
-        if( !empty($invoice->idFilePdf)) {
+        if( !empty($documents->idFilePdf)) {
             return true;
         }
         
-        $idFile = app(GeneratePdfLogic::class)->init($invoice);
+        $idFile = app(GeneratePdfLogic::class)->init($documents);
         
         if( !$idFile) {
-            return $this->error('Imposible generar archivo PDF de la factura {i}', [
-                'i'=>$invoice->id
+            return $this->error('Imposible generar archivo PDF del documento {d}', [
+                'd'=>$documents->id
             ]);
         }
         
-        if( !app(InvoiceRepository::class)->update([
+        if( !app(DocumentsRepository::class)->update([
             'idFilePdf'=>$idFile
-        ], $invoice->id)) {
+        ], $documents->id)) {
             return $this->error('Imposible asignar archivo {f} PDF de la factura {i}', [
-                'i'=>$invoice->id,
+                'i'=>$documents->id,
                 'f'=>$idFile,
             ]);
         }
         
-        $invoice->idFilePdf = $idFile;
+        $documents->idFilePdf = $idFile;
         return true;
     }
     
-    public function isValid(&$invoice)
+    public function isValid(&$documents)
     {
-        if( empty($invoice->uuid)) {
+        if( empty($documents->uuid)) {
             return $this->error('No se ha generado el CFDI');
         }
         
         return true;
     }
     
-    public function createAccountReceivable(&$invoice)
+    public function createAccountReceivable(&$documents)
     {
-        $dateVoucher = new \Carbon\Carbon($invoice->createdAt);
+        $dateVoucher = new \Carbon\Carbon($documents->createdAt);
         
         $result = $this->accRecRepo->createNew([
             'idIdentityCreated'=>$this->getIdentity(),
-            'idAccountingAccount'=>$invoice->customer_address->accounting_account->id,
-            'idFileVoucher'=>$invoice->idFilePdf,
-            'idInvoice'=>$invoice->id,
-            'amountCharged'=>(float)$invoice->total,
+            'idAccountingAccount'=>$documents->customer_address->accounting_account->id,
+            'idFileVoucher'=>$documents->idFilePdf,
+            'idDocument'=>$documents->id,
+            'amountCharged'=>(float)$documents->total,
             'dateVoucher'=>new \Carbon\Carbon($dateVoucher),
-            'balance'=>(float)$invoice->total,
-            'dueDate'=>$dateVoucher->addDays($invoice->customer_address->accounting_account->expirationDays),
+            'balance'=>(float)$documents->total,
+            'dueDate'=>$dateVoucher->addDays($documents->customer_address->accounting_account->expirationDays),
         ]);
         
         if( $result) {
@@ -126,21 +126,21 @@ class AutoRegisterLogic
         }
         
         return $this->error('Imposible auto registrar cuenta por cobrar a la cuenta {a} por la factura {i}', [
-            'a'=>$invoice->customer_address->accounting_account->id,
-            'i'=>$invoice->id,
+            'a'=>$documents->customer_address->accounting_account->id,
+            'i'=>$documents->id,
         ]);
     }
     
-    public function getInvoice($idInvoice)
+    public function getDocument($id)
     {
-        $result = $this->invoiceLogic->init($idInvoice);
+        $result = $this->logicDocument->init($id);
         
         if( $result) {
             return $result;
         }
         
-        return $this->error('La factura {f} no se encuentra o acaba de ser eliminada', [
-            'f'=>$idInvoice
+        return $this->error('El docuento {f} no se encuentra o acaba de ser eliminado', [
+            'f'=>$id
         ]);
     }
     

@@ -19,7 +19,7 @@ class PagingCriteria extends FilterCriteria
     {
         $builder = parent::apply($model, $repository, $input, [
             'account'=>'a.name',
-            'invoice'=>'i.folio',
+            'documents'=>'i.folio',
         ]);
         $builder = $this->applySort($builder, $input);
         
@@ -43,7 +43,7 @@ class PagingCriteria extends FilterCriteria
                 ]))
             ])
             ->with([
-                'invoice'=>function($query) {
+                'documents'=>function($query) {
                     $query
                         ->select([
                             'id',
@@ -61,7 +61,7 @@ class PagingCriteria extends FilterCriteria
                 }
             ])
             ->join('accountingAccounts as a', 'a.id', '=', 'accountsReceivable.idAccountingAccount')
-            ->leftjoin('invoice as i', 'i.id', '=', 'accountsReceivable.idInvoice')
+            ->leftjoin('documents as i', 'i.id', '=', 'accountsReceivable.idInvoice')
             ->where('idAccountReceivableStatus', AccountsReceivableStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }

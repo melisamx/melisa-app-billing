@@ -14,7 +14,7 @@ class ModulesDesktopSeeder extends InstallSeeder
     
     public function run()
     {        
-        $this->invoice();        
+        $this->documents();        
         $this->series();        
         $this->debtsToPay();        
         $this->accountsReceivable();        
@@ -184,9 +184,9 @@ class ModulesDesktopSeeder extends InstallSeeder
         ]);
     }
     
-    public function invoice()
+    public function documents()
     {
-        $this->installModuleJson('Desktop/Invoice', [
+        $this->installModuleJson('Desktop/Documents', [
             'view',
         ]);
     }

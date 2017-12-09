@@ -6,17 +6,17 @@ use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\ReportLogic;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\StringCreateLogic;
-use App\Billing\Interfaces\Invoice\v32\Invoice;
+use App\Billing\Interfaces\Documents\v32\Documents;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
+use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
-use App\Billing\Modules\Universal\Invoice\ReportModule;
-use App\Billing\Logics\Invoice\v32\PreviewLogic;
+use App\Billing\Modules\Universal\Documents\ReportModule;
+use App\Billing\Logics\Documents\v32\PreviewLogic;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
- * Invoice generate
+ * Documents generate
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -45,7 +45,7 @@ class InvoiceGenerate
         $this->libNumberToLetter = $libNumberToLetter;
     }
     
-    public function init(Invoice $invoice, $serie, $csd)
+    public function init(Documents $documents, $serie, $csd)
     {
         $serie = $this->getSerie($serie);
         
@@ -59,11 +59,11 @@ class InvoiceGenerate
             return false;
         }
         
-        if( !$this->setSeries($invoice, $serie)) {
+        if( !$this->setSeries($documents, $serie)) {
             return false;
         }
         
-        if( !$this->setDate($invoice)) {
+        if( !$this->setDate($documents)) {
             return false;
         }
         
@@ -90,9 +90,9 @@ class InvoiceGenerate
             return false;
         }
         
-        $xmlString = $this->generateXmlCfd($invoice);
+        $xmlString = $this->generateXmlCfd($documents);
         
-        $idFileCfdBeforeSeal = $this->saveCfdBeforeSeal($invoice, $xmlString);
+        $idFileCfdBeforeSeal = $this->saveCfdBeforeSeal($documents, $xmlString);
         
         if( !$idFileCfdBeforeSeal) {
             return $this->error('Imposible guardar CFD antes de ser sellado');
@@ -106,7 +106,7 @@ class InvoiceGenerate
         
         $sealXmlString = $this->cleanString($sealXml->saveXML());
         
-        $idFileCfdSeal = $this->saveCfdSeal($invoice, $sealXmlString);
+        $idFileCfdSeal = $this->saveCfdSeal($documents, $sealXmlString);
         
         if( !$idFileCfdSeal) {
             return $this->error('Imposible guardar CFD despues de ser sellado');
@@ -143,7 +143,7 @@ class InvoiceGenerate
             ]);
         }
         
-        $idFileHtmlInvoice = $this->createHtmlInvoice($invoice, $dataBell);
+        $idFileHtmlInvoice = $this->createHtmlInvoice($documents, $dataBell);
         
         if( !$idFileHtmlInvoice) {
             return false;
@@ -161,7 +161,7 @@ class InvoiceGenerate
             return false;
         }
         
-        $idFilePdfInvoice = $this->saveFilePdf($invoice, $stringPdf);
+        $idFilePdfInvoice = $this->saveFilePdf($documents, $stringPdf);
         
         if( !$idFilePdfInvoice) {
             return false;
@@ -173,7 +173,7 @@ class InvoiceGenerate
             $idFileXmlBell, 
             $idFilePdfInvoice, 
             $dataBell, 
-            $invoice,
+            $documents,
             $serie
         );
         
@@ -220,18 +220,18 @@ class InvoiceGenerate
         return $xslt;
     }
     
-    public function setDate(Invoice &$invoice)
+    public function setDate(Documents &$documents)
     {
         $carbon = new \Carbon\Carbon('now');
         $formatted = $carbon->toRfc3339String();
-        $invoice->setDate($formatted);
+        $documents->setDate($formatted);
         return true;
     }
     
-    public function setSeries(Invoice &$invoice, &$serie)
+    public function setSeries(Documents &$documents, &$serie)
     {
-        $invoice->setSeries($serie->serie);
-        $invoice->setFolio($serie->folioCurrent + 1);
+        $documents->setSeries($serie->serie);
+        $documents->setFolio($serie->folioCurrent + 1);
         return true;
     }
     
@@ -340,9 +340,9 @@ class InvoiceGenerate
         ]);
     }
     
-    public function createHtmlInvoice(&$invoice, &$dataBell)
+    public function createHtmlInvoice(&$documents, &$dataBell)
     {        
-        $data = app(PreviewLogic::class)->init($invoice);
+        $data = app(PreviewLogic::class)->init($documents);
         $data->uuid = $dataBell['uuid'];
         $data->date = $dataBell['date'];
         $data->numberCertificateSat = $dataBell['numberCertificateSat'];
@@ -355,7 +355,7 @@ class InvoiceGenerate
             ->withInput($data)
             ->render();
         $htmlInvoice = $module->render();
-        $idFileHtmlInvoice = $this->saveHtmlInvoice($invoice, $htmlInvoice);
+        $idFileHtmlInvoice = $this->saveHtmlInvoice($documents, $htmlInvoice);
         
         if( !$idFileHtmlInvoice) {
             return $this->error('Imposible guardar reporte HTML para generar PDF');
@@ -406,19 +406,19 @@ class InvoiceGenerate
         ];
     }
     
-    public function getNameFilesGenerate(&$invoice)
+    public function getNameFilesGenerate(&$documents)
     {
         return implode('_', [
-            $invoice->getSeries(),
-            $invoice->getFolio(),
-            $invoice->getReceiver()->getRfc()
+            $documents->getSeries(),
+            $documents->getFolio(),
+            $documents->getReceiver()->getRfc()
         ]);
     }
     
-    public function saveHtmlInvoice(&$invoice, &$htmlInvoice)
+    public function saveHtmlInvoice(&$documents, &$htmlInvoice)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
+            $this->getNameFilesGenerate($documents),
             'html'
         ]);
         
@@ -432,10 +432,10 @@ class InvoiceGenerate
         return $this->logicFile->init($file);
     }
     
-    public function saveCfdSeal(&$invoice, &$xmlString)
+    public function saveCfdSeal(&$documents, &$xmlString)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
+            $this->getNameFilesGenerate($documents),
             'sealed'
         ]);
         
@@ -449,10 +449,10 @@ class InvoiceGenerate
         return $this->logicFile->init($file);
     }
     
-    public function saveCfdBeforeSeal(&$invoice, &$xmlString)
+    public function saveCfdBeforeSeal(&$documents, &$xmlString)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
+            $this->getNameFilesGenerate($documents),
             'before',
             'sealing'
         ]);
@@ -467,15 +467,15 @@ class InvoiceGenerate
         return $this->logicFile->init($file);
     }
     
-    public function generateXmlCfd(Invoice &$invoice)
+    public function generateXmlCfd(Documents &$documents)
     {
         /* CI use RFC test */
         if( env('CI_ENVIROMENT') === 'sandbox') {
-            $invoice->getTransmitter()->setRfc(env('CI_RFC_TRANSMITTER'));
+            $documents->getTransmitter()->setRfc(env('CI_RFC_TRANSMITTER'));
         }
         
         $xml = view('layouts/ci/xml', [
-            'invoice'=>$invoice
+            'documents'=>$documents
         ])->render();
         
         return $xml;
@@ -501,10 +501,10 @@ class InvoiceGenerate
         return file_get_contents(__DIR__ . '/CSD01_AAA010101AAA.cer');
     }
     
-    public function saveFilePdf(&$invoice, &$stringPdf)
+    public function saveFilePdf(&$documents, &$stringPdf)
     {
         $name = implode('_', [
-            $this->getNameFilesGenerate($invoice),
+            $this->getNameFilesGenerate($documents),
             'before',
             'sealing'
         ]);
@@ -637,16 +637,16 @@ class InvoiceGenerate
         $idFileXmlBell, 
         $idFilePdfInvoice, 
         $dataBell, 
-        $invoice,
+        $documents,
         $serie
     )
     {
         $taxes = array_map(function($tax) {
             return $tax->toArray();
-        }, $invoice->getTaxes());
+        }, $documents->getTaxes());
         $concepts = array_map(function($concept) {
             return $concept->toArray();
-        }, $invoice->getConcepts());
+        }, $documents->getConcepts());
         
         $result = $this->repoInvoice->create([
             'idIdentityCreated'=>$this->getIdentity(),
@@ -656,29 +656,29 @@ class InvoiceGenerate
             'idFilePdf'=>$idFilePdfInvoice,
             'idFileCfdSeal'=>$idFileCfdSeal,
             'idFileCfdBeforeSeal'=>$idFileCfdBeforeSeal,
-            'rfc'=>$invoice->getReceiver()->getRfc(),
-            'name'=>$invoice->getReceiver()->getBusinessName(),
+            'rfc'=>$documents->getReceiver()->getRfc(),
+            'name'=>$documents->getReceiver()->getBusinessName(),
             'uuid'=>$dataBell['uuid'],
-            'folio'=>$invoice->getFolio(),
-            'serie'=>$invoice->getSeries(),
+            'folio'=>$documents->getFolio(),
+            'serie'=>$documents->getSeries(),
             'date'=>$dataBell['date'],
             'sealCfd'=>$dataBell['sealCfd'],
             'sealSat'=>$dataBell['sealSat'],
-            'voucherType'=>$invoice->getVoucherType(),
-            'methodPayment'=>$invoice->getMethodPayment(),
-            'expeditionPlace'=>$invoice->getExpeditionPlace(),
-            'coin'=>$invoice->getCoin(),
+            'voucherType'=>$documents->getVoucherType(),
+            'methodPayment'=>$documents->getMethodPayment(),
+            'expeditionPlace'=>$documents->getExpeditionPlace(),
+            'coin'=>$documents->getCoin(),
             'numberCertificateSat'=>$dataBell['numberCertificateSat'],
             'stringOriginal'=>$this->getStringOriginal($dataBell),
-            'version'=>$invoice->getVersion(),
-            'rfcTransmitter'=>$invoice->getTransmitter()->getRfc(),
-            'nameTransmitter'=>$invoice->getTransmitter()->getBusinessName(),
-            'receiver'=>json_encode($invoice->getReceiver()->toArray()),
-            'transmitter'=>json_encode($invoice->getTransmitter()->toArray()),
+            'version'=>$documents->getVersion(),
+            'rfcTransmitter'=>$documents->getTransmitter()->getRfc(),
+            'nameTransmitter'=>$documents->getTransmitter()->getBusinessName(),
+            'receiver'=>json_encode($documents->getReceiver()->toArray()),
+            'transmitter'=>json_encode($documents->getTransmitter()->toArray()),
             'concepts'=>json_encode($concepts),
             'taxes'=>json_encode($taxes),
-            'total'=>$invoice->getTotal(),
-            'subTotal'=>$invoice->getSubTotal()
+            'total'=>$documents->getTotal(),
+            'subTotal'=>$documents->getSubTotal()
         ]);
         
         if( $result)  {

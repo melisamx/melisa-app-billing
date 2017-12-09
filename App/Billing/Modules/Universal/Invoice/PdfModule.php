@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Modules\Universal\Invoice;
+namespace App\Billing\Modules\Universal\Documents;
 
 use App\Core\Logics\Modules\Outbuildings;
 
@@ -28,7 +28,7 @@ class PdfModule extends Outbuildings
                     'bootstrap.reports.print',
                     'fontawesome',
                     'insurance.report',
-                    'billing.invoice.preview',
+                    'billing.documents.preview',
                 ]),
                 'powerbyImage'=>$this->asset('powerby.image')
             ],

@@ -5,7 +5,7 @@ namespace App\Billing\tests\AccountsReceivable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
 use App\Billing\tests\TestCase;
-use App\Billing\tests\Invoice\CreateTrait as InvoiceTrait;
+use App\Billing\tests\Documents\CreateTrait as InvoiceTrait;
 use App\Billing\tests\Cfdi\CreateTrait as CfdiTrait;
 
 class CreateTest extends TestCase
@@ -41,7 +41,7 @@ class CreateTest extends TestCase
         
         $result = json_decode($response->getContent());
         
-        $this->assertDatabaseHas('invoice', [
+        $this->assertDatabaseHas('documents', [
             'id'=>$result->data->idInvoice,
         ], 'billing');
         

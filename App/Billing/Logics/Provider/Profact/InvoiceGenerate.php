@@ -5,12 +5,12 @@ namespace App\Billing\Logics\Provider\Profact;
 use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\StringCreateLogic;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
+use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Libraries\NumberToLetterConverter;
 
 /**
- * Invoice generate with Profact
+ * Documents generate with Profact
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -39,9 +39,9 @@ class InvoiceGenerate
         $this->libNumberToLetter = $libNumberToLetter;
     }
     
-    public function init($invoice)
+    public function init($documents)
     {
-        $xmlString = $this->generateXmlCfd($invoice);
+        $xmlString = $this->generateXmlCfd($documents);
         
         $params = $this->getClientParams([
             'xmlComprobanteBase64'=>base64_encode($xmlString)
@@ -59,7 +59,7 @@ class InvoiceGenerate
         
         $this->repoInvoice->beginTransaction();
         
-        if( !$this->updateInvoice($invoice->id, [
+        if( !$this->updateInvoice($documents->id, [
             'uuid'=>$dataBell['uuid'],
             'stringOriginal'=>$result['stringOriginal'],
             'cfdiResult'=>base64_encode(serialize($result)),
@@ -87,16 +87,16 @@ class InvoiceGenerate
         ];
     }
     
-    public function generateXmlCfd(&$invoice)
+    public function generateXmlCfd(&$documents)
     {
         if( env('PROFACT_ENVIROMENT') === 'sandbox') {
-            $invoice->transmitter->rfc = env('PROFACT_RFC_TRANSMITTER');
-            $invoice->transmitter->fiscal_regime->key = '601';
-            $invoice->customer->rfc = env('PROFACT_RFC_CUSTOMER');
+            $documents->transmitter->rfc = env('PROFACT_RFC_TRANSMITTER');
+            $documents->transmitter->fiscal_regime->key = '601';
+            $documents->customer->rfc = env('PROFACT_RFC_CUSTOMER');
         }
         
-        $xml = view('layouts/invoice/xml33', [
-            'invoice'=>$invoice
+        $xml = view('layouts/documents/xml33', [
+            'documents'=>$documents
         ])->render();
         
         return $xml;

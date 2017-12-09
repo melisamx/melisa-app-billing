@@ -2,28 +2,28 @@
 
 namespace App\Billing\Interfaces\Digifact\v32;
 
-use App\Billing\Interfaces\Invoice\v32\Invoice as InvoiceBase;
+use App\Billing\Interfaces\Documents\v32\Documents as InvoiceBase;
 
 /**
  * 
  *
  * @author Luis Josafat Heredia Contreras
  */
-class Invoice
+class Documents
 {
     
-    protected $invoice;
+    protected $documents;
 
     public function __construct(
-        InvoiceBase $invoice
+        InvoiceBase $documents
     )
     {
-        $this->invoice = $invoice;
+        $this->documents = $documents;
     }
     
     public function formatConcepts()
     {
-        $concepts = $this->invoice->getConcepts();
+        $concepts = $this->documents->getConcepts();
         $items = [];
         
         foreach ($concepts as $concept) {
@@ -40,7 +40,7 @@ class Invoice
     
     public function formatTaxes()
     {
-        $taxes = $this->invoice->getTaxes();
+        $taxes = $this->documents->getTaxes();
         $items = [];
         foreach($taxes as $tax) {
             $items []= new \soapval('Impuesto', 'Impuesto', [
@@ -54,19 +54,19 @@ class Invoice
     
     public function format()
     {
-        $receiver = $this->invoice->getReceiver();        
+        $receiver = $this->documents->getReceiver();        
         $enviroment = env('DIGIFACT_ENVIROMENT', 'sandbox');
         
         $data = [
             'DatosCFD'=>[
-                'FormadePago'=>$this->invoice->getMethodPayment(),
-                'Moneda'=>$this->invoice->getCoin(),
-                'Subtotal'=>$this->invoice->getSubtotal(),
-                'Total'=>$this->invoice->getTotal(),
-                'Serie'=>$this->invoice->getSeries(),
-                'TipodeComprobante'=>$this->invoice->getVoucherType(),
+                'FormadePago'=>$this->documents->getMethodPayment(),
+                'Moneda'=>$this->documents->getCoin(),
+                'Subtotal'=>$this->documents->getSubtotal(),
+                'Total'=>$this->documents->getTotal(),
+                'Serie'=>$this->documents->getSeries(),
+                'TipodeComprobante'=>$this->documents->getVoucherType(),
                 'MensajePDF'=>'Hola',
-                'LugarDeExpedicion'=>$this->invoice->getExpeditionPlace(),
+                'LugarDeExpedicion'=>$this->documents->getExpeditionPlace(),
             ],
             'Receptor'=>[
                 'RFC'=>$receiver->getRfc(),

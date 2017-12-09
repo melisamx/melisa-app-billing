@@ -8,7 +8,7 @@ use App\Billing\Models\InvoiceStatus;
 use App\Drive\Logics\Files\GetContentLogic;
 
 /**
- * Invoice cancel
+ * Documents cancel
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -27,10 +27,10 @@ class InvoiceCancel
         $this->invoiceRepo = $invoiceRepo;
     }
     
-    public function init($invoice)
+    public function init($documents)
     {
         $params = $this->getClientParams([
-            'folioUUID'=>$invoice->uuid,
+            'folioUUID'=>$documents->uuid,
         ]);
         
         $client = $this->createClient($params);

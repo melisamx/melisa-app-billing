@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Billing\Interfaces\Invoice\v32;
+namespace App\Billing\Interfaces\Documents\v32;
 
 /**
- * Read invoice xml v3.2
+ * Read documents xml v3.2
  *
  * @author Luis Josafat Heredia Contreras
  */

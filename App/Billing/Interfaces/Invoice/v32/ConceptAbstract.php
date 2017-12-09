@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Interfaces\Invoice\v32;
+namespace App\Billing\Interfaces\Documents\v32;
 
 /**
  * Default concept abstract class

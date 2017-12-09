@@ -65,11 +65,11 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate($input)
     {
-        $invoice = $this->invoiceRepo->findWhere([
+        $documents = $this->invoiceRepo->findWhere([
             'idCustomerAddress'=>$input['id']
         ]);
         
-        if( !$invoice->count()) {
+        if( !$documents->count()) {
             return true;
         }
         

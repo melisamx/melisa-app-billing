@@ -19,12 +19,12 @@ abstract class BankAccountsAbstract extends Base
         'id',
         'idBank',
         'accountNumber',
+        'name',
         'idIdentityCreated',
         'beginningBalance',
         'active',
         'createdAt',
         'idIdentityUpdated',
-        'name',
         'updatedAt'
     ];    
 }

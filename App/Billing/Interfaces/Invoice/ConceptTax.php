@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Interfaces\Invoice;
+namespace App\Billing\Interfaces\Documents;
 
 /**
  * Concept tax

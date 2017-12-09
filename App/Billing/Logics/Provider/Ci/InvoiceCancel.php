@@ -3,14 +3,14 @@
 namespace App\Billing\Logics\CI;
 
 use Melisa\core\LogicBusiness;
-use App\Billing\Interfaces\Invoice\v32\Invoice;
+use App\Billing\Interfaces\Documents\v32\Documents;
 use App\Billing\Repositories\InvoiceRepository;
-use App\Billing\Interfaces\Invoice\v32\InvoiceXmlReader;
+use App\Billing\Interfaces\Documents\v32\InvoiceXmlReader;
 use App\Billing\Models\InvoiceStatus;
 use App\Drive\Logics\Files\GetContentLogic;
 
 /**
- * Invoice cancel
+ * Documents cancel
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -27,7 +27,7 @@ class InvoiceCancel
         $this->logicGetContentFile = $logicGetContentFile;
     }
     
-    public function init($invoice)
+    public function init($documents)
     {
         $client = $this->createClient();
         
@@ -35,13 +35,13 @@ class InvoiceCancel
             return false;
         }
         
-        $cfd = $this->getCfd($invoice->idFileXml);
+        $cfd = $this->getCfd($documents->idFileXml);
         
         if( !$cfd) {
             return false;
         }
         
-        $xmlCancel = $this->getXmlCancel($invoice);
+        $xmlCancel = $this->getXmlCancel($documents);
         
         $params = $this->getRequestParams();
         $params ['CFD']= $xmlCancel;
@@ -86,11 +86,11 @@ class InvoiceCancel
         ];
     }
     
-    public function getXmlCancel(&$invoice)
+    public function getXmlCancel(&$documents)
     {
         $objCancel = new \stdClass();
-        $objCancel->uuid = $invoice->uuid;
-        $objCancel->uuid = $invoice->uuid;
+        $objCancel->uuid = $documents->uuid;
+        $objCancel->uuid = $documents->uuid;
         $fileCer = $this->getFileCer();
         $fileKey = str_replace([ '\n', '\r'], '', $this->getFileKey());
         
@@ -101,7 +101,7 @@ class InvoiceCancel
         if( env('CI_ENVIROMENT') === 'sandbox') {
             $objCancel->rfc = 'CGA030903UC3';//env('CI_RFC_TRANSMITTER');
         } else {
-            $objCancel->rfc = $invoice->rfcTransmitter;
+            $objCancel->rfc = $documents->rfcTransmitter;
         }
 //        dd($objCancel);
         return str_replace([ PHP_EOL, '\r'], '', view('layouts/ci/cancel', [

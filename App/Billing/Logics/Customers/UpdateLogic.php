@@ -62,11 +62,11 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate(&$input)
     {
-        $invoice = $this->invoiceRepo->findWhere([
+        $documents = $this->invoiceRepo->findWhere([
             'idCustomer'=>$input['id']
         ]);
         
-        if( $invoice->count()) {
+        if( $documents->count()) {
             return $this->error('Ya hay facturas con este cliente, no es posible modificarlo');
         }
         

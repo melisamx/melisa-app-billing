@@ -15,7 +15,7 @@ class CreateTableTypesFactor extends Migration
     {
         Schema::create('typesFactor', function (Blueprint $table) {
             $table->smallInteger('id', true);
-            $table->string('name');
+            $table->string('name')->unique();
             
             $table->index('name');
         });

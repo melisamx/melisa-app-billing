@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Billing\tests\Invoice;
+namespace App\Billing\tests\Documents;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
 use App\Billing\tests\TestCase;
-use App\Billing\Models\Invoice;
+use App\Billing\Models\Documents;
 
 class ReportTest extends TestCase
 {
@@ -24,9 +24,9 @@ class ReportTest extends TestCase
     public function testCreate()
     {
         $user = $this->findUser();
-        $invoice = Invoice::inRandomOrder()->first();        
+        $documents = Documents::inRandomOrder()->first();        
         $response = $this->actingAs($user)
-            ->json('get', "invoice/report/$invoice->id/json/")
+            ->json('get', "documents/report/$documents->id/json/")
             ->assertStatus(200)
             ->assertJson([
                 'success'=>true
@@ -34,7 +34,7 @@ class ReportTest extends TestCase
         
         $result = json_decode($response->getContent());
         
-        $this->assertDatabaseHas('invoice', [
+        $this->assertDatabaseHas('documents', [
             'id'=>$result->data->id
         ], 'billing');
     }

@@ -8,7 +8,7 @@ namespace App\Billing\Models;
  */
 class TypesFactor extends TypesFactorAbstract
 {
-        
+    
     public function getByName($name)
     {
         return $this

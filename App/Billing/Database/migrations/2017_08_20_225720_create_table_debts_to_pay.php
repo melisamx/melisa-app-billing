@@ -17,10 +17,13 @@ class CreateTableDebtstopay extends Migration
         Schema::create('debtsToPay', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->smallInteger('idDebtsToPayStatus');
-            $table->unsignedInteger('idAccountingAccount');
+            /* in case of being a client  */
+            $table->unsignedInteger('idContributorAddress')->nullable();
+            /* in case of being a suppliers */
+            $table->uuid('idProvider')->nullable();
             $table->uuid('idIdentityCreated');
             $table->uuid('idFileVoucher');
-            $table->uuid('idInvoice')->nullable();
+            $table->uuid('idDocument');
             $table->decimal('amountPayable', 15, 2);
             $table->dateTime('dateVoucher');            
             $table->dateTime('dueDate')->nullable();            
@@ -34,9 +37,13 @@ class CreateTableDebtstopay extends Migration
             $table->foreign('idDebtsToPayStatus')
                 ->references('id')->on('debtsToPayStatus')
                 ->onDelete('no action')
-                ->onUpdate('no action');            
-            $table->foreign('idAccountingAccount')
-                ->references('id')->on('accountingAccounts')
+                ->onUpdate('no action');           
+            $table->foreign('idContributorAddress')
+                ->references('id')->on('contributorsAddresses')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+            $table->foreign('idDocument')
+                ->references('id')->on('documents')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             

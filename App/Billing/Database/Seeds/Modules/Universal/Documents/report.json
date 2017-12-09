@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de factura",
+    "url": "/billing.php/documents/report/",
+    "description": "Módulo para ver reporte de factura",
+    "task": {
+        "key": "task.billing.documents.report",
+        "name": "Acceso a ver reporte de factura",
+        "description": "Permitir ver reporte de factura",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.documents.report.success",
+        "description": "Acceso a reporte de factura"
+    }
+}

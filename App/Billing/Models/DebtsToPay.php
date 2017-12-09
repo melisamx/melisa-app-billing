@@ -24,9 +24,9 @@ class DebtsToPay extends DebtsToPayAbstract
         return $this->hasOne('App\Drive\Models\Files', 'id', 'idFileVoucher');
     }
     
-    public function invoice()
+    public function documents()
     {
-        return $this->hasOne('App\Billing\Models\Invoice', 'id', 'idInvoice');
+        return $this->hasOne('App\Billing\Models\Documents', 'id', 'idDocument');
     }
     
 }

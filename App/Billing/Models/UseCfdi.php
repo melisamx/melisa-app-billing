@@ -10,7 +10,7 @@ class UseCfdi extends UseCfdiAbstract
 {
     
     const P01 = 'P01';
-
+    
     public function toDefine()
     {
         return $this->where('key', self::P01)->first();

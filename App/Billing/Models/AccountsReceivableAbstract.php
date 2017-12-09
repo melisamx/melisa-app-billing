@@ -16,13 +16,12 @@ abstract class AccountsReceivableAbstract extends BaseUuid
     /* incrementing */
     protected $fillable = [
         'id',
-        'idAccountingAccount',
         'idAccountReceivableStatus',
         'idBankAccount',
+        'idContributorAddress',
+        'idDocument',
         'idFileVoucher',
-        'idInvoice',
         'idPaymentMethod',
-        'idReferralNote',
         'idIdentityCreated',
         'amountCharged',
         'balance',

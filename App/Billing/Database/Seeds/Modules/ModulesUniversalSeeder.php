@@ -14,7 +14,7 @@ class ModulesUniversalSeeder extends InstallSeeder
     
     public function run()
     {        
-        $this->invoice();
+        $this->documents();
         $this->series();
         $this->accountingAccounts();
         $this->debtsToPay();
@@ -255,9 +255,9 @@ class ModulesUniversalSeeder extends InstallSeeder
         ]);
     }
     
-    public function invoice()
+    public function documents()
     {
-        $this->installModuleJson('Universal/Invoice', [
+        $this->installModuleJson('Universal/Documents', [
             'report',
             'cancel',
             'create',
@@ -267,9 +267,9 @@ class ModulesUniversalSeeder extends InstallSeeder
             'delete',
         ]);
         
-        $this->installAssetCss('billing.invoice.preview', [
-            'name'=>'Billing invoice preview',
-            'path'=>'/billing/css/invoice-preview.min.css',
+        $this->installAssetCss('billing.documents.preview', [
+            'name'=>'Billing documents preview',
+            'path'=>'/billing/css/documents-preview.min.css',
         ]);
     }
     

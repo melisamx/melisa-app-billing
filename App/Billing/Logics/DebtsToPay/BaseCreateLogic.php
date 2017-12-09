@@ -45,16 +45,16 @@ class BaseCreateLogic
     
     public function isValid(&$input)
     {
-        $invoice = $this->repoInvoice
+        $documents = $this->repoInvoice
             ->getModel()
             ->with('status')
             ->find($input['idInvoice']);
         
-        if( !$invoice) {
+        if( !$documents) {
             return $this->error('No existe la factura');
         }
         
-        if( $invoice->status->key === InvoiceStatus::NNEW) {
+        if( $documents->status->key === InvoiceStatus::NNEW) {
             return true;
         }
         

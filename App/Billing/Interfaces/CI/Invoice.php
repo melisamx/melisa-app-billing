@@ -11,7 +11,7 @@ use App\Billing\Interfaces\ReceiverAbstract;
  *
  * @author Luis Josafat Heredia Contreras
  */
-class Invoice extends InvoiceInterface
+class Documents extends InvoiceInterface
 {
     
     public function __construct(

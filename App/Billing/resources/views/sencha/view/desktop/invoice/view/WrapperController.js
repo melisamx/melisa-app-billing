@@ -1,4 +1,4 @@
-Ext.define('Melisa.billing.view.desktop.invoice.view.WrapperController', {
+Ext.define('Melisa.billing.view.desktop.documents.view.WrapperController', {
     extend: 'Melisa.controller.View',
     alias: 'controller.billingInvoiceView',
     
@@ -8,7 +8,7 @@ Ext.define('Melisa.billing.view.desktop.invoice.view.WrapperController', {
     
     listen: {
         global: {
-            'event.billing.invoice.cancel.success': 'onUpdatedRecord'
+            'event.billing.documents.cancel.success': 'onUpdatedRecord'
         }
     },
     
