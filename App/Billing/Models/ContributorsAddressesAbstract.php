@@ -30,6 +30,7 @@ abstract class ContributorsAddressesAbstract extends Base
         'isDefault',
         'createdAt',
         'accountingAccount',
+        'expirationDays',
         'interiorNumber',
         'idIdentityUpdated',
         'updatedAt'

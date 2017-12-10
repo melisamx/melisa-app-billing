@@ -48,7 +48,7 @@ class CreateLogic
         }
         
         $event = [
-            'idCustomer'=>$idCustomer,
+            'id'=>$idCustomer,
             'idContributor'=>$idContributor,
         ];
         

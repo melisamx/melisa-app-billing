@@ -22,6 +22,7 @@ class CreateTableCustomers extends Migration
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();
+            $table->smallInteger('expirationDays')->nullable();
             $table->dateTime('updatedAt')->nullable();
             
             $table->unique([

@@ -28,6 +28,7 @@ class CreateTableContributorsAddresses extends Migration
             $table->boolean('isDefault')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('accountingAccount', 20)->nullable();
+            $table->smallInteger('expirationDays')->nullable();
             $table->integer('interiorNumber')->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();

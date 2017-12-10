@@ -17,6 +17,7 @@ class CreateTableRepositories extends Migration
             $table->uuid('id')->primary();
             $table->uuid('idIdentityCreated');
             $table->string('name', 150)->unique();
+            $table->smallInteger('expirationDays')->default(30);
             $table->boolean('active')->default(1);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->uuid('idIdentityUpdated')->nullable();

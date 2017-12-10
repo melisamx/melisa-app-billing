@@ -7,10 +7,9 @@ use App\Billing\Repositories\AccountsReceivableRepository;
 use App\Billing\Logics\Documents\ReportLogic;
 use App\Billing\Logics\Documents\GeneratePdfLogic;
 use App\Billing\Repositories\DocumentsRepository;
-use App\Billing\Repositories\AccountingAccountsRepository;
 
 /**
- * Register debts to pay
+ * Register accounts receivable
  *
  * @author Luis Josafat Heredia Contreras
  */
@@ -19,36 +18,35 @@ class AutoRegisterLogic
     use LogicBusiness;
     
     protected $eventSuccess = 'billing.accountsReceivable.autoregister.success';
-    protected $accRecRepo;
+    protected $repoAccRec;
     protected $accountRepo;
     protected $logicDocument;
 
     public function __construct(
-        AccountsReceivableRepository $accRecRepo,
-        AccountingAccountsRepository $accountRepo,
+        AccountsReceivableRepository $repoAccRec,
         ReportLogic $logicDocument
-    ) {
-        $this->accRecRepo = $accRecRepo;
-        $this->accountRepo = $accountRepo;
+    )
+    {
+        $this->repoAccRec = $repoAccRec;
         $this->logicDocument = $logicDocument;
     }
 
     public function init(array $input)
     {
-        $this->accRecRepo->beginTransaction();
+        $this->repoAccRec->beginTransaction();
         
         $document = $this->getDocument($input['idDocument']);
         
         if( !$document) {
-            return $this->accRecRepo->rollback();
+            return $this->repoAccRec->rollback();
         }
         
         if( !$this->isValid($document)) {
-            return $this->accRecRepo->rollback();
+            return $this->repoAccRec->rollback();
         }
         
         if( !$this->generatePdf($document)) {
-            return $this->accRecRepo->rollback();
+            return $this->repoAccRec->rollback();
         }
         
         $idAccRec = $this->createAccountReceivable($document);
@@ -63,10 +61,10 @@ class AutoRegisterLogic
         ];
         
         if( !$this->fireEvent($event)) {
-            return $this->accRecRepo->rollback();
+            return $this->repoAccRec->rollback();
         }
         
-        $this->accRecRepo->commit();
+        $this->repoAccRec->commit();
         return $event;
     }
     
@@ -110,9 +108,9 @@ class AutoRegisterLogic
     {
         $dateVoucher = new \Carbon\Carbon($documents->createdAt);
         
-        $result = $this->accRecRepo->createNew([
+        $result = $this->repoAccRec->createNew([
             'idIdentityCreated'=>$this->getIdentity(),
-            'idAccountingAccount'=>$documents->customer_address->accounting_account->id,
+            'idContributorAddress'=>$documents->customer_address->id,
             'idFileVoucher'=>$documents->idFilePdf,
             'idDocument'=>$documents->id,
             'amountCharged'=>(float)$documents->total,
@@ -126,7 +124,7 @@ class AutoRegisterLogic
         }
         
         return $this->error('Imposible auto registrar cuenta por cobrar a la cuenta {a} por la factura {i}', [
-            'a'=>$documents->customer_address->accounting_account->id,
+            'a'=>$documents->customer_address->id,
             'i'=>$documents->id,
         ]);
     }

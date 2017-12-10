@@ -101,7 +101,7 @@ Route::group([
 Route::group([
     'prefix'=>'exchangeRates',
     'middleware'=>'auth',
-], function() {    
+], function() {
     require realpath(base_path() . '/routes/modules/exchangeRates.php');    
 });
 

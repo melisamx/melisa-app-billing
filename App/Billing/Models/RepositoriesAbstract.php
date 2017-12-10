@@ -18,6 +18,7 @@ abstract class RepositoriesAbstract extends BaseUuid
         'id',
         'name',
         'idIdentityCreated',
+        'expirationDays',
         'active',
         'createdAt',
         'idIdentityUpdated',

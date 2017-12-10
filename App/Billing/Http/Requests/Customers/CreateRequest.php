@@ -20,7 +20,7 @@ class CreateRequest extends Generic
         'name'=>'required|xss',
         'rfc'=>'required|xss',
         'email'=>'nullable|email|xss',
-        'active'=>'sometimes|xss|boolean',
+        'active'=>'required|xss|boolean',
     ];
     
     protected $sanitizes = [

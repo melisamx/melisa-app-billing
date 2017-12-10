@@ -4,6 +4,7 @@ namespace App\Billing\tests\AccountsReceivable;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
+use Melisa\Laravel\Tests\ResponseTrait;
 use App\Billing\tests\TestCase;
 use App\Billing\tests\Documents\CreateTrait as InvoiceTrait;
 use App\Billing\tests\Cfdi\CreateTrait as CfdiTrait;
@@ -12,6 +13,7 @@ class CreateTest extends TestCase
 {
     use DatabaseTransactions,
         InstallUser,
+        ResponseTrait,
         InvoiceTrait,
         CfdiTrait;
     
@@ -24,21 +26,18 @@ class CreateTest extends TestCase
      * 
      * @group completed
      * @group accountReceivable
+     * @test
      */
-    public function testCreate()
+    public function create_success()
     {
         $cfdi = $this->createCfdi();
         
         $user = $this->findUser();
         $response = $this->actingAs($user)
             ->json('post', 'accountsReceivable', [
-                'idInvoice'=>$cfdi->idInvoice
-            ])
-            ->assertStatus(200)
-            ->assertJson([
-                'success'=>true
+                'idDocument'=>$cfdi->idDocument
             ]);
-        
+        dd($response->getContent());
         $result = json_decode($response->getContent());
         
         $this->assertDatabaseHas('documents', [
@@ -47,7 +46,7 @@ class CreateTest extends TestCase
         
         $this->assertDatabaseHas('accountsReceivable', [
             'id'=>$result->data->idAccountReceivable,
-            'idInvoice'=>$result->data->idInvoice,
+            'idDocument'=>$result->data->idDocument,
         ], 'billing');
     }
     

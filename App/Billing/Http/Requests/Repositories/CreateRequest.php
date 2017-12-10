@@ -15,8 +15,9 @@ class CreateRequest extends Generic
     use BeforeSanitize;
     
     protected $rules = [
-        'name'=>'bail|required|xss|max:200',
-        'active'=>'bail|required|xss|boolean',
+        'name'=>'required|xss|max:200',
+        'active'=>'required|xss|boolean',
+        'expirationDays'=>'required|xss|numeric',
     ];
     
     protected $sanitizes = [
