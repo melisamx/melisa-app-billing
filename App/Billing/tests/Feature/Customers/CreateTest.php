@@ -34,6 +34,7 @@ class CreateTest extends TestCase
     
     /**
      * @group customers
+     * @group feature
      * @group completed
      * @test
      */
@@ -65,6 +66,7 @@ class CreateTest extends TestCase
     
     /**
      * @group customers
+     * @group feature
      * @group completed
      * @test
      */
@@ -119,6 +121,7 @@ class CreateTest extends TestCase
     /**
      * 
      * @group customers
+     * @group feature
      * @group completed
      * @test
      */

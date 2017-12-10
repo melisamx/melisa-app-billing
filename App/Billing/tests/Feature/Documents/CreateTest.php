@@ -20,15 +20,30 @@ class CreateTest extends TestCase
         'billing'
     ];
     
+    protected $endpoint = 'documents';
+    
     /**
      * 
-     * @group completed
      * @group documents
+     * @group feature
+     * @group completed
      * @test
      */
     public function create_invoice()
     {
-        return $this->createInvoice();
+        return $this->createInvoice($this->endpoint);
+    }
+    
+    /**
+     * 
+     * @group documents
+     * @group feature
+     * @group completed
+     * @test
+     */
+    function unauthenticated_user()
+    {
+        $this->responseUnauthenticated($this->endpoint);
     }
     
 }

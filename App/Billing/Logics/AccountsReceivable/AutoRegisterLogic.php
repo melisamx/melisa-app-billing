@@ -56,7 +56,7 @@ class AutoRegisterLogic
         }
         
         $event = [
-            'idAccountReceivable'=>$idAccRec,
+            'id'=>$idAccRec,
             'idDocument'=>$document->id
         ];
         
@@ -104,28 +104,42 @@ class AutoRegisterLogic
         return true;
     }
     
-    public function createAccountReceivable(&$documents)
+    public function getExpirationDays(&$document)
     {
-        $dateVoucher = new \Carbon\Carbon($documents->createdAt);
+        if( !is_null($document->customer_address->expirationDays)) {
+            return $document->customer_address->expirationDays;
+        }
+        
+        if( !is_null($document->customer->expirationDays)) {
+            return $document->customer->expirationDays;
+        }
+        
+        return $document->customer->repository->expirationDays;
+    }
+    
+    public function createAccountReceivable(&$document)
+    {
+        $dateVoucher = new \Carbon\Carbon($document->createdAt);
+        $expirationDays = $this->getExpirationDays($document);        
         
         $result = $this->repoAccRec->createNew([
             'idIdentityCreated'=>$this->getIdentity(),
-            'idContributorAddress'=>$documents->customer_address->id,
-            'idFileVoucher'=>$documents->idFilePdf,
-            'idDocument'=>$documents->id,
-            'amountCharged'=>(float)$documents->total,
+            'idContributorAddress'=>$document->customer_address->id,
+            'idFileVoucher'=>$document->idFilePdf,
+            'idDocument'=>$document->id,
+            'amountCharged'=>(float)$document->total,
             'dateVoucher'=>new \Carbon\Carbon($dateVoucher),
-            'balance'=>(float)$documents->total,
-            'dueDate'=>$dateVoucher->addDays($documents->customer_address->accounting_account->expirationDays),
+            'balance'=>(float)$document->total,
+            'dueDate'=>$dateVoucher->addDays($expirationDays),
         ]);
         
         if( $result) {
             return $result;
         }
         
-        return $this->error('Imposible auto registrar cuenta por cobrar a la cuenta {a} por la factura {i}', [
-            'a'=>$documents->customer_address->id,
-            'i'=>$documents->id,
+        return $this->error('Imposible auto registrar cuenta por cobrar a la dirección del cliente {c} por el document {i}', [
+            'c'=>$document->customer_address->id,
+            'i'=>$document->id,
         ]);
     }
     

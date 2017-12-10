@@ -32,6 +32,7 @@ class CreateTest extends TestCase
     
     /**
      * @group repositories
+     * @group feature
      * @group completed
      * @test
      */
@@ -57,6 +58,7 @@ class CreateTest extends TestCase
     
     /**
      * @group repositories
+     * @group feature
      * @group completed
      * @test
      */
@@ -87,6 +89,7 @@ class CreateTest extends TestCase
     /**
      * 
      * @group repositories
+     * @group feature
      * @group completed
      * @test
      */

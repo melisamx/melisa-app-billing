@@ -14,13 +14,13 @@ use App\Billing\Logics\Fake\Documents\InvoiceLogic;
 trait CreateTrait
 {
     
-    public function createInvoice()
+    public function createInvoice($endpoint)
     {
         $user = $this->findUser();
         $data = app(InvoiceLogic::class)->getData();
         
         $response = $this->actingAs($user)
-            ->json('post', 'documents', $data);
+            ->json('post', $endpoint, $data);
         
         $this->responseCreatedSuccess($response);
         $result = json_decode($response->getContent());

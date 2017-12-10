@@ -64,7 +64,9 @@ class ReportLogic
                         'municipality',
                     ]);
                 },
-                'customer',
+                'customer'=>function($query) {
+                    $query->with('repository');
+                },
                 'customerAddress'=>function($query) {
                     $query->with([
                         'country',

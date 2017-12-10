@@ -22,15 +22,19 @@ class CfdiTest extends TestCase
         'billing'
     ];
     
+    protected $endpoint = 'cfdi';
+    protected $endpointDocuments = 'documents';
+    
     /**
      * 
-     * @group completed
      * @group cfdi
+     * @group feature
+     * @group completed
      * @test
      */
     public function create_success()
     {        
-        $this->createCfdi();
+        $this->createCfdi($this->endpoint, $this->endpointDocuments);
     }
     
 }

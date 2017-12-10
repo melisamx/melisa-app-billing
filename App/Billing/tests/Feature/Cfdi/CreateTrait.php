@@ -10,12 +10,12 @@ namespace App\Billing\tests\Feature\Cfdi;
 trait CreateTrait
 {
     
-    public function createCfdi()
+    public function createCfdi($endPointCfdi, $endPointDocuments)
     {
-        $idInvoice = $this->createInvoice();
+        $idInvoice = $this->createInvoice($endPointDocuments);
         $user = $this->findUser();
         $response = $this->actingAs($user)
-            ->json('post', 'cfdi', [
+            ->json('post', $endPointCfdi, [
                 'id'=>$idInvoice
             ]);
         
