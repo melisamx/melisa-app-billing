@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Cfdi;
+namespace App\Billing\tests\Feature\Cfdi;
 
 /**
  * 

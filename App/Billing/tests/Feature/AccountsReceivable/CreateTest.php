@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Billing\tests\AccountsReceivable;
+namespace App\Billing\tests\Feature\AccountsReceivable;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
 use Melisa\Laravel\Tests\ResponseTrait;
 use App\Billing\tests\TestCase;
-use App\Billing\tests\Documents\CreateTrait as InvoiceTrait;
-use App\Billing\tests\Cfdi\CreateTrait as CfdiTrait;
+use App\Billing\tests\Feature\Documents\CreateTrait as InvoiceTrait;
+use App\Billing\tests\Feature\Cfdi\CreateTrait as CfdiTrait;
 
 class CreateTest extends TestCase
 {
@@ -24,8 +24,8 @@ class CreateTest extends TestCase
     
     /**
      * 
-     * @group completed
      * @group accountReceivable
+     * * @group dev
      * @test
      */
     public function create_success()

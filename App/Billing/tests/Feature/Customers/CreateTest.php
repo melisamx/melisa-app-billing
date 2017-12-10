@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Customers;
+namespace App\Billing\tests\Feature\Customers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Faker\Generator as Faker;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Documents;
+namespace App\Billing\tests\Feature\Documents;
 
 use App\Billing\Models\DocumentsConcepts;
 use App\Billing\Models\Taxes;

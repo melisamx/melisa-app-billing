@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\tests\Documents;
+namespace App\Billing\tests\Feature\Documents;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Melisa\Laravel\Database\InstallUser;
@@ -18,13 +18,15 @@ class ReportTest extends TestCase
     ];
     
     /**
-     * 
-     * @group completed
+     * @group documents
+     * @group incomplete
+     * @group feature
+     * @test
      */
-    public function testCreate()
+    public function create_success()
     {
         $user = $this->findUser();
-        $documents = Documents::inRandomOrder()->first();        
+        $documents = Documents::inRandomOrder()->first();
         $response = $this->actingAs($user)
             ->json('get', "documents/report/$documents->id/json/")
             ->assertStatus(200)
