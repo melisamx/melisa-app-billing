@@ -9,7 +9,7 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Wrapper', {
     ],
     
     iconCls: 'x-fa fa-money',
-    cls: 'billing-accountsReceivable-view',
+    cls: 'billing-accounts-receivable-view',
     controller: 'billingAccountsReceivableView',
     viewModel: {
         type: 'billingAccountsReceivableView'

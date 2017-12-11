@@ -18,6 +18,9 @@ class ViewModule extends Outbuildings
     {        
         return [
             'success'=>true,
+            'assets'=>[
+                $this->asset('app.billing.accountsReceivable.view')
+            ],
             'data'=>[
                 'token'=>csrf_token(),
                 'modules'=>[

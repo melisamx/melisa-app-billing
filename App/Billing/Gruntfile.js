@@ -17,7 +17,8 @@ module.exports = function(grunt) {
             },
             all: {
                 files: {
-                    '<%= main.output %>css/documents-preview.min.css': '<%= main.src %>less/documents-preview.less'
+                    '<%= main.output %>css/documents-preview.min.css': '<%= main.src %>less/documents-preview.less',
+                    '<%= main.output %>css/accounts-receivable-view.min.css': '<%= main.src %>less/accounts-receivable-view.less'
                 }
             }
         },

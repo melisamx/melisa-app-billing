@@ -16,17 +16,33 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
         {
             dataIndex: 'account',
             text: 'Cuenta',
-            flex: 1
+            flex: 1,
+            renderer: function(value, x, record) {
+                return [
+                    '<b>',
+                    value,
+                    '</b><br>',
+                    record.get('accountRfc')
+                ].join('');
+            }
+        },
+        {
+            dataIndex: 'type',
+            text: 'Tipo de documento',
+            width: 150,
+            renderer: function(v, x, record) {
+                return record.get('document').type.name;
+            }
         },
         {
             dataIndex: 'documents',
-            text: 'Factura',
+            text: 'Document',
             flex: 1,
             renderer: function(v, x, record) {
-                var documents = record.get('documents');
+                var document = record.get('document');
                 return [
-                    documents.serie.serie,
-                    documents.folio
+                    document.serie.serie,
+                    document.folio
                 ].join('-');
             }
         },

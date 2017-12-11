@@ -19,14 +19,15 @@ class PagingCriteria extends FilterCriteria
     {
         $builder = parent::apply($model, $repository, $input, [
             'account'=>'a.name',
-            'documents'=>'i.folio',
+            'documents'=>'d.folio',
         ]);
         $builder = $this->applySort($builder, $input);
         
         return $builder
             ->select([
                 'accountsReceivable.*',
-                'a.name as account',
+                'co.name as account',
+                'co.rfc as accountRfc',
                 \DB::raw(implode('', [
                     '(',
                         'select sum(amountCharged) from accountsReceivable where ',
@@ -43,14 +44,20 @@ class PagingCriteria extends FilterCriteria
                 ]))
             ])
             ->with([
-                'documents'=>function($query) {
+                'document'=>function($query) {
                     $query
                         ->select([
                             'id',
                             'idSerie',
+                            'idCustomer',
+                            'idCustomerAddress',
+                            'idDocumentType',
                             'folio'
                         ])
                         ->with([
+                            'type',
+                            'customer',
+                            'customerAddress',
                             'serie'=>function($query) {
                                 $query->select([
                                     'id',
@@ -60,8 +67,9 @@ class PagingCriteria extends FilterCriteria
                         ]);
                 }
             ])
-            ->join('accountingAccounts as a', 'a.id', '=', 'accountsReceivable.idAccountingAccount')
-            ->leftjoin('documents as i', 'i.id', '=', 'accountsReceivable.idInvoice')
+            ->join('documents as d', 'd.id', '=', 'accountsReceivable.idDocument')
+            ->leftjoin('contributorsAddresses as c', 'c.id', '=', 'd.idCustomerAddress')
+            ->leftjoin('contributors as co', 'co.id', '=', 'c.idContributor')
             ->where('idAccountReceivableStatus', AccountsReceivableStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }

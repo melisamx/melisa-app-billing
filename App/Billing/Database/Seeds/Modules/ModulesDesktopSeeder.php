@@ -164,6 +164,10 @@ class ModulesDesktopSeeder extends InstallSeeder
             'add',
             'view',
         ]);
+        $this->installAssetCss('app.billing.accountsReceivable.view', [
+            'name'=>'CSS accounts receivable view',
+            'path'=>'/billing/css/accounts-receivable-view.min.css'
+        ]);
     }
     
     public function debtsToPay()
