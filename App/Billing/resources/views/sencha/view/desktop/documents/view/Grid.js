@@ -26,6 +26,14 @@ Ext.define('Melisa.billing.view.desktop.documents.view.Grid', {
             }
         },
         {
+            dataIndex: 'type',
+            text: 'Tipo de documento',
+            width: 180,
+            renderer: function(v, x, record) {
+                return record.get('type').name;
+            }
+        },
+        {
             dataIndex: 'customer',
             text: 'RFC',
             flex: 1,
@@ -193,7 +201,7 @@ Ext.define('Melisa.billing.view.desktop.documents.view.Grid', {
                 ptype: 'buttonconfirmation',
                 messageConfirmation: '¿Realmente desea generar cuenta(s) por cobrar?',
                 messageSuccess: 'Cuenta por cobrar generada',
-                fieldId: 'idInvoice',
+                fieldId: 'idDocument',
                 fieldIdRecord: 'id'
             }
         },
@@ -210,7 +218,7 @@ Ext.define('Melisa.billing.view.desktop.documents.view.Grid', {
                 ptype: 'buttonconfirmation',
                 messageConfirmation: '¿Realmente desea generar cuenta(s) por pagar?',
                 messageSuccess: 'Cuenta por pagar generada',
-                fieldId: 'idInvoice',
+                fieldId: 'idDocument',
                 fieldIdRecord: 'id'
             }
         }

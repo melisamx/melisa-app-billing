@@ -16,6 +16,11 @@ class Documents extends DocumentsAbstract
         'totalTaxTransfer'=>'float',
     ];
     
+    public function type()
+    {
+        return $this->hasOne('App\Billing\Models\DocumentTypes', 'id', 'idDocumentType');
+    }
+    
     public function status()
     {
         return $this->hasOne('App\Billing\Models\DocumentStatus', 'id', 'idDocumentStatus');
