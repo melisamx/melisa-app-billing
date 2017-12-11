@@ -34,10 +34,10 @@ class UpdateLogic extends CreateLogic
         
         $result = $this->repository->update([
             'idContributor'=>$input['idContributor'],
-            'idAccountingAccount'=>$input['idAccountingAccount'],
             'idCountry'=>$input['idCountry'],
             'idState'=>$input['idState'],
             'idMunicipality'=>$input['idMunicipality'],
+            'idIdentityUpdated'=>$input['idIdentityUpdated'],
             'address'=>$input['address'],
             'colony'=>$input['colony'],
             'postalCode'=>$input['postalCode'],
@@ -45,7 +45,8 @@ class UpdateLogic extends CreateLogic
             'exteriorNumber'=>$input['exteriorNumber'],
             'active'=>$input['active'],
             'isDefault'=>$input['isDefault'],
-            'idIdentityUpdated'=>$input['idIdentityUpdated'],
+            'expirationDays'=>$input['expirationDays'],
+            'accountingAccount'=>isset($input['accountingAccount']) ? $input['accountingAccount'] : null,
         ], $input['id']);
         
         if( $result === false) {

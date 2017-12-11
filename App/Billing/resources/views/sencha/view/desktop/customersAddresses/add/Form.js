@@ -6,8 +6,7 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.add.Form', {
         'Melisa.people.view.desktop.settlements.PostalCode',
         'Melisa.people.view.desktop.countries.ComboDefault',
         'Melisa.people.view.desktop.states.ComboDefault',
-        'Melisa.people.view.desktop.municipalities.ComboDefault',
-        'Melisa.billing.view.desktop.accountingAccounts.Combo'
+        'Melisa.people.view.desktop.municipalities.ComboDefault'
     ],
     
     defaults: {
@@ -85,7 +84,9 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.add.Form', {
         {
             items: [
                 {
-                    xtype: 'billingAccountingAccountsCombo',
+                    xtype: 'numberfield',
+                    name: 'expirationDays',
+                    fieldLabel: 'Días de vencimiento',
                     allowBlank: true
                 }
             ]

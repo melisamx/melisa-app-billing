@@ -2,12 +2,19 @@
 
 namespace App\Billing\Models;
 
+use Melisa\Laravel\Models\SaveAllUppercaseTrait;
+
 /**
  * 
  * @author Luis Josafat Heredia Contreras
  */
 class Contributors extends ContributorsAbstract
 {
+    use SaveAllUppercaseTrait;
+    
+    protected $noUppercase = [
+        'email'
+    ];
     
     public function setEmailAttribute($value)
     {

@@ -21,6 +21,7 @@ class CreateRequest extends Generic
         'rfc'=>'required|xss',
         'email'=>'nullable|email|xss',
         'active'=>'required|xss|boolean',
+        'expirationDays'=>'nullable|xss|numeric',
     ];
     
     protected $sanitizes = [

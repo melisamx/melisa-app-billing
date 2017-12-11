@@ -14,6 +14,11 @@ Ext.define('Melisa.billing.view.desktop.repositories.add.Form', {
             itemId: 'txtName'
         },
         {
+            xtype: 'numberfield',
+            name: 'expirationDays',
+            fieldLabel: 'Días de vencimiento'
+        },
+        {
             xtype: 'checkbox',
             name: 'active',
             fieldLabel: 'Activo',

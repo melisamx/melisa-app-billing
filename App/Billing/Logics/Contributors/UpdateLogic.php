@@ -21,6 +21,7 @@ class UpdateLogic extends CreateLogic
             'name'=>$input['name'],
             'active'=>$input['active'],
             'idIdentityUpdated'=>$input['idIdentityUpdated'],
+            'email'=>$input['email'],
         ], $input['idContributor']);
         
         if( $result === false) {

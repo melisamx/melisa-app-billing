@@ -30,6 +30,7 @@ class CustomersController extends CrudController
     
     protected $delete = [
         'event'=>'billing.customers.delete.success',
+        'logic'=>'DeleteLogic',
         'request'=>'Customers\DeleteRequest'
     ];
     

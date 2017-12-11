@@ -13,7 +13,7 @@
 
 use App\Billing\Application;
 
-$app = new App\Billing\Application(realpath(__DIR__ . '/../App/Billing'));
+$app = new Application(realpath(__DIR__ . '/../App/Billing'));
 
 /*
 |--------------------------------------------------------------------------

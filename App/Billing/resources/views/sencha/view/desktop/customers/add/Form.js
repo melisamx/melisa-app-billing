@@ -59,11 +59,21 @@ Ext.define('Melisa.billing.view.desktop.customers.add.Form', {
             ]
         },
         {
-            xtype: 'checkbox',
-            name: 'active',
-            fieldLabel: 'Activo',
-            margin: '0 10',
-            checked: true
+            items: [
+                {
+                    xtype: 'numberfield',
+                    name: 'expirationDays',
+                    fieldLabel: 'Días de vencimiento',
+                    allowBlank: true
+                },
+                {
+                    xtype: 'checkbox',
+                    name: 'active',
+                    fieldLabel: 'Activo',
+                    margin: '0 10',
+                    checked: true
+                }
+            ]
         }
     ]    
 });

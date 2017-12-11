@@ -17,12 +17,11 @@ class DeleteLogic extends BaseDeleteLogic
     protected $repoDocuments;
 
     public function __construct(
-        CustomersRepository $repo,
-        DocumentsRepository $repoDocuments
+        CustomersRepository $repo
     )
     {
         $this->repository = $repo;
-        $this->repoDocuments = $repoDocuments;
+        $this->repoDocuments = app(DocumentsRepository::class);
     }
     
     public function delete(&$input)
@@ -31,7 +30,7 @@ class DeleteLogic extends BaseDeleteLogic
             return false;
         }
         
-        return parent::delete(&$input);        
+        return parent::delete($input);        
     }
     
     public function isValidDelete(&$input)
@@ -39,7 +38,12 @@ class DeleteLogic extends BaseDeleteLogic
         $documents = $this->repoDocuments->findWhere([
             'idCustomer'=>$input['id']
         ]);
-        dd($documents);
+        
+        if( !$documents->count()) {
+            return true;
+        }
+        
+        return $this->error('Imposible eliminar el cliente, ya cuenta con documentos');
     }
     
 }

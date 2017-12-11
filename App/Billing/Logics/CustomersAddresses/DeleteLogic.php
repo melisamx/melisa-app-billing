@@ -37,7 +37,7 @@ class DeleteLogic extends BaseDeleteLogic
     public function isValidDelete($input)
     {
         $documents = $this->repoDocuments->findWhere([
-            'idContributorAddress'=>$input['id']
+            'idCustomerAddress'=>$input['id']
         ]);
         
         if( !$documents->count()) {

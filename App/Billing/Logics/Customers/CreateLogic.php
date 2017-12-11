@@ -83,13 +83,14 @@ class CreateLogic
     }
     
     public function createCustomer($idContributor, &$input)
-    {        
+    {
         $id = $this->customers->create([
             'idRepository'=>$input['idRepository'],
             'idContributor'=>$idContributor,
             'active'=>$input['active'],
             'idWaytopay'=>$input['idWaytopay'],
             'idIdentityCreated'=>$input['idIdentityCreated'],
+            'expirationDays'=>$input['expirationDays'],
         ]);
         
         if( $id) {

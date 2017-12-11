@@ -19,7 +19,6 @@ class CreateRequest extends Generic
         'idCountry'=>'required|xss|numeric|exists:people.countries,id',
         'idState'=>'required|xss|numeric|exists:people.states,id',
         'idMunicipality'=>'required|xss|numeric|exists:people.municipalities,id',
-        'idAccountingAccount'=>'nullable|xss|numeric|exists:billing.accountingAccounts,id',
         'address'=>'required|xss',
         'colony'=>'required|xss',
         'postalCode'=>'required|xss|numeric',
@@ -27,6 +26,8 @@ class CreateRequest extends Generic
         'exteriorNumber'=>'required|xss|numeric',
         'active'=>'sometimes|xss|boolean',
         'isDefault'=>'sometimes|xss|boolean',
+        'expirationDays'=>'nullable|xss|numeric',
+        'accountingAccount'=>'nullable|xss',
     ];
     
     protected $sanitizes = [

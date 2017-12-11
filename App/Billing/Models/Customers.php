@@ -8,7 +8,7 @@ namespace App\Billing\Models;
  */
 class Customers extends CustomersAbstract
 {
-    
+
     public function repository()
     {
         return $this->hasOne('App\Billing\Models\Repositories', 'id', 'idRepository');

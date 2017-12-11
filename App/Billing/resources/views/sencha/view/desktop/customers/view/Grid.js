@@ -143,7 +143,8 @@ Ext.define('Melisa.billing.view.desktop.customers.view.Grid', {
                 },
                 plugins: {
                     ptype: 'buttonconfirmation',
-                    messageSuccess: 'Cliente eliminado'
+                    messageSuccess: 'Cliente eliminado',
+                    restFull: true
                 }
             }
         }

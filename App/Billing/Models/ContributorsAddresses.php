@@ -2,12 +2,20 @@
 
 namespace App\Billing\Models;
 
+use Melisa\Laravel\Models\SaveAllUppercaseTrait;
+
 /**
  * 
  * @author Luis Josafat Heredia Contreras
  */
 class ContributorsAddresses extends ContributorsAddressesAbstract
 {
+    
+    use SaveAllUppercaseTrait;
+    
+    protected $noUppercase = [
+        'accountingAccount'
+    ];
     
     public function customer()
     {

@@ -36,6 +36,7 @@ class UpdateLogic extends CreateLogic
             'active'=>$input['active'],
             'idWaytopay'=>$input['idWaytopay'],
             'idIdentityUpdated'=>$input['idIdentityUpdated'],
+            'expirationDays'=>$input['expirationDays'],
         ], $input['id']);
         
         if( $result === false) {
