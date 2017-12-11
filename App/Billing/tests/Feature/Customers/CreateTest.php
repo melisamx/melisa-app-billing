@@ -49,6 +49,7 @@ class CreateTest extends TestCase
             'rfc'=>$this->faker->bothify('????####?##'),
             'email'=>$this->faker->email,
             'active'=>$this->faker->boolean,
+            'expirationDays'=>$this->faker->numberBetween(30, 90),
         ];
         
         $response = $this->actingAs($this->user)
@@ -74,7 +75,7 @@ class CreateTest extends TestCase
     {
         $repository = factory(Repositories::class)->create();
         $wayToPay = factory(Waytopay::class)->create();
-        $idInvalid = mt_rand(999, 9999);
+        $idInvalid = $this->faker->numberBetween(999, 9999);
         $string = uniqid();
         $casesInput = [
             [
