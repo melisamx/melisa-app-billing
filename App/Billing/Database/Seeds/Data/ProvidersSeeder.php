@@ -3,7 +3,7 @@
 namespace App\Billing\Database\Seeds\Data;
 
 use Melisa\Laravel\Database\InstallSeeder;
-use App\Billing\Models\Providers;
+use App\Billing\Database\Seeds\Traits\InstallProvider;
 
 /**
  * Install default providers
@@ -12,24 +12,12 @@ use App\Billing\Models\Providers;
  */
 class ProvidersSeeder extends InstallSeeder
 {
+    use InstallProvider;
     
     public function run()
-    {
-        $idIdentity = $this->findIdentity()->id;
-        Providers::updateOrCreate([
-            'name'=>'TELMEX',
-            'slug'=>'telmex',
-        ], [
-            'expirationDays'=>21,
-            'idIdentityCreated'=>$idIdentity
-        ]);
-        Providers::updateOrCreate([
-            'name'=>'CFE',
-            'slug'=>'cfe',
-        ], [
-            'expirationDays'=>21,
-            'idIdentityCreated'=>$idIdentity
-        ]);
+    {        
+        $this->installProvider('TELMEX', 21, 'otros');
+        $this->installProvider('CFE', 21, 'otros');
     }
     
 }

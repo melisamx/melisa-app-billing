@@ -33,6 +33,7 @@ class DataSeeder extends InstallSeeder
             'useCfdi',
             'paymentMethods',
             'taxActions',
+            'typesProviders',
         ]);
         $this->call(SeriesSeeder::class);
         $this->call(ProvidersSeeder::class);

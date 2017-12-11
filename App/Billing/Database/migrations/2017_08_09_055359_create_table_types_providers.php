@@ -15,9 +15,11 @@ class CreateTableTypesProviders extends Migration
     {
         Schema::create('typesProviders', function (Blueprint $table) {
             $table->smallInteger('id', true);
-            $table->string('name')->unique();
+            $table->string('name', 75)->unique();
+            $table->string('slug', 150)->unique();
             
             $table->index('name');
+            $table->index('slug');
         });
     }
 

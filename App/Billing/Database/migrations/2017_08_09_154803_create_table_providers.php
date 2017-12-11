@@ -15,6 +15,7 @@ class CreateTableProviders extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {            
             $table->uuid('id')->primary();
+            $table->smallInteger('idTypeProvider');
             $table->uuid('idIdentityCreated');
             $table->string('name', 95)->unique();
             $table->string('slug', 150)->unique();
@@ -27,6 +28,11 @@ class CreateTableProviders extends Migration
             
             $table->index('name');
             $table->index('slug');
+            
+            $table->foreign('idTypeProvider')
+                ->references('id')->on('typesProviders')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 
