@@ -3,7 +3,7 @@
 namespace App\Billing\Logics\Documents\v33;
 
 use App\Billing\Libraries\NumberToLetterConverter;
-use App\Billing\Interfaces\Documents\Documents;
+use App\Billing\Interfaces\Documents\Invoice;
 use App\Billing\Repositories\SeriesRepository;
 use App\Billing\Repositories\CustomersRepository;
 use App\Billing\Repositories\ContributorsRepository;
@@ -74,7 +74,7 @@ class TransformerLogic
         $this->repoTaxes = $repoTaxes;
     }
     
-    public function init(Documents $documents)
+    public function init(Invoice $documents)
     {
         $this->documents = $documents;
         $receiver = $this->getReceiver();

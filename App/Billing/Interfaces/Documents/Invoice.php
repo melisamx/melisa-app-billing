@@ -7,7 +7,7 @@ namespace App\Billing\Interfaces\Documents;
  *
  * @author Luis Josafat Heredia Contreras
  */
-class Documents
+class Invoice
 {
     
     protected $idSerie;

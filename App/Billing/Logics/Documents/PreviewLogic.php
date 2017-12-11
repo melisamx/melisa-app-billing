@@ -2,7 +2,7 @@
 
 namespace App\Billing\Logics\Documents;
 
-use App\Billing\Interfaces\Documents\Documents;
+use App\Billing\Interfaces\Documents\Invoice;
 use App\Billing\Logics\Documents\v33\TransformerLogic;
 
 /**
@@ -23,7 +23,7 @@ class PreviewLogic
         $this->transformer = $transformer;
     }
     
-    public function init(Documents $documents)
+    public function init(Invoice $documents)
     {
         return $this->transformer->init($documents);
     }
