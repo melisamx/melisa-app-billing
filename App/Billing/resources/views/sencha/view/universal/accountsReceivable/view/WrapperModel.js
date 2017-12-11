@@ -16,7 +16,8 @@ Ext.define('Melisa.billing.view.universal.accountsReceivable.view.WrapperModel',
             },
             listeners: {
                 datachanged: 'onDataChangedAccountsReceivable'
-            }
+            },
+            groupField: 'repository'
         }
     }
     

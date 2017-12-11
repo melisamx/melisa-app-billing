@@ -35,7 +35,7 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
             }
         },
         {
-            dataIndex: 'documents',
+            dataIndex: 'document',
             text: 'Document',
             flex: 1,
             renderer: function(v, x, record) {
@@ -125,5 +125,19 @@ Ext.define('Melisa.billing.view.desktop.accountsReceivable.view.Grid', {
     bbar: {
         xtype: 'pagingtoolbar',
         displayInfo: true
-    }
+    },
+    features: [
+        {
+            ftype:'grouping',
+            groupHeaderTpl: [
+                '<tpl switch="columnName">',
+                    '<tpl case="repository">',
+                        'Cliente base',
+                    '<tpl default>',
+                        '{columnName}',
+                '</tpl>',
+                ': {name} ({rows.length} Registro{[values.rows.length > 1 ? "s" : ""]})'
+            ]
+        }
+    ]
 });

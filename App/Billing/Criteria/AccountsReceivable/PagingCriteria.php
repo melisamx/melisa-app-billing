@@ -19,7 +19,8 @@ class PagingCriteria extends FilterCriteria
     {
         $builder = parent::apply($model, $repository, $input, [
             'account'=>'a.name',
-            'documents'=>'d.folio',
+            'document'=>'d.folio',
+            'repository'=>'r.name',
         ]);
         $builder = $this->applySort($builder, $input);
         
@@ -28,6 +29,8 @@ class PagingCriteria extends FilterCriteria
                 'accountsReceivable.*',
                 'co.name as account',
                 'co.rfc as accountRfc',
+                'co.rfc as accountRfc',
+                'r.name as repository',
                 \DB::raw(implode('', [
                     '(',
                         'select sum(amountCharged) from accountsReceivable where ',
@@ -56,7 +59,9 @@ class PagingCriteria extends FilterCriteria
                         ])
                         ->with([
                             'type',
-                            'customer',
+                            'customer'=>function($query) {
+                                $query->with('repository');
+                            },
                             'customerAddress',
                             'serie'=>function($query) {
                                 $query->select([
@@ -70,6 +75,8 @@ class PagingCriteria extends FilterCriteria
             ->join('documents as d', 'd.id', '=', 'accountsReceivable.idDocument')
             ->leftjoin('contributorsAddresses as c', 'c.id', '=', 'd.idCustomerAddress')
             ->leftjoin('contributors as co', 'co.id', '=', 'c.idContributor')
+            ->leftjoin('customers as cu', 'cu.id', '=', 'd.idCustomer')
+            ->leftjoin('repositories as r', 'r.id', '=', 'cu.idRepository')
             ->where('idAccountReceivableStatus', AccountsReceivableStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }
