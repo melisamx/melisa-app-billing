@@ -9,6 +9,9 @@ namespace App\Billing\Models;
 class Providers extends ProvidersAbstract
 {    
     
-    
+    public function type()
+    {
+        return $this->hasOne('App\Billing\Models\TypesProviders', 'id', 'idTypeProvider');
+    }
     
 }

@@ -25,7 +25,7 @@ class PagingCriteria extends FilterCriteria
         return $builder
             ->select([
                 'debtsToPay.*',
-                'a.name as account',
+                'p.name as provider',
                 \DB::raw(implode('', [
                     '(',
                     'select sum(amountPayable) from debtsToPay where ',
@@ -41,7 +41,13 @@ class PagingCriteria extends FilterCriteria
                     ') as totalPayableExpired'
                 ]))
             ])
-            ->join('accountingAccounts as a', 'a.id', '=', 'debtsToPay.idAccountingAccount')
+            ->with([
+                'provider'=>function($query) {
+                    $query->with('type');
+                },
+                'contributor'
+            ])
+            ->leftJoin('providers as p', 'p.id', '=', 'debtsToPay.idProvider')
             ->where('idDebtsToPayStatus', DebtsToPayStatus::NNEW)
             ->orderBy('createdAt', 'desc');
     }

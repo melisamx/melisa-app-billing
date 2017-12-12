@@ -29,21 +29,21 @@ class PdfLogic
     
     public function init($id)
     {
-        $documents = $this->getDocument($id);
+        $document = $this->getDocument($id);
         
-        if( !$documents) {
+        if( !$document) {
             return $this->error('Imposible obtener la información del documento');
         }
         
-        $idFile = $this->getFileId($documents);
+        $idFile = $this->getFileId($document);
         
         if( $idFile) {
             return $this->getFileInfo($idFile);
         }
         
-        $idFileNew = $this->generateFile($documents);
+        $idFileNew = $this->generateFile($document);
         
-        if( !$this->updateInvoice($idFileNew, $documents->id)) {
+        if( !$this->updateInvoice($idFileNew, $document->id)) {
             return false;
         }
         

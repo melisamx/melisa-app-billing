@@ -30,15 +30,15 @@ class GeneratePdfLogic
         $this->filesReport = $filesReport;
     }
     
-    public function init($documents)
+    public function init($document)
     {
-        $html = $this->generateHtml($documents);
+        $html = $this->generateHtml($document);
         
-        $idFileHtml = $this->saveHtml($html, $documents);
+        $idFileHtml = $this->saveHtml($html, $document);
         
         if( !$idFileHtml) {
             return $this->error('Imposible guardar reporte de factura {i} para transformar en PDF', [
-                'i'=>$documents->uuid
+                'i'=>$document->uuid
             ]);
         }
         
@@ -46,21 +46,21 @@ class GeneratePdfLogic
         
         if( !$fileHtml) {
             return $this->error('Imposible obtener el archivo HTML de la factura {u}', [
-                'u'=>$documents->uuid,
+                'u'=>$document->uuid,
             ]);
         }
         
-        $stringPdf = $this->generatePdf($fileHtml, $documents);
+        $stringPdf = $this->generatePdf($fileHtml, $document);
         
         if( !$stringPdf) {
             return false;
         }
         
-        $idFilePdfInvoice = $this->savePdf($stringPdf, $documents);
+        $idFilePdfInvoice = $this->savePdf($stringPdf, $document);
         
         if( !$idFilePdfInvoice) {
             return $this->error('Imposible guardar PDF de la factura {i}', [
-                'i'=>$documents->uuid,
+                'i'=>$document->uuid,
             ]);
         }
         
@@ -137,10 +137,10 @@ class GeneratePdfLogic
         return $this->filesCreate->init($file);
     }
     
-    public function generateHtml($documents)
+    public function generateHtml($document)
     {
         return $this->reportModule
-            ->withInput($documents)
+            ->withInput($document)
             ->render()
             ->render();
     }

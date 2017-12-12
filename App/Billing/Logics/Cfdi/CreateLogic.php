@@ -19,8 +19,8 @@ class CreateLogic
 {
     use LogicBusiness;
     
-    protected $eventSuccess = 'billing.cfdi.success';
-    protected $eventError = 'billing.cfdi.error';
+    protected $eventSuccess = 'billing.cfdi.create.success';
+    protected $eventError = 'billing.cfdi.create.error';
     
     protected $repoDocument;
     protected $repoSeries;

@@ -14,9 +14,20 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.view.Grid', {
             hidden: true
         },
         {
-            dataIndex: 'account',
-            text: 'Cuenta',
-            flex: 1
+            dataIndex: 'provider',
+            text: 'Proveedor',
+            flex: 1,
+            renderer: function(value, x, record) {
+                return value.name;
+            }
+        },
+        {
+            dataIndex: 'type',
+            text: 'Tipo de proveedor',
+            flex: 1,
+            renderer: function(v, x, record) {
+                return record.get('provider').type.name;
+            }
         },
         {
             dataIndex: 'dateVoucher',
