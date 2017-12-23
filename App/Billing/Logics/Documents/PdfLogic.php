@@ -2,6 +2,7 @@
 
 namespace App\Billing\Logics\Documents;
 
+use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\ViewLogic;
 use App\Billing\Logics\Documents\ReportLogic;
 use App\Billing\Logics\Documents\GeneratePdfLogic;
@@ -14,6 +15,7 @@ use App\Billing\Repositories\DocumentsRepository;
  */
 class PdfLogic
 {
+    use LogicBusiness;
     
     protected $reportLogic;
     protected $filesView;
