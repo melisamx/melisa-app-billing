@@ -7,12 +7,6 @@ Route::group([
 });
 
 Route::group([
-    'prefix'=>'accountingAccounts',
-], function() {    
-    require realpath(base_path() . '/routes/modules/accountingAccounts.php');    
-});
-
-Route::group([
     'prefix'=>'cfdi',
 ], function() {    
     require realpath(base_path() . '/routes/modules/cfdi.php');    

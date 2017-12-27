@@ -1,6 +1,21 @@
 <?php 
 
 Route::group([
+    'prefix'=>'my',
+    'namespace' =>'My',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/my.php');    
+});
+
+Route::group([
+    'prefix'=>'providers',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/providers.php');    
+});
+
+Route::group([
     'prefix'=>'modules',
     'namespace'=>'Modules'
 ], function() {    
@@ -19,13 +34,6 @@ Route::group([
     'middleware'=>'auth',
 ], function() {    
     require realpath(base_path() . '/routes/modules/bankAccounts.php');    
-});
-
-Route::group([
-    'prefix'=>'accountingAccounts',
-    'middleware'=>'auth',
-], function() {    
-    require realpath(base_path() . '/routes/modules/accountingAccounts.php');    
 });
 
 Route::group([

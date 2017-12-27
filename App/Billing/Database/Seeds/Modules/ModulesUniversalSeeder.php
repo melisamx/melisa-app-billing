@@ -31,12 +31,29 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->customersAddresses();
         $this->customersContacts();        
         $this->customersBanksAccounts();
-        $this->customerGroups();        
-        $this->customerGroupsCustomers();        
-        $this->customerGroupsIdentities();
         $this->repositories();
         $this->cfdi();
         $this->bankAccounts();
+        $this->my();
+        $this->providers();
+    }
+    
+    public function providers()
+    {        
+        $this->installModuleJson('Universal/Providers', [
+            'paging',
+        ]);
+    }
+    
+    public function my()
+    {        
+        $this->installModuleJson('Universal/My/Customers', [
+            'create',
+            'paging',
+            'delete',
+            'update',
+            'report',
+        ]);
     }
     
     public function bankAccounts()
@@ -90,15 +107,6 @@ class ModulesUniversalSeeder extends InstallSeeder
         ]);
     }
     
-    public function customerGroupsIdentities()
-    {
-        $this->installModuleJson('Universal/CustomerGroupsIdentities', [
-            'create',
-            'delete',
-            'paging',
-        ]);
-    }
-    
     public function customersBanksAccounts()
     {
         $this->installModuleJson('Universal/CustomersBanksAccounts', [
@@ -127,26 +135,6 @@ class ModulesUniversalSeeder extends InstallSeeder
             'create',
             'paging',
             'delete',
-        ]);
-    }
-    
-    public function customerGroupsCustomers()
-    {
-        $this->installModuleJson('Universal/CustomerGroupsCustomers', [
-            'create',
-            'delete',
-            'paging',
-        ]);
-    }
-    
-    public function customerGroups()
-    {
-        $this->installModuleJson('Universal/CustomerGroups', [
-            'create',
-            'report',
-            'update',
-            'delete',
-            'paging',
         ]);
     }
     

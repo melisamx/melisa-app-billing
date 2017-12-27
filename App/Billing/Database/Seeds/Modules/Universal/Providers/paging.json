@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de proveedores",
+    "url": "/billing.php/providers/",
+    "description": "Módulo para paginar lista de proveedores",
+    "task": {
+        "key": "task.billing.providers.paging",
+        "name": "Paginar lista de proveedores",
+        "description": "Permitir paginar lista de proveedores",
+        "pattern": "read"
+    }
+}

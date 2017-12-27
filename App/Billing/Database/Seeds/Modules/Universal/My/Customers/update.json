@@ -1,0 +1,15 @@
+{
+    "name": "Modificar cliente",
+    "url": "/billing.php/my/customers/update/",
+    "description": "Módulo para modificar cliente",
+    "task": {
+        "key": "task.billing.my.customers.update",
+        "name": "Acceso a modificar cliente",
+        "description": "Permitir modificar cliente",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.my.customers.update.success",
+        "description": "Cliente modificado"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de clientes",
+    "url": "/billing.php/my/customers/",
+    "description": "Módulo para paginar lista de clientes",
+    "task": {
+        "key": "task.billing.my.customers.paging",
+        "name": "Paginar lista de clientes",
+        "description": "Permitir paginar lista de clientes",
+        "pattern": "read"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Crear cliente",
+    "url": "/billing.php/my/customers/",
+    "description": "Módulo para crear cliente",
+    "task": {
+        "key": "task.billing.my.customers.create",
+        "name": "Acceso a crear cliente",
+        "description": "Permitir crear cliente",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.my.customers.create.success",
+        "description": "Cliente creado"
+    }
+}
