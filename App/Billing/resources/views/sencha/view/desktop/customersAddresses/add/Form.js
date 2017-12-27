@@ -68,13 +68,13 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.add.Form', {
         {
             items: [                
                 {
-                    xtype: 'numberfield',
+                    xtype: 'textfield',
                     fieldLabel: 'Número exterior',
                     name: 'exteriorNumber',
                     margin: '0 10 0 0'
                 },                
                 {
-                    xtype: 'numberfield',
+                    xtype: 'textfield',
                     fieldLabel: 'Número interior',
                     name: 'interiorNumber',
                     allowBlank: true
