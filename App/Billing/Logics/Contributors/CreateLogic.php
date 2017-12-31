@@ -33,6 +33,10 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
+        if( !isset($input['idCountry'])) {
+            return $idContributor;
+        }
+        
         if( !$this->repoAddresses->create([
             'idContributor'=>$idContributor,
             'idIdentityCreated'=>$input['idIdentityCreated'],

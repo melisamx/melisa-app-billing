@@ -193,6 +193,10 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->installModuleJson('Desktop/Documents', [
             'view',
         ]);
+        $this->installAssetCss('app.billing.document.preview', [
+            'name'=>'CSS billing documents preview',
+            'path'=>'/billing/css/documents-preview.min.css'
+        ]);
     }
     
 }
