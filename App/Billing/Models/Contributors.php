@@ -31,4 +31,9 @@ class Contributors extends ContributorsAbstract
         return $this->hasMany('App\Billing\Models\ContributorsAddresses', 'idContributor', 'id');
     }
     
+    public function address()
+    {
+        return $this->hasOne('App\Billing\Models\ContributorsAddresses', 'idContributor', 'id');
+    }
+    
 }
