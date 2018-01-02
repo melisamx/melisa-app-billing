@@ -14,8 +14,7 @@ class CreateLogic extends BaseCreateLogic
 {
     use IdentitiesPrivilegeTrait;
     
-    protected $eventSuccess = 'billing.my.customers.create.success';
-    
+    protected $eventSuccess = 'billing.my.customers.create.success';    
     
     public function createCustomer($idContributor, &$input)
     {

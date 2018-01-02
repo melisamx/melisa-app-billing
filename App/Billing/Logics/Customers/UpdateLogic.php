@@ -36,7 +36,8 @@ class UpdateLogic extends CreateLogic
             'active'=>$input['active'],
             'idWaytopay'=>$input['idWaytopay'],
             'idIdentityUpdated'=>$input['idIdentityUpdated'],
-            'expirationDays'=>$input['expirationDays'],
+            'expirationDays'=>isset($input['expirationDays']) ? 
+                $input['expirationDays'] : null,
         ], $input['id']);
         
         if( $result === false) {

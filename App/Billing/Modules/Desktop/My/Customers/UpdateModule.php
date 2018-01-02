@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Billing\Modules\Desktop\Customers;
+namespace App\Billing\Modules\Desktop\My\Customers;
 
 /**
  * 
@@ -10,7 +10,7 @@ namespace App\Billing\Modules\Desktop\Customers;
 class UpdateModule extends AddModule
 {
     
-    public $event = 'billing.customers.update.access';
+    public $event = 'billing.my.customers.update.access';
     
     public function dataDictionary()
     {        
@@ -19,15 +19,15 @@ class UpdateModule extends AddModule
             'data'=>[
                 'token'=>csrf_token(),
                 'modules'=>array_merge($this->getModules(), [
-                    'submit'=>$this->module('task.billing.customers.update'),
-                    'report'=>$this->module('task.billing.customers.report'),
+                    'submit'=>$this->module('task.billing.my.customers.update'),
+                    'report'=>$this->module('task.billing.my.customers.report'),
                 ]),
                 'wrapper'=>[
-                    'title'=>'Modificar cliente'
+                    'title'=>'Modificar razón social'
                 ],
                 'i18n'=>[
-                    'success'=>'Cliente modificado',
-                    'btnSave'=>'Modificar cliente'
+                    'success'=>'Razón social modificada',
+                    'btnSave'=>'Modificar razón social'
                 ],
                 'fieldsHidden'=>[
                     'id',
