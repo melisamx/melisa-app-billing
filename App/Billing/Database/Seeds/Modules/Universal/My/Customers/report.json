@@ -1,15 +1,15 @@
 {
-    "name": "Ver reporte de clientes",
+    "name": "Ver reporte de de mi razón social",
     "url": "/billing.php/my/customers/report/",
-    "description": "Módulo para ver reporte de clientes",
+    "description": "Módulo para ver reporte de de mi razón social",
     "task": {
         "key": "task.billing.my.customers.report",
-        "name": "Acceso a ver reporte de clientes",
-        "description": "Permitir ver reporte de clientes",
+        "name": "Acceso a ver reporte de de mi razón social",
+        "description": "Permitir ver reporte de de mi razón social",
         "pattern": "read"
     },
     "event": {
         "key": "event.billing.my.customers.report.success",
-        "description": "Acceso a reporte de clientes"
+        "description": "Acceso a reporte de de mi razón social"
     }
 }

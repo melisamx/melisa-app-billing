@@ -33,7 +33,17 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->accountingAccounts();
         $this->cfdi();
         $this->bankAccounts();
+        $this->my();
     }    
+    
+    public function my()
+    {
+        $this->installModuleJson('Desktop/My/Customers', [
+            'add',
+            'update',
+            'view',
+        ]);
+    }
     
     public function cfdi()
     {

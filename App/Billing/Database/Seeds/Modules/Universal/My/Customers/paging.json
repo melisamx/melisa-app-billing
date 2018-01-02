@@ -1,11 +1,11 @@
 {
-    "name": "Paginar lista de clientes",
+    "name": "Paginar lista de razones sociales",
     "url": "/billing.php/my/customers/",
-    "description": "Módulo para paginar lista de clientes",
+    "description": "Módulo para paginar lista de razones sociales",
     "task": {
         "key": "task.billing.my.customers.paging",
-        "name": "Paginar lista de clientes",
-        "description": "Permitir paginar lista de clientes",
+        "name": "Paginar lista de razones sociales",
+        "description": "Permitir paginar lista de razones sociales",
         "pattern": "read"
     }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Agregar mis razones sociales",
+    "url": "/billing.php/modules/my/customers/add",
+    "description": "Módulo interfaz para agregar mis razones sociales",
+    "nameSpace": "Melisa.billing.view.desktop.my.customers.add.Wrapper",
+    "task": {
+        "key": "task.billing.my.customers.add.access",
+        "name": "Acceso a agregar mis razones sociales",
+        "description": "Permitir acceso a agregar mis razones sociales",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.my.customers.add.access",
+        "name": "Opción para agregar mis razones sociales",
+        "text": "Agregar mis razones sociales"
+    },
+    "event": {
+        "key": "event.billing.my.customers.add.access",
+        "description": "Acceso al módulo agregar mis razones sociales"
+    }
+}

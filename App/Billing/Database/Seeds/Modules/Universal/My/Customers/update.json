@@ -1,15 +1,15 @@
 {
-    "name": "Modificar cliente",
+    "name": "Modificar razón social",
     "url": "/billing.php/my/customers/update/",
-    "description": "Módulo para modificar cliente",
+    "description": "Módulo para modificar razón social",
     "task": {
         "key": "task.billing.my.customers.update",
-        "name": "Acceso a modificar cliente",
-        "description": "Permitir modificar cliente",
+        "name": "Acceso a modificar razón social",
+        "description": "Permitir modificar razón social",
         "pattern": "update"
     },
     "event": {
         "key": "event.billing.my.customers.update.success",
-        "description": "Cliente modificado"
+        "description": "Razón social modificado"
     }
 }

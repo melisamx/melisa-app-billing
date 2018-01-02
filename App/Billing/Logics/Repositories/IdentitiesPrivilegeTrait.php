@@ -12,12 +12,16 @@ use App\Billing\Repositories\RepositoriesIdentitiesRepository;
 trait IdentitiesPrivilegeTrait
 {
     
+    protected $repoIdentities;
+
+
     public function getRepositoriesPrivilege()
     {
         static $repoIdentities = null;
         
         if( !$repoIdentities) {
             $repoIdentities = app(RepositoriesIdentitiesRepository::class);
+            $this->repoIdentities = $repoIdentities;
         }
         
         $repositories = $repoIdentities->getModel()
@@ -40,11 +44,11 @@ trait IdentitiesPrivilegeTrait
     {
         $repositories = $this->getRepositoriesPrivilege();
         
-        if( !empty($repositories)) {
+        if( empty($repositories)) {
             return [];
         }
         
-        $identities = $repoIdentities->getModel()
+        $identities = $this->repoIdentities->getModel()
             ->select('idIdentity')
             ->whereIn('idRepository', $repositories)
             ->groupBy('idIdentity')

@@ -1,15 +1,15 @@
 {
-    "name": "Crear cliente",
+    "name": "Crear razón social",
     "url": "/billing.php/my/customers/",
-    "description": "Módulo para crear cliente",
+    "description": "Módulo para crear razón social",
     "task": {
         "key": "task.billing.my.customers.create",
-        "name": "Acceso a crear cliente",
-        "description": "Permitir crear cliente",
+        "name": "Acceso a crear razón social",
+        "description": "Permitir crear razón social",
         "pattern": "create"
     },
     "event": {
         "key": "event.billing.my.customers.create.success",
-        "description": "Cliente creado"
+        "description": "Razón social creado"
     }
 }

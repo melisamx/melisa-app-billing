@@ -1,15 +1,15 @@
 {
-    "name": "Eliminar cliente",
+    "name": "Eliminar razón social",
     "url": "/billing.php/my/customers/delete/",
-    "description": "Módulo para eliminar cliente",
+    "description": "Módulo para eliminar razón social",
     "task": {
         "key": "task.billing.my.customers.delete",
-        "name": "Acceso a eliminar cliente",
-        "description": "Permitir eliminar cliente",
+        "name": "Acceso a eliminar razón social",
+        "description": "Permitir eliminar razón social",
         "pattern": "delete"
     },
     "event": {
         "key": "event.billing.my.customers.delete.success",
-        "description": "Cliente eliminado"
+        "description": "Razón social eliminada"
     }
 }

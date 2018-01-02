@@ -1,6 +1,13 @@
 <?php 
 
 Route::group([
+    'prefix'=>'my',
+    'namespace' =>'My'
+], function() {    
+    require realpath(base_path() . '/routes/my.php');    
+});
+
+Route::group([
     'prefix'=>'bankAccounts',
 ], function() {    
     require realpath(base_path() . '/routes/modules/bankAccounts.php');    

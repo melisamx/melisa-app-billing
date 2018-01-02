@@ -25,7 +25,7 @@ class CustomersController extends CrudController
     
     protected $paging = [
         'repository'=>'CustomersRepository',
-        'criteria'=>'Customers\PagingCriteria'
+        'criteria'=>'My\Customers\PagingCriteria'
     ];
     
     protected $report = [
