@@ -19,7 +19,7 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.17.3'
+            'version'=>'1.17.4'
         ]);        
     }
     
