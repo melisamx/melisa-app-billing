@@ -29,7 +29,7 @@ Ext.define('Melisa.billing.view.desktop.my.customers.view.Grid', {
             width: 180
         },
         {
-            dataIndex: 'paymentMethod',
+            dataIndex: 'waytopay',
             text: 'Método de pago',
             width: 160
         },
