@@ -48,6 +48,9 @@ Ext.define('Melisa.billing.view.desktop.customers.view.Wrapper', {
                         },
                         email: {
                             operator: 'like'
+                        },
+                        repository: {
+                            operator: 'like'
                         }
                     }
                 },
