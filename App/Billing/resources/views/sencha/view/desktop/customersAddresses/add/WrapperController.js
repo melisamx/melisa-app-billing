@@ -44,8 +44,8 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.add.WrapperController
             view = me.getView(),
             txtAddress = view.down('#txtAddress');
         
-        me.mixins.settlements.autoSelectSettlement.apply(me, arguments);
         txtAddress.focus();
+        me.mixins.settlements.autoSelectSettlement.apply(me, arguments);
     },
     
     onReadyModule: function() {
