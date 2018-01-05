@@ -33,6 +33,7 @@ Ext.define('Melisa.billing.view.desktop.customers.add.Form', {
                     fieldLabel: 'R. F. C.',
                     name: 'rfc',
                     width: 150,
+                    maxLength: 13,
                     flex: null
                 }
             ]

@@ -37,6 +37,7 @@ Ext.define('Melisa.billing.view.desktop.my.customers.add.Form', {
                     name: 'rfc',
                     margin: '0 10 0 0',
                     flex: null,
+                    maxLength: 13,
                     width: 140
                 },
                 {

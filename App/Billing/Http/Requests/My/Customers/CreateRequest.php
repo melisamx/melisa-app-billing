@@ -20,7 +20,7 @@ class CreateRequest extends Generic
         'idState'=>'required|xss|exists:people.states,id',
         'idMunicipality'=>'required|xss|exists:people.municipalities,id',
         'name'=>'required|xss',
-        'rfc'=>'required|xss',
+        'rfc'=>'required|xss|max:13',
         'email'=>'nullable|email|xss',
         'active'=>'required|xss|boolean',
         'postalCode'=>'required|numeric|xss',

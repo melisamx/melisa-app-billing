@@ -18,7 +18,7 @@ class CreateRequest extends Generic
         'idRepository'=>'required|xss|exists:billing.repositories,id',
         'idWaytopay'=>'required|xss|numeric|exists:billing.waytopay,id',
         'name'=>'required|xss',
-        'rfc'=>'required|xss',
+        'rfc'=>'required|xss|max:13',
         'email'=>'nullable|email|xss',
         'active'=>'required|xss|boolean',
         'expirationDays'=>'nullable|xss|numeric',
