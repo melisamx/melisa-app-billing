@@ -1,6 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.customers.add.Form', {
+Ext.define('Melisa.billing.view.desktop.customers.update.Form', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.billingCustomersAddForm',
+    alias: 'widget.billingCustomersUpdateForm',
     
     requires: [
         'Melisa.billing.view.desktop.repositories.Combo',
@@ -69,67 +69,8 @@ Ext.define('Melisa.billing.view.desktop.customers.add.Form', {
                     xtype: 'numberfield',
                     name: 'expirationDays',
                     fieldLabel: 'Días de vencimiento',
-                    allowBlank: true
-                },
-                {
-                    xtype: 'peopleCountriesCombo',
-                    margin: '0 0 0 10'
-                }
-            ]
-        },
-        {
-            items: [
-                {
-                    xtype: 'peopleSettlementsPostalCode',
-                    listeners: {
-                        select: 'onSelectPostalCode'
-                    }
-                },
-                {
-                    xtype: 'peopleStatesCombo',
-                    itemId: 'cmbStates',
-                    margin: '0 0 0 10'
-                }              
-            ]
-        },
-        {
-            items: [
-                {
-                    xtype: 'peopleMunicipalitiesCombo',
-                    itemId: 'cmbMunicipalities'
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Colonia',
-                    name: 'colony',
-                    itemId: 'txtColony',
-                    margin: '0 0 0 10'
-                }
-            ]
-        },
-        {
-            items: [
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Domicilio',
-                    name: 'address',
-                    itemId: 'txtAddress'
-                }
-            ]
-        },
-        {
-            items: [
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Número exterior',
-                    name: 'exteriorNumber'
-                },                
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Número interior',
-                    name: 'interiorNumber',
-                    margin: '0 10',
-                    allowBlank: true
+                    allowBlank: true,
+                    margin: '0 10 0 0'
                 },
                 {
                     xtype: 'checkbox',

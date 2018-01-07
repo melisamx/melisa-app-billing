@@ -22,6 +22,49 @@ Ext.define('Melisa.billing.view.universal.customers.add.WrapperModel', {
                     rootProperty: 'data'
                 }
             }
+        },
+        countries: {
+            remoteFilter: true,
+            proxy: {
+                type: 'ajax',
+                url: '{modules.countries}',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                }
+            }
+        },
+        states: {
+            remoteFilter: true,
+            proxy: {
+                type: 'ajax',
+                url: '{modules.states}',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                }
+            }
+        },
+        municipalities: {
+            proxy: {
+                type: 'ajax',
+                url: '{modules.municipalities}',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                }
+            }
+        },
+        settlements: {
+            remoteFilter: true,
+            proxy: {
+                type: 'ajax',
+                url: '{modules.settlements}',
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data'
+                }
+            }
         }
     }    
 });

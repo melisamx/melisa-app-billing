@@ -30,7 +30,7 @@ class CreateLogic
     }
     
     public function init(array $input)
-    {        
+    {
         $this->customers->beginTransaction();
         
         $this->inyectIdentity($input);

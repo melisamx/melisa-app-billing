@@ -3,7 +3,8 @@ Ext.define('Melisa.billing.view.desktop.customers.update.Wrapper', {
     
     requires: [
         'Melisa.billing.view.desktop.customers.add.Wrapper',
-        'Melisa.billing.view.desktop.customers.update.WrapperController'
+        'Melisa.billing.view.desktop.customers.update.WrapperController',
+        'Melisa.billing.view.desktop.customers.update.Form'
     ],
     
     controller: 'billingCustomersUpdate',
@@ -18,6 +19,11 @@ Ext.define('Melisa.billing.view.desktop.customers.update.Wrapper', {
         loaddata: 'onLoadData',
         successloadremotedata: 'onSuccessLoadData',
         beforeloaddata: 'onBeforeLoadData'
-    }
+    },
+    items: [
+        {
+            xtype: 'billingCustomersUpdateForm'
+        }
+    ]
     
 });
