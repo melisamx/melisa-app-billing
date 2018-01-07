@@ -54,6 +54,13 @@ class ModulesUniversalSeeder extends InstallSeeder
             'update',
             'report',
         ]);
+        $this->installModuleJson('Universal/My/CustomersAddresses', [
+            'create',
+            'paging',
+            'delete',
+            'update',
+            'report',
+        ]);
     }
     
     public function bankAccounts()

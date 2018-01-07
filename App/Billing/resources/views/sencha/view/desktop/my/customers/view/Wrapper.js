@@ -9,7 +9,7 @@ Ext.define('Melisa.billing.view.desktop.my.customers.view.Wrapper', {
         'Melisa.billing.view.desktop.my.customers.view.Grid',
         'Melisa.billing.view.desktop.my.customers.view.WrapperController',
         'Melisa.billing.view.desktop.my.customers.addresses.Grid',
-        'Melisa.billing.view.universal.my.customers.view.WrapperModel'
+        'Melisa.billing.view.universal.my.customers.view.WrapperModel',
     ],
     
     mixins: [
@@ -18,7 +18,7 @@ Ext.define('Melisa.billing.view.desktop.my.customers.view.Wrapper', {
     
     iconCls: 'x-fa fa-users',
     cls: 'billing-customers-view',
-    layout: 'border',
+    layout: 'card',
     controller: 'billingMyCustomersView',
     reference: 'wrapper',
     viewModel: {
@@ -30,8 +30,20 @@ Ext.define('Melisa.billing.view.desktop.my.customers.view.Wrapper', {
             region: 'center',
             reference: 'griCustomers',
             listeners: {
-                itemdblclick: 'onShowItemReport'
+                itemdblclick: 'onShowItemReport',
+                selectionchange: 'onSelectionChangeCustomers'
             },
+            actions: {
+                viewAddresses: {
+                    text: 'Ver direcciones',
+                    iconCls: 'x-fa fa-map-marker',
+                    handler: 'onClicBtnViewAddresses',
+                    disabled: true
+                }
+            },
+            tbar: [
+                '@viewAddresses'
+            ],
             plugins: [
                 {
                     ptype: 'autofilters',
@@ -57,6 +69,71 @@ Ext.define('Melisa.billing.view.desktop.my.customers.view.Wrapper', {
                         bind: {
                             melisa: '{modules.add}',
                             hidden: '{!modules.add.allowed}'
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            xtype: 'billingMyCustomersAddressesGrid',
+            tbar: [
+                {
+                    xtype: 'toolbar',
+                    layout: {
+                        type: 'hbox',
+                        align: 'middle'
+                    },
+                    items: [
+                        {
+                            scale: 'large',
+                            iconCls: 'x-fa fa-chevron-left',
+                            handler: 'onClicBtnReturn'
+                        },
+                        {
+                            xtype: 'label',
+                            bind: {
+                                html: [
+                                    '<b>Cliente</b>: {customer.name}',
+                                    '<b>RFC</b>: {customer.rfc}'
+                                ].join('<br>')
+                            }
+                        }
+                    ]
+                }
+            ],
+            plugins: [
+                {
+                    ptype: 'autofilters',
+                    filters: {
+                        country: {
+                            operator: 'like'
+                        },
+                        state: {
+                            operator: 'like'
+                        },
+                        municipality: {
+                            operator: 'like'
+                        }
+                    },
+                    filtersIgnore: [
+                        'id',
+                        'cratedAt',
+                        'updatedAt'
+                    ]
+                },
+                {
+                    ptype: 'floatingbutton',
+                    configButton: {
+                        iconCls: 'x-fa fa-map-marker',
+                        scale: 'large',
+                        tooltip: 'Agregar dirección',
+                        bind: {
+                            melisa: '{modules.addressesAdd}',
+                            hidden: '{!modules.addressesAdd.allowed}'
+                        },
+                        listeners: {
+                            click: 'moduleRun',
+                            loaded: 'onLoadedModuleAsociate'
                         }
                     }
                 }

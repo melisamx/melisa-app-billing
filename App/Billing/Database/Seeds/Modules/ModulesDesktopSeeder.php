@@ -43,6 +43,10 @@ class ModulesDesktopSeeder extends InstallSeeder
             'update',
             'view',
         ]);
+        $this->installModuleJson('Desktop/My/CustomersAddresses', [
+            'add',
+            'update',
+        ]);
     }
     
     public function cfdi()

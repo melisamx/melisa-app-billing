@@ -14,7 +14,7 @@ Ext.define('Melisa.billing.view.desktop.my.customers.update.WrapperController', 
         update: 'Melisa.controller.Update'
     },
     
-    eventSuccess: 'event.billing.my.customers.create.success',
+    eventSuccess: 'event.billing.my.customers.update.success',
     
     onSuccessLoadData: function (data) {        
         var me = this,

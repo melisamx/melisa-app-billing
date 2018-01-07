@@ -20,14 +20,14 @@ Ext.define('Melisa.billing.view.universal.my.customers.view.WrapperModel', {
             groupField: 'bank',
             filters: [
                 {
-                    property: 'idCustomer',
-                    value: '{idCustomer}',
+                    property: 'idContributor',
+                    value: '{customer.idContributor}',
                     operator: '='
                 }
             ],
             proxy: {
                 type: 'ajax',
-                url: '{modules.customersAddresses}',
+                url: '{modules.addresses}',
                 reader: {
                     type: 'json',
                     rootProperty: 'data'

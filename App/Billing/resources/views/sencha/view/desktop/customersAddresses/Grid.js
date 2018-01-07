@@ -23,7 +23,6 @@ Ext.define('Melisa.billing.view.desktop.customersAddresses.Grid', {
             text: 'Páis',
             flex: 1,
             renderer: function(value) {
-                console.log(value);
                 return value.name;
             }
         },

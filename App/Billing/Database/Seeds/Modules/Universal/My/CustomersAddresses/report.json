@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte mis direcciones de clientes",
+    "url": "/billing.php/my/customersAddresses/report/",
+    "description": "Módulo para ver reporte de mis direcciones de clientes",
+    "task": {
+        "key": "task.billing.my.customersAddresses.report",
+        "name": "Acceso a ver reporte de mis direcciones de clientes",
+        "description": "Permitir ver reporte de mis direcciones de clientes",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.my.customersAddresses.report.success",
+        "description": "Acceso a reporte de mis direcciones de clientes"
+    }
+}

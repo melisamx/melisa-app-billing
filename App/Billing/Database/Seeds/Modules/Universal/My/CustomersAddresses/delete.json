@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar mis direcciones del cliente",
+    "url": "/billing.php/my/customersAddresses/delete/",
+    "description": "Módulo para eliminar mis direcciones del cliente",
+    "task": {
+        "key": "task.billing.my.customersAddresses.delete",
+        "name": "Acceso a eliminar mis direcciones del cliente",
+        "description": "Permitir eliminar mis direcciones del cliente",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.my.customersAddresses.delete.success",
+        "description": "Dirección de cliente eliminada"
+    }
+}

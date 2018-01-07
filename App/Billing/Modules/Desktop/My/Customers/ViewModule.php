@@ -26,6 +26,10 @@ class ViewModule extends Outbuildings
                     'update'=>$this->module('task.billing.my.customers.update.access', false),
                     'add'=>$this->module('task.billing.my.customers.add.access', false),
                     'delete'=>$this->module('task.billing.my.customers.delete', false),
+                    'addresses'=>$this->module('task.billing.my.customersAddresses.paging'),
+                    'addressesAdd'=>$this->module('task.billing.my.customersAddresses.add.access', false),
+                    'addressesUpdate'=>$this->module('task.billing.my.customersAddresses.update.access', false),
+                    'addressesDelete'=>$this->module('task.billing.my.customersAddresses.delete', false),
                 ],
                 'wrapper'=>[
                     'title'=>'Mis razones sociales'

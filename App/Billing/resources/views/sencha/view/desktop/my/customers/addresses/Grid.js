@@ -19,11 +19,32 @@ Ext.define('Melisa.billing.view.desktop.my.customers.addresses.Grid', {
             hidden: true
         },
         {
+            dataIndex: 'address',
+            text: 'Dirección',
+            flex: 1,
+            renderer: function(value, meta, record) {
+                meta.style = 'line-height: 12px;';
+                return [
+                    '<h1 style="font-size: 12px">',
+                        value,
+                        ', ',
+                        record.get('exteriorNumber'),
+                        ' - ',
+                        record.get('interiorNumber'),
+                        ', ',
+                        record.get('colony'),
+                    '</h1>',
+                    '<p style="margin: 0">',
+                        record.get('postalCode'),
+                    '</p>'
+                ].join('');
+            }
+        },
+        {
             dataIndex: 'country',
             text: 'Páis',
             flex: 1,
             renderer: function(value) {
-                console.log(value);
                 return value.name;
             }
         },
@@ -64,7 +85,8 @@ Ext.define('Melisa.billing.view.desktop.my.customers.addresses.Grid', {
         {
             dataIndex: 'createdAt',
             text: 'Fecha creación',
-            flex: 1
+            flex: 1,
+            hidden: true
         },
         {
             dataIndex: 'updatedAt',
