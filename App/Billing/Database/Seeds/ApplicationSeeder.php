@@ -19,7 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.20.0'
+            'version'=>'1.20.0',
+            'comments'=>'Se agrego funcionalidad para poder especificar en los clientes base si es posible cambiar y/o aplicar cuota aplicar personalizada'
         ]);        
     }
     

@@ -18,9 +18,12 @@ class CreateRequest extends Generic
         'name'=>'required|xss|max:200',
         'active'=>'required|xss|boolean',
         'expirationDays'=>'required|xss|numeric',
+        'allowChangeQuota'=>'required|xss|boolean',
+        'quota'=>'required|xss|numeric'
     ];
     
     protected $sanitizes = [
+        'allowChangeQuota'=>'boolean',
         'active'=>'boolean'
     ];
     

@@ -10,7 +10,7 @@ Ext.define('Melisa.billing.view.desktop.repositories.add.Wrapper', {
     defaultFocus: 'txtName',
     controller: 'billingRepositoriesAdd',
     width: 400,
-    height: 400,
+    height: 480,
     viewModel: {},
     items: [
         {
