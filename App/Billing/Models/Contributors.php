@@ -13,7 +13,8 @@ class Contributors extends ContributorsAbstract
     use SaveAllUppercaseTrait;
     
     protected $noUppercase = [
-        'email'
+        'idIdentityCreated',
+        'email',
     ];
     
     public function setEmailAttribute($value)
