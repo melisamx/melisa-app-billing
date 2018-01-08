@@ -15,7 +15,7 @@ class AddColumnAllowChangeQuota extends Migration
     {
         Schema::table('repositories', function (Blueprint $table) {
             $table->boolean('allowChangeQuota')->default(0);
-            $table->decimal('quota', 15, 2)->default(0);
+            $table->decimal('quota', 15, 2)->default(0.6);
             
         });
     }
