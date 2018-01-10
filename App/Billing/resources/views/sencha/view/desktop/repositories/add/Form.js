@@ -43,7 +43,7 @@ Ext.define('Melisa.billing.view.desktop.repositories.add.Form', {
         {
             xtype: 'numberfield',
             name: 'quota',
-            fieldLabel: 'Couta',
+            fieldLabel: 'Cuota',
             allowDecimals: true
         }
     ]
