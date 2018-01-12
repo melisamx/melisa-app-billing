@@ -1,0 +1,15 @@
+{
+    "name": "Modificar comisionista",
+    "url": "/billing.php/providers/commissionAgent/update/",
+    "description": "Módulo para modificar comisionista",
+    "task": {
+        "key": "task.billing.providers.commissionAgent.update",
+        "name": "Acceso a modificar comisionista",
+        "description": "Permitir modificar comisionista",
+        "pattern": "update"
+    },
+    "event": {
+        "key": "event.billing.providers.commissionAgent.update.success",
+        "description": "Comisionista modificado"
+    }
+}

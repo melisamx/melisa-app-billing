@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de comisionistas",
+    "url": "/billing.php/providers/commissionAgent",
+    "description": "Módulo para paginar lista de comisionistas",
+    "task": {
+        "key": "task.billing.providers.commissionAgent.paging",
+        "name": "Paginar lista de comisionistas",
+        "description": "Permitir paginar lista de comisionistas",
+        "pattern": "read"
+    }
+}

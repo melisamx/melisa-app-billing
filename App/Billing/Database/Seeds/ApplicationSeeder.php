@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.20.2',
-            'comments'=>'Falta de ortografía cuota'
+            'version'=>'1.21.1',
+            'comments'=>'Se agregaron módulos para administrar comisionistas'
         ]);        
     }
     

@@ -1,0 +1,15 @@
+{
+    "name": "Crear comisionistas",
+    "url": "/billing.php/providers/commissionAgent",
+    "description": "Módulo para crear comisionistas",
+    "task": {
+        "key": "task.billing.providers.commissionAgent.create",
+        "name": "Acceso a crear comisionistas",
+        "description": "Permitir crear comisionistas",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.billing.providers.commissionAgent.create.success",
+        "description": "Comisionista creado"
+    }
+}

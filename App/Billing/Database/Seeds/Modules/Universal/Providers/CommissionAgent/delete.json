@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar comisionistas",
+    "url": "/billing.php/providers/commissionAgent",
+    "description": "Módulo para eliminar comisionistas",
+    "task": {
+        "key": "task.billing.providers.commissionAgent.delete",
+        "name": "Acceso a eliminar comisionistas",
+        "description": "Permitir eliminar comisionistas",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.providers.commissionAgent.delete.success",
+        "description": "Comisionista eliminado"
+    }
+}

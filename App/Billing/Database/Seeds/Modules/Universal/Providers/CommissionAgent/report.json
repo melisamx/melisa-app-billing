@@ -1,0 +1,15 @@
+{
+    "name": "Ver reporte de comisionistas",
+    "url": "/billing.php/providers/commissionAgent/report/",
+    "description": "Módulo para ver reporte de comisionistas",
+    "task": {
+        "key": "task.billing.providers.commissionAgent.report",
+        "name": "Acceso a ver reporte de comisionistas",
+        "description": "Permitir ver reporte de comisionistas",
+        "pattern": "read"
+    },
+    "event": {
+        "key": "event.billing.providers.commissionAgent.report.success",
+        "description": "Acceso a reporte de comisionistas"
+    }
+}

@@ -43,6 +43,13 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->installModuleJson('Universal/Providers', [
             'paging',
         ]);
+        $this->installModuleJson('Universal/Providers/CommissionAgent', [
+            'paging',
+            'create',
+            'delete',
+            'update',
+            'report',
+        ]);
     }
     
     public function my()
