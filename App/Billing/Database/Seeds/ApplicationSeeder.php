@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.21.1',
-            'comments'=>'Se agregaron módulos para administrar comisionistas'
+            'version'=>'1.21.2',
+            'comments'=>'Se ajusto eliminar detalle del cliente cuando se elimina. Se agrego clave para evitar clientes duplicados.'
         ]);        
     }
     
