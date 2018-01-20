@@ -78,6 +78,8 @@ class TransformerLogic
     {
         $this->documents = $documents;
         $receiver = $this->getReceiver();
+        $concepts = $this->getConcepts();
+        $taxes = $this->getTaxes($concepts);
         return json_decode(json_encode([
             'dateTimeExpedition'=>\Carbon\Carbon::now(),
             'transmitter'=>$this->getTransmitter(),
@@ -93,9 +95,27 @@ class TransformerLogic
             'subTotal'=>$this->documents->getSubtotal(),
             'total'=>$this->documents->getTotal(),
             'totalLetter'=>$this->convertNumber->convertir($this->documents->getTotal()),
-            'concepts'=>$this->getConcepts(),
-            'taxes'=>$this->documents->getTaxes(),
+            'concepts'=>$concepts,
+            'taxes'=>$taxes,
         ]));
+    }
+    
+    public function getTaxes($concepts)
+    {
+        $taxes = [];
+        foreach($concepts as $concept) {
+            foreach($concept['taxes'] as $tax) {
+                if( !isset($taxes[$tax['action']])) {
+                    $taxes [$tax['action']]= [
+                        'amount'=>0,
+                        'display'=>$tax['display'],
+                        'rateOrFee'=>$tax['rateOrFee']
+                    ];
+                }
+                $taxes [$tax['action']]['amount']+= $tax['amount'];
+            }
+        }
+        return $taxes;
     }
     
     public function getConcepts()
@@ -126,6 +146,8 @@ class TransformerLogic
         $result = [];
         foreach($taxes as $i => &$tax) {
             $result []= [
+                'action'=>$tax->getAction(),
+                'display'=>$tax->getTax(),
                 'tax'=>$this->getTax($tax->getTax()),
                 'base'=>$tax->getBase(),
                 'typeFactor'=>$tax->getTypeFactor(),

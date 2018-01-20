@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.21.2',
-            'comments'=>'Se ajusto eliminar detalle del cliente cuando se elimina. Se agrego clave para evitar clientes duplicados.'
+            'version'=>'1.22.0',
+            'comments'=>'Se agrego mostrar impuestos trasladados en el previe de la factura.'
         ]);        
     }
     
