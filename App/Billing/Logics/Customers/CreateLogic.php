@@ -39,6 +39,10 @@ class CreateLogic
         
         $this->inyectIdentity($input);
         
+        if( !$this->isValidCustomer($input)) {
+            return $this->customers->rollback();
+        }
+        
         $idContributor = $this->createContributor($input);
         
         if( !$idContributor) {
@@ -73,6 +77,28 @@ class CreateLogic
         
         $this->customers->commit();
         return $report;        
+    }
+    
+    public function isValidCustomer($input)
+    {
+        $result = $this->customers->getModel()
+            ->select('c.*')
+            ->join('contributors as c', 'c.id', '=', 'customers.idContributor')
+            ->where([
+                'idRepository'=>$input['idRepository'],
+                'rfc'=>$input['rfc'],
+                'name'=>$input['name'],
+            ])
+            ->first();
+        
+        if( !$result) {
+            return true;
+        }
+        
+        return $this->error('Ya existe un cliente con el RFC {r} y el nombre {n}', [
+            'r'=>$input['rfc'],
+            'n'=>$input['name'],
+        ]);
     }
     
     public function getRecord($id)

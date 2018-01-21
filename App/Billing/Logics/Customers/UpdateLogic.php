@@ -20,12 +20,44 @@ class UpdateLogic extends CreateLogic
     public function __construct(
         CustomersRepository $customers,
         UpdateContributor $contributors,
-        DocumentsRepository $repoDocuments
+        DocumentsRepository $repoDocuments,
+        ReportLogic $reportCustomer
     )
     {
         $this->customers = $customers;
         $this->contributors = $contributors;
         $this->repoDocuments = $repoDocuments;
+        $this->reportCustomer = $reportCustomer;
+    }
+    
+    public function isValidCustomer($input)
+    {
+        $result = $this->customers->getModel()
+            ->select([
+                'customers.*',
+                'c.name',
+                'c.rfc',
+            ])
+            ->join('contributors as c', 'c.id', '=', 'customers.idContributor')
+            ->where([
+                'idRepository'=>$input['idRepository'],
+                'rfc'=>$input['rfc'],
+                'name'=>$input['name'],
+            ])
+            ->first();
+        
+        if( !$result) {
+            return true;
+        }
+        
+        if( $result->id === $input['id']) {
+            return true;
+        }
+        
+        return $this->error('Ya existe un cliente con el RFC {r} y el nombre {n}', [
+            'r'=>$input['rfc'],
+            'n'=>$input['name'],
+        ]);
     }
     
     public function createCustomer($idContributor, &$input)

@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.23.0',
-            'comments'=>'Se ajusto logica crear cliente, se retorna reporte del actual cliente creado. Se dio soporte para auto llenar cliente base desde otros módulos.'
+            'version'=>'1.24.0',
+            'comments'=>'Se agrego funcionalidad para evitar duplicar clientes con el mismo RFC y nombre'
         ]);        
     }
     
