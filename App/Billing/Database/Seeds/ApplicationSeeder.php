@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.22.0',
-            'comments'=>'Se agrego mostrar impuestos trasladados en el previe de la factura.'
+            'version'=>'1.23.0',
+            'comments'=>'Se ajusto logica crear cliente, se retorna reporte del actual cliente creado. Se dio soporte para auto llenar cliente base desde otros módulos.'
         ]);        
     }
     

@@ -16,8 +16,30 @@ Ext.define('Melisa.billing.view.desktop.customers.add.WrapperController', {
     
     control: {
         '#': {
-            ready: 'onLoadedModule'
+            ready: 'onLoadedModule',
+            loadRepository: 'onLoadRepository'
         }
+    },
+    
+    onLoadRepository: function(repository) {
+        var me = this,
+            vm = me.getViewModel(),
+            view = me.getView(),
+            repositories;
+        vm.notify();
+        repositories = vm.getStore('repositories');
+        
+        if( !repositories) {
+            return;
+        }
+        
+        repositories.add(repository.data);
+        view.down('billingRepositoriesCombo').select(repository.get('id'));
+        view.down('#txtBusinessName').on('render', function() {
+            view.down('#txtBusinessName').focus();
+        }, {
+            single: true
+        });
     },
     
     onSelectPostalCode: function(cmb, record) {

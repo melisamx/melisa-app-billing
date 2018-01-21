@@ -5,6 +5,7 @@ namespace App\Billing\Logics\Customers;
 use Melisa\core\LogicBusiness;
 use App\Billing\Repositories\CustomersRepository;
 use App\Billing\Logics\Contributors\CreateLogic as CreateContributor;
+use App\Billing\Logics\Customers\ReportLogic;
 
 /**
  * Create customer and contributor
@@ -17,16 +18,19 @@ class CreateLogic
     
     protected $customers;
     protected $contributors;
+    protected $reportCustomer;
     protected $eventDisabled = false;
     protected $eventSuccess = 'billing.customers.create.success';
 
     public function __construct(
         CustomersRepository $customers,
-        CreateContributor $contributors
+        CreateContributor $contributors,
+        ReportLogic $reportCustomer
     )
     {
         $this->customers = $customers;
         $this->contributors = $contributors;
+        $this->reportCustomer = $reportCustomer;
     }
     
     public function init(array $input)
@@ -61,8 +65,25 @@ class CreateLogic
             return $this->customers->rollBack();
         }
         
+        $report = $this->getRecord($idCustomer);
+        
+        if( !$report) {
+            return $this->customers->rollBack();
+        }
+        
         $this->customers->commit();
-        return $event;        
+        return $report;        
+    }
+    
+    public function getRecord($id)
+    {
+        $result = $this->reportCustomer->init($id);
+        
+        if( !$result) {
+            return $this->error('Imposible obtener el reporte del cliente recien creado');
+        }
+        
+        return $result;
     }
     
     public function eventDisabled()
