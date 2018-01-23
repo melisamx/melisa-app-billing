@@ -14,9 +14,9 @@ class CreateLogic extends BaseCreateLogic
 {
     use IdentitiesPrivilegeTrait;
     
-    protected $eventSuccess = 'billing.my.customers.create.success';    
+    protected $eventSuccess = 'billing.my.customers.create.success';
     
-    public function createCustomer($idContributor, &$input)
+    public function isValidCustomer(&$input)
     {
         $repositories = $this->getRepositoriesPrivilege();
         
@@ -30,6 +30,11 @@ class CreateLogic extends BaseCreateLogic
         
         $input ['idRepository']= $repositories[0];
         
+        return parent::isValidCustomer($input);
+    }
+    
+    public function createCustomer($idContributor, &$input)
+    {
         $id = $this->customers->create([
             'idRepository'=>$input['idRepository'],
             'idContributor'=>$idContributor,

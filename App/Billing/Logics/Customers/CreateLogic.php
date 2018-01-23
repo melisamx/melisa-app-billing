@@ -79,7 +79,7 @@ class CreateLogic
         return $report;        
     }
     
-    public function isValidCustomer($input)
+    public function isValidCustomer(&$input)
     {
         $result = $this->customers->getModel()
             ->select('c.*')
