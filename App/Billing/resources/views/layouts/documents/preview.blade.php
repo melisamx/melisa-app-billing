@@ -128,6 +128,26 @@
     
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            @if( isset($report->extraData))
+            <table class="table">
+                <tr>
+                    <td>Amparado por el Certificado No. {{ $report->extraData->certificateApplication->certificate }}</td>
+                </tr>
+                <tr>
+                    <td>No. Guía de Embarque/BL/Pedimento: {{ $report->extraData->document }}</td>
+                </tr>
+                <tr>
+                    <td>
+                    @if( $report->extraData->type === 'DE CARGA')
+                        {{ $report->extraData->typeLoad->observations }}
+                    @endif
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            @endif
             <table class="table">
                 <tr>
                     <th>Moneda</th>

@@ -97,6 +97,7 @@ class TransformerLogic
             'totalLetter'=>$this->convertNumber->convertir($this->documents->getTotal()),
             'concepts'=>$concepts,
             'taxes'=>$taxes,
+            'extraData'=>$documents->getExtraData(),
         ]));
     }
     
