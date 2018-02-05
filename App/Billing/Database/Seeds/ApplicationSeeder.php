@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.24.1',
-            'comments'=>'Fix bug. Al crear mis clientes desde sessión de clientes.'
+            'version'=>'1.24.2',
+            'comments'=>'Fix bug. Instalación de conceptos.'
         ]);        
     }
     

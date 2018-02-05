@@ -46,6 +46,7 @@ trait InstallConcept
         if( $name) {
             return ConceptKeys::updateOrCreate([
                 'key'=>$key,
+            ], [
                 'name'=>$name,
             ]);
         }
