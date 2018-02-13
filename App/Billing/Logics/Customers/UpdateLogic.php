@@ -30,7 +30,7 @@ class UpdateLogic extends CreateLogic
         $this->reportCustomer = $reportCustomer;
     }
     
-    public function isValidCustomer($input)
+    public function isValidCustomer(&$input)
     {
         $result = $this->customers->getModel()
             ->select([
@@ -70,6 +70,8 @@ class UpdateLogic extends CreateLogic
             'idIdentityUpdated'=>$input['idIdentityUpdated'],
             'expirationDays'=>isset($input['expirationDays']) ? 
                 $input['expirationDays'] : null,
+            'quota'=>isset($input['quota']) && !empty($input['quota']) ? 
+                $input['quota'] : 0,
         ], $input['id']);
         
         if( $result === false) {

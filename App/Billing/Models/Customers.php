@@ -8,6 +8,10 @@ namespace App\Billing\Models;
  */
 class Customers extends CustomersAbstract
 {
+    
+    protected $casts = [
+        'quota'=>'float',
+    ];
 
     public function repository()
     {

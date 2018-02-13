@@ -132,6 +132,14 @@ Ext.define('Melisa.billing.view.desktop.customers.add.Form', {
                     allowBlank: true
                 },
                 {
+                    xtype: 'numberfield',
+                    name: 'quota',
+                    fieldLabel: 'Quota',
+                    margin: '0 10 0 0',
+                    minValue: 0,
+                    allowBlank: true
+                },
+                {
                     xtype: 'checkbox',
                     name: 'active',
                     fieldLabel: 'Activo',

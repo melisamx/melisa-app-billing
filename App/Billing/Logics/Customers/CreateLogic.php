@@ -138,6 +138,8 @@ class CreateLogic
             'idWaytopay'=>$input['idWaytopay'],
             'idIdentityCreated'=>$input['idIdentityCreated'],
             'expirationDays'=>$input['expirationDays'],
+            'quota'=>isset($input['quota']) && !empty($input['quota']) ? 
+                $input['quota'] : 0,
         ]);
         
         if( $id) {

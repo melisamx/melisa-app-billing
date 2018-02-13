@@ -69,8 +69,15 @@ Ext.define('Melisa.billing.view.desktop.customers.update.Form', {
                     xtype: 'numberfield',
                     name: 'expirationDays',
                     fieldLabel: 'Días de vencimiento',
-                    allowBlank: true,
-                    margin: '0 10 0 0'
+                    allowBlank: true
+                },
+                {
+                    xtype: 'numberfield',
+                    name: 'quota',
+                    fieldLabel: 'Quota',
+                    margin: '0 10',
+                    minValue: 0,
+                    allowBlank: true
                 },
                 {
                     xtype: 'checkbox',

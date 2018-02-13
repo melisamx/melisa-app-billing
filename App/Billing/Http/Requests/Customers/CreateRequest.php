@@ -32,6 +32,7 @@ class CreateRequest extends Generic
         'active'=>'nullable|xss|boolean',
         'interiorNumber'=>'nullable|xss',
         'exteriorNumber'=>'required|xss',
+        'quota'=>'nullable|xss|numeric',
     ];
     
     protected $sanitizes = [
