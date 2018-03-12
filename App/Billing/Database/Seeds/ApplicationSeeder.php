@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.25.0',
-            'comments'=>'Se agrego soporte para especificar la cuota a aplicar en el catalogo de clientes.'
+            'version'=>'1.25.1',
+            'comments'=>'Se ajusto trait para crear concepto.'
         ]);        
     }
     

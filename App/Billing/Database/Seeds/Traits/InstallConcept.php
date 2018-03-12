@@ -22,8 +22,8 @@ trait InstallConcept
         if( is_null($conceptKey)) {
             return Concepts::updateOrCreate([
                 'key'=>$key,
-                'name'=>$name,
             ], [
+                'name'=>$name,
                 'idIdentityCreated'=>$this->findIdentity()->id,
             ]);
         }
@@ -32,8 +32,8 @@ trait InstallConcept
         
         return Concepts::updateOrCreate([
                 'key'=>$key,
-                'name'=>$name,
             ], [
+                'name'=>$name,
                 'idIdentityCreated'=>$this->findIdentity()->id,
                 'idConceptKey'=>$conceptKey ? $conceptKey->id : null
             ]);
