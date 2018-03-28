@@ -29,7 +29,10 @@ class DebtsToPayController extends CrudController
         'module'=>'Universal\DebtsToPay\ReportModule',
     ];
     
-    public function payoff(PayoffRequest $request, PayoffLogic $logic)
+    public function payoff(
+        PayoffRequest $request, 
+        PayoffLogic $logic
+    )
     {
         return response()->data($logic->init($request->allValid()));
     }

@@ -32,7 +32,10 @@ class ReferralNotesController extends CrudController
         'module'=>'Universal\ReferralNotes\ReportModule',
     ];
     
-    public function cancel(CancelRequest $request, CancelLogic $logic)
+    public function cancel(
+        CancelRequest $request, 
+        CancelLogic $logic
+    )
     {
         $result = $logic->init($request->allValid());
         return response()->data($result);
