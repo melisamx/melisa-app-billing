@@ -16,8 +16,8 @@ class ProvidersSeeder extends InstallSeeder
     
     public function run()
     {        
-        $this->installProvider('TELMEX', 21, 'otros');
-        $this->installProvider('CFE', 21, 'otros');
+        $this->installProvider('TELMEX', 21, 'others');
+        $this->installProvider('CFE', 21, 'others');
     }
     
 }
