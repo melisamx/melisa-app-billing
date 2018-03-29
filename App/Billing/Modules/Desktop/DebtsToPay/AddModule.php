@@ -23,7 +23,7 @@ class AddModule extends Outbuildings
                 'modules'=>[
                     'submit'=>$this->module('task.billing.debtsToPay.create'),
                     'filesSelect'=>$this->module('task.drive.files.select.access', false),
-                    'accounts'=>$this->module('task.billing.accounts.paging'),
+                    'providers'=>$this->module('task.billing.providers.paging'),
                 ],
                 'wrapper'=>[
                     'title'=>'Agregar cuenta por pagar'

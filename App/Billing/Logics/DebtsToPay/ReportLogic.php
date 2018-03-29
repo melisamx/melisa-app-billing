@@ -28,9 +28,13 @@ class ReportLogic
         $record = $this->repository
             ->with([
                 'status',
-                'account',
+                'provider'=>function($query) {
+                    $query->with('type');
+                },
                 'voucher',
-                'documents',
+                'document',
+                'filepayment',
+                'contributor',
             ])
             ->findOrFail($id);
         

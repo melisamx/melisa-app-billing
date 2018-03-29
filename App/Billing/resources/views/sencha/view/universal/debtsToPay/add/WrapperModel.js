@@ -3,11 +3,11 @@ Ext.define('Melisa.billing.view.universal.debtsToPay.add.WrapperModel', {
     alias: 'viewmodel.billingDebtsToPayAdd',
     
     stores: {
-        accounts: {
+        providers: {
             remoteFilter: true,
             proxy: {
                 type: 'ajax',
-                url: '{modules.accounts}',
+                url: '{modules.providers}',
                 reader: {
                     type: 'json',
                     rootProperty: 'data'

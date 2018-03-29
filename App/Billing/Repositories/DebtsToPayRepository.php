@@ -16,4 +16,11 @@ class DebtsToPayRepository extends Repository
         return 'App\Billing\Models\DebtsToPay';        
     }
     
+    public function getByIdDocument($idDocument)
+    {
+        return $this->getModel()
+            ->byIdDocument($idDocument)
+            ->get();
+    }
+    
 }

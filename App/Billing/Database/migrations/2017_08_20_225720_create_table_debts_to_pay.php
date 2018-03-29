@@ -17,16 +17,16 @@ class CreateTableDebtstopay extends Migration
         Schema::create('debtsToPay', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->smallInteger('idDebtsToPayStatus');
+            $table->uuid('idIdentityCreated');
             /* in case of being a client  */
             $table->unsignedInteger('idContributorAddress')->nullable();
+            $table->uuid('idFileVoucher')->nullable();
             /* in case of being a suppliers */
             $table->uuid('idProvider')->nullable();
-            $table->uuid('idIdentityCreated');
-            $table->uuid('idFileVoucher');
-            $table->uuid('idDocument');
+            $table->uuid('idDocument')->nullable();
             $table->decimal('amountPayable', 15, 2);
-            $table->dateTime('dateVoucher');            
-            $table->dateTime('dueDate')->nullable();            
+            $table->dateTime('dateVoucher');
+            $table->dateTime('dueDate')->nullable();
             $table->dateTime('paymentDate')->nullable();            
             $table->boolean('expiredDate')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
