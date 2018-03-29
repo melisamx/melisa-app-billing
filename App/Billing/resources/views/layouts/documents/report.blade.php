@@ -1,5 +1,10 @@
 @extends('layouts.reports')
 
+@section('head')
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@endsection
+
 @section('content')
 <div class="container">
     <table class="table">
@@ -157,7 +162,9 @@
                     <th colspan="2">Método de pago</th>
                 </tr>
                 <tr>
-                    <td>{{ $report->payment_method->key }} {{ $report->payment_method->description }}</td>
+                    <td colspan="2">
+                        {{ $report->payment_method->key }} {{ $report->payment_method->description }}
+                    </td>
                 </tr>
             </table>
         </div>        
@@ -205,11 +212,44 @@
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             <table class="table">
                 <tr>
-                    <th>Total con letra</th>
+                    <th>Total con letra</th>                    
+                </tr>
+                <tr>
                     <td>{{ $report->totalLetter }}</td>
+                </tr>
+                <tr>
+                    <th class="title section">
+                        Cadena original del complemento de certificación digital del SAT
+                    </th>
+                </tr>
+                <tr>
+                    <td class="text-center word-break text-small">
+                        {{ $report->stringOriginal }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        Este documento es una representacion impresa de un CFDI
+                    </td>
                 </tr>
             </table>
         </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div id="qrcode"></div> 
+        </div>
     </div>
 </div>
+@endsection
+
+@section('footer')
+<script>
+    new QRCode(document.getElementById('qrcode'), {
+        text: "{!! $report->uuid !!}",
+        width: 150,
+        height: 150,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
 @endsection

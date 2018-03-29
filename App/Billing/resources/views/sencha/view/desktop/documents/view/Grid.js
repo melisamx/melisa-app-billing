@@ -124,7 +124,8 @@ Ext.define('Melisa.billing.view.desktop.documents.view.Grid', {
                     ptype: 'buttonconfirmation',
                     messageConfirmation: '¿Realmente desea eliminar la factura?',
                     messageSuccess: 'Factura eliminada',
-                    restFull: true
+                    restFull: true,
+                    timeout: 90000
                 }
             }
         },

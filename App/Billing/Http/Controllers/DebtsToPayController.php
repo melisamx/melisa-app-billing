@@ -34,7 +34,8 @@ class DebtsToPayController extends CrudController
         PayoffLogic $logic
     )
     {
-        return response()->data($logic->init($request->allValid()));
+        $result = $logic->init($request->allValid());
+        return response()->data($result);
     }
     
 }
