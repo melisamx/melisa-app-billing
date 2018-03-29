@@ -95,13 +95,19 @@ class AutoRegisterLogic
         return true;
     }
     
-    public function isValid(&$documents)
+    public function isValid(&$document)
     {
-        if (empty($documents->uuid)) {
+        if (empty($document->uuid)) {
             return $this->error('No se ha generado el CFDI');
         }
         
-        return true;
+        $old = $this->repoAccRec->getByIdDocument($document->id);
+        
+        if (!$old->count()) {
+            return true;
+        }
+        
+        return $this->error('Ya se registro la cuenta por cobrar de la factura');
     }
     
     public function getExpirationDays(&$document)
