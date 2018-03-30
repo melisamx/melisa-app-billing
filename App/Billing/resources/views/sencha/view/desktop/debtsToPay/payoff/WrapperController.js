@@ -26,7 +26,7 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.payoff.WrapperController', {
         view.setTitle([
             view.getTitle(),
             ' de ',
-            data.account.name
+            data.provider.name
         ].join(''));
         data.paymentDate = new Date();
         me.mixins.update.onSuccessLoadData.call(me, data);

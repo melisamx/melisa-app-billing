@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.25.1',
-            'comments'=>'Se ajusto trait para crear concepto.'
+            'version'=>'1.25.2',
+            'comments'=>'Se ajusto módulo para saldar cuenta por pagar'
         ]);        
     }
     
