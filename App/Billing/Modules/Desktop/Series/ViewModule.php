@@ -33,6 +33,7 @@ class ViewModule extends Outbuildings
         return [
             'series'=>$this->module('task.billing.series.paging'),
             'report'=>$this->module('task.billing.series.report'),
+            'update'=>$this->module('task.billing.series.update.access', false),
             'add'=>$this->module('task.billing.series.add.access', false),
             'delete'=>$this->module('task.billing.series.delete', false),
         ];
