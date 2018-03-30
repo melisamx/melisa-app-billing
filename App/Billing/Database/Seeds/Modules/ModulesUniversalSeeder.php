@@ -232,6 +232,7 @@ class ModulesUniversalSeeder extends InstallSeeder
             'paging',
             'report',
             'payoff',
+            'providers',
         ]);
     }
     
