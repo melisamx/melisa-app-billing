@@ -3,6 +3,7 @@
 Route::post('/', 'DebtsToPayController@create')->middleware('gate:task.billing.debtsToPay.create');
 Route::post('payoff', 'DebtsToPayController@payoff')->middleware('gate:task.billing.debtsToPay.payoff');
 Route::post('providers', 'DebtsToPayController@providers')->middleware('gate:task.billing.debtsToPay.providers');
+Route::delete('/', 'DebtsToPayController@delete')->middleware('gate:task.billing.debtsToPay.delete');
 
 Route::get('/', 'DebtsToPayController@paging')->middleware('gate:task.billing.debtsToPay.paging');
 Route::get('view', 'DebtsToPayController@view')->middleware('gate:task.billing.debtsToPay.view.access');

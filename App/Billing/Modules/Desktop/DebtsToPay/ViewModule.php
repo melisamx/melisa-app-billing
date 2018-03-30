@@ -25,6 +25,7 @@ class ViewModule extends Outbuildings
                     'report'=>$this->module('task.billing.debtsToPay.report'),
                     'add'=>$this->module('task.billing.debtsToPay.add.access', false),
                     'payoff'=>$this->module('task.billing.debtsToPay.payoff.access', false),
+                    'delete'=>$this->module('task.billing.debtsToPay.delete', false),
                 ],
                 'wrapper'=>[
                     'title'=>'Cuentas por pagar'

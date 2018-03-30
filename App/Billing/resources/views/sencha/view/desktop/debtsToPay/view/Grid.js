@@ -92,6 +92,24 @@ Ext.define('Melisa.billing.view.desktop.debtsToPay.view.Grid', {
                     loaded: 'onLoadedModuleUpdate'
                 }
             }
+        },
+        {
+            xtype: 'widgetcolumn',
+            width: 30,
+            widget: {
+                xtype: 'button',
+                iconCls: 'x-fa fa-trash',
+                tooltip: 'Eliminar',
+                bind: {
+                    melisa: '{modules.delete}',
+                    hidden: '{!modules.delete.allowed}'
+                },
+                plugins: {
+                    ptype: 'buttonconfirmation',
+                    messageSuccess: 'Cuenta por pagar eliminada',
+                    restFull: true
+                }
+            }
         }
     ],
     selModel: {

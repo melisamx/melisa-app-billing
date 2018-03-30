@@ -1,0 +1,15 @@
+{
+    "name": "Eliminar cuenta por pagar",
+    "url": "/billing.php/debtsToPay",
+    "description": "Módulo para eliminar cuenta por pagar",
+    "task": {
+        "key": "task.billing.debtsToPay.delete",
+        "name": "Acceso a eliminar cuenta por pagar",
+        "description": "Permitir eliminar cuenta por pagar",
+        "pattern": "delete"
+    },
+    "event": {
+        "key": "event.billing.debtsToPay.delete.success",
+        "description": "Cuenta por pagar eliminada"
+    }
+}
