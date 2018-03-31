@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var fs = require('fs');
 var pdf = require('html-pdf');
 var args = process.argv.slice(2);

@@ -94,6 +94,7 @@ class GeneratePdfLogic
             '.pdf';
         
         $command = implode('', [
+            'node ',
             base_path() . '/htmlToPdf.js ',
 //            'wkhtmltopdf ',
 //            '-s Letter --encoding "UTF-8" -L 0 -R 0 -T 0 -B 0 "file://',
