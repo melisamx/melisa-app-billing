@@ -29,4 +29,14 @@ class AccountsReceivable extends AccountsReceivableAbstract
         return $this->hasOne('App\Billing\Models\Documents', 'id', 'idDocument');
     }
     
+    public function provider()
+    {
+        return $this->hasOne('App\Billing\Models\Providers', 'id', 'idProvider');
+    }
+    
+    public function voucher()
+    {
+        return $this->hasOne('App\Drive\Models\Files', 'id', 'idFileVoucher');
+    }
+    
 }
