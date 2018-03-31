@@ -98,15 +98,27 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate(&$input)
     {
+        $customer = $this->reportCustomer->init($input['id']);
+        
+        if (!$customer) {
+            return $this->error('Imposible obtener reporte del cliente');
+        }
+        
         $documents = $this->repoDocuments->findWhere([
             'idCustomer'=>$input['id']
         ]);
         
-        if( $documents->count()) {
-            return $this->error('Ya hay facturas con este cliente, no es posible modificarlo');
+        if( !$documents->count()) {
+            return true;
+            
         }
         
-        return true;
+        if (mb_strtoupper($input['name']) === $customer->contributor->name && 
+            mb_strtoupper($input['rfc']) === $customer->contributor->rfc) {
+            return true;
+        }
+        
+        return $this->error('Ya hay facturas con este cliente, no es posible modificar su Razón social o RFC');
     }
     
     public function inyectIdentity(&$input)

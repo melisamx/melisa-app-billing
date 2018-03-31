@@ -20,7 +20,7 @@ class ApplicationSeeder extends InstallSeeder
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
             'version'=>'1.25.2',
-            'comments'=>'Se ajusto módulo para saldar cuenta por pagar'
+            'comments'=>'Se mejoro validador para permitir datos del cliente cuando existan facturas relacionadas'
         ]);        
     }
     
