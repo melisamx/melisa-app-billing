@@ -1,0 +1,11 @@
+{
+    "name": "Reporte de facturas pagadas agrupadas por cliente",
+    "url": "/billing.php/reports/billsPaid",
+    "description": "Módulo para listar facturas pagadas agrupadas por cliente",
+    "task": {
+        "key": "task.billing.reports.billsPaid.paging",
+        "name": "Reporte de facturas pagadas agrupadas por clientes",
+        "description": "Permitir listas facturas pagadas agrupadas por clientes",
+        "pattern": "read"
+    }
+}

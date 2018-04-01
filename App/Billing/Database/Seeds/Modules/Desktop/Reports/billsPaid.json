@@ -1,0 +1,24 @@
+{
+    "name": "Ver reporte de facturas pagadas agrupadas por clientes",
+    "url": "/billing.php/modules/reports/billsPaid/view",
+    "description": "Módulo interfaz para ver reporte de facturas pagadas agrupadas por clientes",
+    "nameSpace": "Melisa.billing.view.desktop.reports.billsPaid.view.Wrapper",
+    "task": {
+        "key": "task.billing.reports.billsPaid.view.access",
+        "name": "Acceso a ver reporte de facturas pagadas argupadas por cliente",
+        "description": "Permitir acceso a ver reporte de facturas pagadas agrupadas por clientes",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.billing.reports.billsPaid.view.access",
+        "name": "Opción para ver reporte de facturas pagadas agrupadas por clientes",
+        "text": "Facturas pagadas",
+        "iconClassSmall": "x-fa fa fa fa-users",
+        "iconClassMedium": "x-fa fa fa fa-users",
+        "iconClassLarge": "x-fa fa fa fa-users"
+    },
+    "event": {
+        "key": "event.billing.reports.billsPaid.view.access",
+        "description": "Acceso al módulo ver reporte de facturas pagadas agrupadas por clientes"
+    }
+}

@@ -9,6 +9,13 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'reports',
+    'middleware'=>'auth',
+], function() {    
+    require realpath(base_path() . '/routes/modules/reports.php');    
+});
+
+Route::group([
     'prefix'=>'providers',
     'middleware'=>'auth',
 ], function() {    

@@ -14,6 +14,7 @@ class ModulesDesktopSeeder extends InstallSeeder
     
     public function run()
     {        
+        $this->reports();        
         $this->documents();        
         $this->series();        
         $this->debtsToPay();        
@@ -34,7 +35,14 @@ class ModulesDesktopSeeder extends InstallSeeder
         $this->cfdi();
         $this->bankAccounts();
         $this->my();
-    }    
+    }
+    
+    public function reports()
+    {
+        $this->installModuleJson('Desktop/Reports', [
+            'billsPaid',
+        ]);
+    }
     
     public function my()
     {

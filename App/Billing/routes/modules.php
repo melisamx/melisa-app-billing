@@ -1,6 +1,12 @@
 <?php 
 
 Route::group([
+    'prefix'=>'reports',
+], function() {    
+    require realpath(base_path() . '/routes/modules/reports.php');    
+});
+
+Route::group([
     'prefix'=>'my',
     'namespace' =>'My'
 ], function() {    

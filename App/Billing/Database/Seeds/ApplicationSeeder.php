@@ -19,8 +19,8 @@ class ApplicationSeeder extends InstallSeeder
             'description'=>'Application Billing',
             'nameSpace'=>'Melisa.billing',
             'typeSecurity'=>'art',
-            'version'=>'1.25.2',
-            'comments'=>'Se mejoro validador para permitir datos del cliente cuando existan facturas relacionadas'
+            'version'=>'1.26.0',
+            'comments'=>'Se agrego módulo para ver reporte de facturas pagadas'
         ]);        
     }
     

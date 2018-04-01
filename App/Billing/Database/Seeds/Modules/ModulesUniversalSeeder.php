@@ -14,6 +14,7 @@ class ModulesUniversalSeeder extends InstallSeeder
     
     public function run()
     {        
+        $this->reports();
         $this->documents();
         $this->series();
         $this->accountingAccounts();
@@ -36,6 +37,13 @@ class ModulesUniversalSeeder extends InstallSeeder
         $this->bankAccounts();
         $this->my();
         $this->providers();
+    }
+    
+    public function reports()
+    {        
+        $this->installModuleJson('Universal/Reports', [
+            'billsPaid',
+        ]);
     }
     
     public function providers()
