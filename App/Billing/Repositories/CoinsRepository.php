@@ -16,4 +16,9 @@ class CoinsRepository extends Repository
         return 'App\Billing\Models\Coins';        
     }
     
+    public function getByShortName($key)
+    {
+        return $this->getModel()->byShortName($key)->first();
+    }
+    
 }

@@ -7,6 +7,8 @@ use App\Billing\Http\Requests\Documents\CancelRequest;
 use App\Billing\Logics\Documents\CancelLogic;
 use App\Billing\Logics\Documents\PdfLogic;
 use App\Billing\Logics\Documents\XmlLogic;
+use App\Billing\Http\Requests\Documents\Receipt\CreateRequest;
+use App\Billing\Logics\Documents\Receipt\CreateLogic;
 
 /**
  * 
@@ -38,6 +40,15 @@ class DocumentsController extends CrudController
         'logic'=>'DeleteLogic',
         'request'=>'Documents\DeleteRequest',
     ];
+    
+    public function receipt(
+        CreateRequest $request,
+        CreateLogic $logic
+    )
+    {
+        $result = $logic->init($request->allValid());
+        return response()->create($result);
+    }
     
     public function cancel(
         CancelRequest $request, 

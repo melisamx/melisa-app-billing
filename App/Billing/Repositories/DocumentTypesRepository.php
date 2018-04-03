@@ -16,4 +16,9 @@ class DocumentTypesRepository extends Repository
         return 'App\Billing\Models\DocumentTypes';        
     }
     
+    public function getNote()
+    {
+        return $this->getModel()->note()->first();
+    }
+    
 }

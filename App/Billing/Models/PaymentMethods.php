@@ -15,4 +15,9 @@ class PaymentMethods extends PaymentMethodsAbstract
         return $this->where('key', self::PUE)->first();
     }
     
+    public function scopeByKey($query, $key)
+    {
+        return $query->where('key', $key);
+    }
+    
 }

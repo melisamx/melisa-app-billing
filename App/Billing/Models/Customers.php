@@ -38,4 +38,16 @@ class Customers extends CustomersAbstract
         return $this->hasMany('App\Insurance\Models\CustomersDealers', 'idCustomer', 'id');
     }
     
+    public function scopeByIdContributorAddress($query, $idContributorAddress)
+    {
+        $table = $this->getTable();
+        return $query
+            ->select([
+                "$table.*"
+            ])
+            ->join('contributors as c', 'c.id', '=', "$table.idContributor")
+            ->join('contributorsAddresses as ca', 'ca.idContributor', '=', "ca.id")
+            ->where('ca.id', $idContributorAddress);
+    }
+    
 }

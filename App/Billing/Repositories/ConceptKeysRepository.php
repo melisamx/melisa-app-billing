@@ -16,4 +16,9 @@ class ConceptKeysRepository extends Repository
         return 'App\Billing\Models\ConceptKeys';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

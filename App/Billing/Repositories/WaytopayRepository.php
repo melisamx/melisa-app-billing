@@ -16,4 +16,9 @@ class WaytopayRepository extends Repository
         return 'App\Billing\Models\Waytopay';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

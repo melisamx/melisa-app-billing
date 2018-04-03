@@ -18,4 +18,9 @@ class Taxes extends TaxesAbstract
             ->first();
     }
     
+    public function scopeByName($query, $key)
+    {
+        return $query->where('name', $key);
+    }
+    
 }

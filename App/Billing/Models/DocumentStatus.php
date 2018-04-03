@@ -34,4 +34,9 @@ class DocumentStatus extends DocumentStatusAbstract
         return $query->where('key', self::NNEW);
     }
     
+    public function scopeNewNote($query)
+    {
+        return $query->where('key', self::NNEW);
+    }
+    
 }
