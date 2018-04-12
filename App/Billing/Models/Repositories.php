@@ -9,6 +9,8 @@ namespace App\Billing\Models;
 class Repositories extends RepositoriesAbstract
 {
     
-    
+    protected $casts = [
+        'quota'=>'float',
+    ];
     
 }
