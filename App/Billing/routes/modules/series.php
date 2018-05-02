@@ -9,3 +9,5 @@ Route::post('deactivate', 'SeriesController@deactivate')->middleware('gate:task.
 Route::get('/', 'SeriesController@paging')->middleware('gate:task.billing.series.paging');
 Route::get('view', 'SeriesController@view')->middleware('gate:task.billing.series.view.access');
 Route::get('add', 'SeriesController@add')->middleware('gate:task.billing.series.add.access');
+Route::get('update', 'SeriesController@update')->middleware('gate:task.billing.series.update.access');
+Route::get('report/{id}/{format}', 'SeriesController@report')->middleware('gate:task.billing.series.report');

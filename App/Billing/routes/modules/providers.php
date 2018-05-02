@@ -13,3 +13,14 @@ Route::get('view', 'ProvidersController@view')->middleware('gate:task.billing.pr
 Route::get('update', 'ProvidersController@update')->middleware('gate:task.billing.providers.update.access');
 Route::get('add', 'ProvidersController@add')->middleware('gate:task.billing.providers.add.access');
 Route::get('report/{id}/{format?}', 'ProvidersController@report')->middleware('gate:task.billing.providers.report');
+
+Route::group([
+    'prefix'=>'commissionAgent',
+    'namespace'=>'Providers'
+], function() {
+    Route::get('/', 'CommissionAgentController@paging')->middleware('gate:task.billing.providers.commissionAgent.paging');
+    Route::post('/', 'CommissionAgentController@create')->middleware('gate:task.billing.providers.commissionAgent.create');
+    Route::delete('/', 'CommissionAgentController@delete')->middleware('gate:task.billing.providers.commissionAgent.delete');
+    Route::get('report/{id}/{format?}', 'CommissionAgentController@report')->middleware('gate:task.billing.providers.commissionAgent.report');
+    Route::post('update', 'CommissionAgentController@update')->middleware('gate:task.billing.providers.commissionAgent.update');
+});

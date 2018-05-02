@@ -12,3 +12,4 @@ Route::get('{id}', 'DocumentsController@report')->middleware('gate:task.billing.
 Route::post('cancel', 'DocumentsController@cancel')->middleware('gate:task.billing.documents.cancel');
 Route::delete('{id}', 'DocumentsController@delete')->middleware('gate:task.billing.documents.delete');
 Route::post('/', 'DocumentsController@create')->middleware('gate:task.billing.documents.create');
+Route::post('/receipt', 'DocumentsController@receipt')->middleware('gate:task.billing.documents.receipt.create');

@@ -1,7 +1,7 @@
 <?php 
 
 Route::post('/', 'CustomersController@create')->middleware('gate:task.insurance.my.customers.create');
-Route::post('delete', 'CustomersController@delete')->middleware('gate:task.insurance.my.customers.delete');
+Route::delete('delete', 'CustomersController@delete')->middleware('gate:task.insurance.my.customers.delete');
 Route::post('update', 'CustomersController@update')->middleware('gate:task.insurance.my.customers.update');
 
 Route::get('/', 'CustomersController@paging')->middleware('gate:task.insurance.my.customers.paging');
