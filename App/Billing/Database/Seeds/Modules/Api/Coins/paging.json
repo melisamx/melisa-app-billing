@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de monedas",
+    "url": "/billing.php/api/v1/coins",
+    "description": "Módulo para paginar lista de monedas",
+    "task": {
+        "key": "task.api.billing.coins.paging",
+        "name": "Paginar lista de monedas",
+        "description": "Permitir paginar lista de monedas",
+        "pattern": "read"
+    }
+}

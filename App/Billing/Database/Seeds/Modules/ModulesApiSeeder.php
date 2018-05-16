@@ -17,6 +17,14 @@ class ModulesApiSeeder extends InstallSeeder
         $this->customers();
         $this->customersAddresses();
         $this->repositories();
+        $this->coins();
+    }
+    
+    public function coins()
+    {
+        $this->installModuleJson('Api/Coins', [
+            'paging',
+        ]);
     }
     
     public function repositories()
