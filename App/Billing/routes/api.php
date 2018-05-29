@@ -18,6 +18,17 @@ Route::group([
     'middleware'=>'auth:api',
 ], function() {
     Route::group([
+        'prefix'=>'modules',
+        'namespace'=>'Modules',
+    ], function() {
+        require realpath(base_path() . '/routes/modules_api.php');    
+    });
+    Route::group([
+        'prefix'=>'exchangeRates',
+    ], function() {
+        require realpath(base_path() . '/routes/modules/exchangeRates.php');    
+    });
+    Route::group([
         'prefix'=>'typesFactor',
     ], function() {
         require realpath(base_path() . '/routes/modules/typesFactor.php');    

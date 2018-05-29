@@ -1,0 +1,11 @@
+{
+    "name": "Paginar lista de tipo de cambio",
+    "url": "/billing.php/api/v1/exchangeRates",
+    "description": "Módulo para paginar lista de tipo de cambio",
+    "task": {
+        "key": "task.api.billing.exchangeRates.paging",
+        "name": "Paginar lista de tipo de cambio",
+        "description": "Permitir paginar lista de tipo de cambio",
+        "pattern": "read"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Crear tipo de cambio",
+    "url": "/billing.php/api/v1/exchangeRates/",
+    "description": "Módulo para crear tipo de cambio",
+    "task": {
+        "key": "task.api.billing.exchangeRates.create",
+        "name": "Acceso a crear tipo de cambio",
+        "description": "Permitir crear tipo de cambio",
+        "pattern": "create"
+    },
+    "event": {
+        "key": "event.api.billing.exchangeRates.create.success",
+        "description": "Tipo de cambio creado"
+    }
+}

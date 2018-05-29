@@ -1,0 +1,25 @@
+{
+    "name": "Ver tipos de cambio",
+    "url": "/billing.php/api/v1/modules/exchangeRates/view",
+    "description": "Módulo interfaz para ver tipos de cambio",
+    "nameSpace": "Melisa.billing.view.api.exchangeRates.view.Wrapper",
+    "route": "/billing/exchangeRates/view",
+    "task": {
+        "key": "task.api.billing.exchangeRates.view.access",
+        "name": "Acceso a ver tipos de cambio",
+        "description": "Permitir acceso a ver tipos de cambio",
+        "pattern": "access"
+    },
+    "option": {
+        "key": "option.api.billing.exchangeRates.view.access",
+        "name": "Opción para ver tipos de cambio",
+        "text": "Tipos de cambio",
+        "iconClassSmall": "fa fa-exchange-alt",
+        "iconClassMedium": "fa fa-exchange-alt",
+        "iconClassLarge": "fa fa-exchange-alt"
+    },
+    "event": {
+        "key": "event.api.billing.exchangeRates.view.access",
+        "description": "Acceso al módulo ver tipos de cambio"
+    }
+}

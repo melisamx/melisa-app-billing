@@ -18,6 +18,16 @@ class ModulesApiSeeder extends InstallSeeder
         $this->customersAddresses();
         $this->repositories();
         $this->coins();
+        $this->exchangeRates();
+    }
+    
+    public function exchangeRates()
+    {
+        $this->installModuleJson('Api/ExchangeRates', [
+            'create',
+            'view',
+            'paging',
+        ]);
     }
     
     public function coins()
