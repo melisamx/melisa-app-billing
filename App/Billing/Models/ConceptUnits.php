@@ -9,6 +9,9 @@ namespace App\Billing\Models;
 class ConceptUnits extends ConceptUnitsAbstract
 {
     
-    
+    public function scopeByKey($query, $key)
+    {
+        return $query->where('key', $key);
+    }
     
 }

@@ -40,7 +40,6 @@ class CreateTableDocuments extends Migration
             $table->uuid('idFilePdf')->nullable();
             $table->uuid('idFileCfdSeal')->nullable();
             $table->uuid('idFileCfdBeforeSeal')->nullable();
-            $table->uuid('idCsd')->nullable();
             $table->smallInteger('idUseCfdi')->nullable();
             $table->string('folio', 25)->nullable();
             $table->text('stringOriginal')->nullable();
@@ -85,11 +84,7 @@ class CreateTableDocuments extends Migration
             $table->foreign('idTransmitterAddress')
                 ->references('id')->on('contributorsAddresses')
                 ->onDelete('no action')
-                ->onUpdate('no action');            
-            $table->foreign('idCsd')
-                ->references('id')->on('csd')
-                ->onDelete('no action')
-                ->onUpdate('no action');            
+                ->onUpdate('no action');          
             $table->foreign('idDocumentStatus')
                 ->references('id')->on('documentStatus')
                 ->onDelete('no action')

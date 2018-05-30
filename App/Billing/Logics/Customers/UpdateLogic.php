@@ -20,12 +20,44 @@ class UpdateLogic extends CreateLogic
     public function __construct(
         CustomersRepository $customers,
         UpdateContributor $contributors,
-        DocumentsRepository $repoDocuments
+        DocumentsRepository $repoDocuments,
+        ReportLogic $reportCustomer
     )
     {
         $this->customers = $customers;
         $this->contributors = $contributors;
         $this->repoDocuments = $repoDocuments;
+        $this->reportCustomer = $reportCustomer;
+    }
+    
+    public function isValidCustomer(&$input)
+    {
+        $result = $this->customers->getModel()
+            ->select([
+                'customers.*',
+                'c.name',
+                'c.rfc',
+            ])
+            ->join('contributors as c', 'c.id', '=', 'customers.idContributor')
+            ->where([
+                'idRepository'=>$input['idRepository'],
+                'rfc'=>$input['rfc'],
+                'name'=>$input['name'],
+            ])
+            ->first();
+        
+        if( !$result) {
+            return true;
+        }
+        
+        if( $result->id === $input['id']) {
+            return true;
+        }
+        
+        return $this->error('Ya existe un cliente con el RFC {r} y el nombre {n}', [
+            'r'=>$input['rfc'],
+            'n'=>$input['name'],
+        ]);
     }
     
     public function createCustomer($idContributor, &$input)
@@ -36,7 +68,10 @@ class UpdateLogic extends CreateLogic
             'active'=>$input['active'],
             'idWaytopay'=>$input['idWaytopay'],
             'idIdentityUpdated'=>$input['idIdentityUpdated'],
-            'expirationDays'=>$input['expirationDays'],
+            'expirationDays'=>isset($input['expirationDays']) ? 
+                $input['expirationDays'] : null,
+            'quota'=>isset($input['quota']) && !empty($input['quota']) ? 
+                $input['quota'] : 0,
         ], $input['id']);
         
         if( $result === false) {
@@ -63,15 +98,27 @@ class UpdateLogic extends CreateLogic
     
     public function isValidUpdate(&$input)
     {
+        $customer = $this->reportCustomer->init($input['id']);
+        
+        if (!$customer) {
+            return $this->error('Imposible obtener reporte del cliente');
+        }
+        
         $documents = $this->repoDocuments->findWhere([
             'idCustomer'=>$input['id']
         ]);
         
-        if( $documents->count()) {
-            return $this->error('Ya hay facturas con este cliente, no es posible modificarlo');
+        if( !$documents->count()) {
+            return true;
+            
         }
         
-        return true;
+        if (mb_strtoupper($input['name']) === $customer->contributor->name && 
+            mb_strtoupper($input['rfc']) === $customer->contributor->rfc) {
+            return true;
+        }
+        
+        return $this->error('Ya hay facturas con este cliente, no es posible modificar su Razón social o RFC');
     }
     
     public function inyectIdentity(&$input)

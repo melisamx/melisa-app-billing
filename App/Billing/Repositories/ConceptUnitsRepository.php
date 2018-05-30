@@ -16,4 +16,9 @@ class ConceptUnitsRepository extends Repository
         return 'App\Billing\Models\ConceptUnits';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

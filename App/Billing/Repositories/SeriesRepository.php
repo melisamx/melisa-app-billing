@@ -16,4 +16,9 @@ class SeriesRepository extends Repository
         return 'App\Billing\Models\Series';        
     }
     
+    public function getDefault()
+    {
+        return $this->getModel()->default();
+    }
+    
 }

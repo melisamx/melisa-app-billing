@@ -7,6 +7,8 @@ use App\Billing\Http\Requests\Documents\CancelRequest;
 use App\Billing\Logics\Documents\CancelLogic;
 use App\Billing\Logics\Documents\PdfLogic;
 use App\Billing\Logics\Documents\XmlLogic;
+use App\Billing\Http\Requests\Documents\Receipt\CreateRequest;
+use App\Billing\Logics\Documents\Receipt\CreateLogic;
 
 /**
  * 
@@ -39,13 +41,28 @@ class DocumentsController extends CrudController
         'request'=>'Documents\DeleteRequest',
     ];
     
-    public function cancel(CancelRequest $request, CancelLogic $logic)
+    public function receipt(
+        CreateRequest $request,
+        CreateLogic $logic
+    )
+    {
+        $result = $logic->init($request->allValid());
+        return response()->create($result);
+    }
+    
+    public function cancel(
+        CancelRequest $request, 
+        CancelLogic $logic
+    )
     {
         $result = $logic->init($request->allValid());
         return response()->data($result);
     }
     
-    public function pdf($id, PdfLogic $logic)
+    public function pdf(
+        $id, 
+        PdfLogic $logic
+    )
     {
         $result = $logic->init($id);        
         
@@ -56,7 +73,10 @@ class DocumentsController extends CrudController
         return response()->file($result['path'], $result['headers']);
     }
     
-    public function xml($id, XmlLogic $logic)
+    public function xml(
+        $id, 
+        XmlLogic $logic
+    )
     {
         $result = $logic->init($id);
         

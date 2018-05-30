@@ -23,13 +23,13 @@ class CreateTableContributorsAddresses extends Migration
             $table->string('address', 250);
             $table->string('colony', 150);
             $table->string('postalCode', 10);
-            $table->string('exteriorNumber', 10);
+            $table->string('exteriorNumber', 30);
             $table->boolean('active')->default(1); 
             $table->boolean('isDefault')->default(0);
             $table->dateTime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('accountingAccount', 20)->nullable();
             $table->smallInteger('expirationDays')->nullable();
-            $table->string('interiorNumber', 10)->nullable();
+            $table->string('interiorNumber', 30)->nullable();
             $table->uuid('idIdentityUpdated')->nullable();
             $table->dateTime('updatedAt')->nullable();
             

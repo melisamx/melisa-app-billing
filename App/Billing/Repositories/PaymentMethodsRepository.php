@@ -16,4 +16,9 @@ class PaymentMethodsRepository extends Repository
         return 'App\Billing\Models\PaymentMethods';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

@@ -16,4 +16,9 @@ class UseCfdiRepository extends Repository
         return 'App\Billing\Models\UseCfdi';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

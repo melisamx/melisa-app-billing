@@ -14,7 +14,8 @@ class ContributorsAddresses extends ContributorsAddressesAbstract
     use SaveAllUppercaseTrait;
     
     protected $noUppercase = [
-        'accountingAccount'
+        'idIdentityCreated',
+        'accountingAccount',
     ];
     
     public function customer()

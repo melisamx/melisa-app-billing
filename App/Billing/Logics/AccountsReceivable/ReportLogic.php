@@ -28,7 +28,7 @@ class ReportLogic
         $record = $this->repository
             ->with([
                 'status',
-                'account',
+                'provider',
                 'voucher',
                 'document',
             ])

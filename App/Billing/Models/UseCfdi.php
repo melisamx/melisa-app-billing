@@ -16,4 +16,9 @@ class UseCfdi extends UseCfdiAbstract
         return $this->where('key', self::P01)->first();
     }
     
+    public function scopeByKey($query, $key)
+    {
+        return $query->where('key', $key);
+    }
+    
 }

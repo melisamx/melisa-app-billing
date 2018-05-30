@@ -4,7 +4,9 @@ namespace App\Billing\Http\Controllers;
 
 use Melisa\Laravel\Http\Controllers\CrudController;
 use App\Billing\Http\Requests\DebtsToPay\PayoffRequest;
+use App\Billing\Http\Requests\DebtsToPay\ProvidersRequest;
 use App\Billing\Logics\DebtsToPay\PayoffLogic;
+use App\Billing\Logics\DebtsToPay\ProvidersLogic;
 
 /**
  * 
@@ -29,9 +31,22 @@ class DebtsToPayController extends CrudController
         'module'=>'Universal\DebtsToPay\ReportModule',
     ];
     
-    public function payoff(PayoffRequest $request, PayoffLogic $logic)
+    public function providers(
+        ProvidersRequest $request, 
+        ProvidersLogic $logic
+    )
     {
-        return response()->data($logic->init($request->allValid()));
+        $result = $logic->init($request->allValid());
+        return response()->data($result);
+    }
+    
+    public function payoff(
+        PayoffRequest $request, 
+        PayoffLogic $logic
+    )
+    {
+        $result = $logic->init($request->allValid());
+        return response()->data($result);
     }
     
 }

@@ -1,56 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.customersAddresses.add.WrapperController', {
-    extend: 'Melisa.controller.Create',
-    alias: 'controller.billingCustomersAddressesAdd',
-    
-    requires: [
-        'Melisa.controller.AppendFields',
-        'Melisa.controller.LoadData',
-        'Melisa.controller.Update',
-        'Melisa.people.view.desktop.settlements.AutoSelectMixin',
-        'Melisa.people.view.desktop.countries.AutoSelectMixin'
-    ],
-    
-    mixins: {
-        settlements: 'Melisa.people.view.desktop.settlements.AutoSelectMixin',
-        countries: 'Melisa.people.view.desktop.countries.AutoSelectMixin',
-        appendfields: 'Melisa.controller.AppendFields',
-        loaddata: 'Melisa.controller.LoadData',
-        update: 'Melisa.controller.Update'
-    },
-    
-    eventSuccess: 'event.billing.customersAddresses.create.success',
-    
-    control: {
-        '#': {
-            ready: 'onReadyModule',
-            loaddata: 'onLoadData',
-            beforeloaddata: 'onBeforeLoadData'
-        }
-    },
-    
-    onBeforeLoadData: function(data) {
-        var me = this;
-        
-        me.getViewModel().set('idContributor', data.idContributor);
-        me.mixins.update.onSuccessLoadData.call(me, {
-            idContributor: data.idContributor,
-            idCustomer: data.id
-        });
-        return false;
-    },
-    
-    autoSelectSettlement: function() {
-        var me = this,
-            view = me.getView(),
-            txtAddress = view.down('#txtAddress');
-        
-        me.mixins.settlements.autoSelectSettlement.apply(me, arguments);
-        txtAddress.focus();
-    },
-    
-    onReadyModule: function() {
-        var me = this;
-        me.mixins.countries.autoSelectCountry.apply(me);
-    }
-    
-});
+/*!
+ * Melisa Tasks 1.0.0
+ * Copyright (c) 2014-2017 Melisa
+ * 2018-04-04 04:04:41
+ */
+Ext.define("Melisa.billing.view.desktop.customersAddresses.add.WrapperController",{extend:"Melisa.controller.Create",alias:"controller.billingCustomersAddressesAdd",requires:["Melisa.controller.AppendFields","Melisa.controller.LoadData","Melisa.controller.Update","Melisa.people.view.desktop.settlements.AutoSelectMixin","Melisa.people.view.desktop.countries.AutoSelectMixin"],mixins:{settlements:"Melisa.people.view.desktop.settlements.AutoSelectMixin",countries:"Melisa.people.view.desktop.countries.AutoSelectMixin",appendfields:"Melisa.controller.AppendFields",loaddata:"Melisa.controller.LoadData",update:"Melisa.controller.Update"},eventSuccess:"event.billing.customersAddresses.create.success",control:{"#":{ready:"onReadyModule",loaddata:"onLoadData",beforeloaddata:"onBeforeLoadData"}},onBeforeLoadData:function(a){var b=this;return b.getViewModel().set("idContributor",a.idContributor),b.mixins.update.onSuccessLoadData.call(b,{idContributor:a.idContributor,idCustomer:a.id}),!1},autoSelectSettlement:function(){var a=this,b=a.getView(),c=b.down("#txtAddress");c.focus(),a.mixins.settlements.autoSelectSettlement.apply(a,arguments)},onReadyModule:function(){var a=this;a.mixins.countries.autoSelectCountry.apply(a)}});

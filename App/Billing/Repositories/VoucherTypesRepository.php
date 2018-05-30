@@ -16,4 +16,9 @@ class VoucherTypesRepository extends Repository
         return 'App\Billing\Models\VoucherTypes';        
     }
     
+    public function getEntry()
+    {
+        return $this->getModel()->entry();
+    }
+    
 }

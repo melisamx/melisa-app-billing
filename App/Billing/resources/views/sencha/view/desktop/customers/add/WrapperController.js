@@ -1,7 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.customers.add.WrapperController', {
-    extend: 'Melisa.controller.Create',
-    alias: 'controller.billingCustomersAdd',
-    
-    eventSuccess: 'event.billing.customers.create.success'
-    
-});
+/*!
+ * Melisa Tasks 1.0.0
+ * Copyright (c) 2014-2017 Melisa
+ * 2018-04-04 04:04:41
+ */
+Ext.define("Melisa.billing.view.desktop.customers.add.WrapperController",{extend:"Melisa.controller.Create",alias:"controller.billingCustomersAdd",requires:["Melisa.people.view.desktop.settlements.AutoSelectMixin","Melisa.people.view.desktop.countries.AutoSelectMixin"],mixins:{settlements:"Melisa.people.view.desktop.settlements.AutoSelectMixin",countries:"Melisa.people.view.desktop.countries.AutoSelectMixin"},eventSuccess:"event.billing.customers.create.success",control:{"#":{ready:"onLoadedModule",loadRepository:"onLoadRepository"}},onLoadRepository:function(a){var b,c=this,d=c.getViewModel(),e=c.getView();d.notify(),b=d.getStore("repositories"),b&&(b.add(a.data),e.down("billingRepositoriesCombo").select(a.get("id")),e.down("#txtBusinessName").on("render",function(){e.down("#txtBusinessName").focus()},{single:!0}))},onSelectPostalCode:function(a,b){var c=this,d=c.getView(),e=d.down("#txtAddress");e.focus(),c.mixins.settlements.autoSelectSettlement.apply(c,[b,!0])},onLoadedModule:function(){var a=this;a.mixins.countries.autoSelectCountry.apply(a)}});

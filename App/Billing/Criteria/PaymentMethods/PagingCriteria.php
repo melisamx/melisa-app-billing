@@ -17,10 +17,10 @@ class PagingCriteria extends FilterCriteria
         $builder = parent::apply($model, $repository, $input);
         
         if( isset($input['query'])) {
-            $builder = $builder->where('name', 'like', '%' . $input['query'] . '%');
+            $builder = $builder->where('description', 'like', '%' . $input['query'] . '%');
         }
         
-        return $builder->orderBy('name');        
+        return $builder->orderBy('description');        
     }
     
 }

@@ -10,10 +10,16 @@ class DocumentTypes extends DocumentTypesAbstract
 {
     
     const INVOICE = 'Factura';
+    const NOTE = 'Nota';
     
     public function scopeInvoice(&$query)
     {
         return $query->where('name', 'Factura');
+    }
+    
+    public function scopeNote(&$query)
+    {
+        return $query->where('name', self::NOTE);
     }
     
 }

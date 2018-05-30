@@ -16,4 +16,9 @@ class DocumentStatusRepository extends Repository
         return 'App\Billing\Models\DocumentStatus';        
     }
     
+    public function getStatusNew()
+    {
+        return $this->getModel()->newNote()->first();
+    }
+    
 }

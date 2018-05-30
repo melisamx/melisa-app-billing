@@ -16,4 +16,9 @@ class TaxActionsRepository extends Repository
         return 'App\Billing\Models\TaxActions';        
     }
     
+    public function getByKey($key)
+    {
+        return $this->getModel()->byKey($key)->first();
+    }
+    
 }

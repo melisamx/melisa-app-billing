@@ -9,9 +9,9 @@ namespace App\Billing\Models;
 class DebtsToPay extends DebtsToPayAbstract
 {
     
-    public function account()
+    public function scopeByIdDocument($query, $idDocument)
     {
-        return $this->hasOne('App\Billing\Models\Accounts', 'id', 'idAccount');
+        return $query->where('idDocument', $idDocument);
     }
     
     public function status()
@@ -22,6 +22,11 @@ class DebtsToPay extends DebtsToPayAbstract
     public function voucher()
     {
         return $this->hasOne('App\Drive\Models\Files', 'id', 'idFileVoucher');
+    }
+    
+    public function filepayment()
+    {
+        return $this->hasOne('App\Drive\Models\Files', 'id', 'idFilePayment');
     }
     
     public function document()

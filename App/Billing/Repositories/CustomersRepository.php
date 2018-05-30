@@ -16,4 +16,11 @@ class CustomersRepository extends Repository
         return 'App\Billing\Models\Customers';        
     }
     
+    public function getByIdContributorAddress($idContributorAddress)
+    {
+        return $this->getModel()
+            ->byIdContributorAddress($idContributorAddress)
+            ->first();
+    }
+    
 }

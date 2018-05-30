@@ -8,11 +8,11 @@ namespace App\Billing\Models;
  */
 class Customers extends CustomersAbstract
 {
-    
-    protected $casts = [
-        'quota'=>'float',
-    ];
 
+protected $casts = [
+        'quota'=>'float',
+];
+    
     public function repository()
     {
         return $this->hasOne('App\Billing\Models\Repositories', 'id', 'idRepository');

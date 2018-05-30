@@ -33,8 +33,17 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
+        if( !$this->saveAddress($idContributor, $input)) {
+            return false;
+        }
+        
+        return $idContributor;
+    }
+    
+    public function saveAddress($idContributor, $input)
+    {
         if( !isset($input['idCountry'])) {
-            return $idContributor;
+            return true;
         }
         
         if( !$this->repoAddresses->create([
@@ -53,7 +62,7 @@ class CreateLogic extends BaseCreateLogic
             return false;
         }
         
-        return $idContributor;
+        return true;
     }
     
 }

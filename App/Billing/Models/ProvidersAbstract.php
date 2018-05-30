@@ -18,6 +18,7 @@ abstract class ProvidersAbstract extends BaseUuid
         'id',
         'name',
         'slug',
+        'idTypeProvider',
         'idIdentityCreated',
         'active',
         'createdAt',

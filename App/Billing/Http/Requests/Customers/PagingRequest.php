@@ -15,7 +15,7 @@ class PagingRequest extends WithFilter
         'page'=>'bail|required|xss|numeric',
         'start'=>'bail|required|xss|numeric',
         'limit'=>'bail|required|xss|numeric',
-        'filter'=>'bail|sometimes|json|filter:name,rfc,email,idRepository,postalCode,address',
+        'filter'=>'bail|sometimes|json|filter:name,rfc,email,idRepository,postalCode,address,repository',
         'query'=>'bail|sometimes',
     ];
     
@@ -25,6 +25,7 @@ class PagingRequest extends WithFilter
         'email'=>'sometimes|xss',
         'postalCode'=>'sometimes|numeric|xss',
         'address'=>'sometimes|xss',
+        'repository'=>'sometimes|xss',
         'idRepository'=>'sometimes|xss|size:36|exists:billing.repositories,id',
     ];
     

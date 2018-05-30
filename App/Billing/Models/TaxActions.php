@@ -18,4 +18,9 @@ class TaxActions extends TaxActionsAbstract
             ->first();
     }
     
+    public function scopeByKey($query, $key)
+    {
+        return $query->where('key', $key);
+    }
+    
 }

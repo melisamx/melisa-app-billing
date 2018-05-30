@@ -24,6 +24,7 @@ abstract class CustomersAbstract extends BaseUuid
         'createdAt',
         'idIdentityUpdated',
         'expirationDays',
-        'updatedAt'
+        'updatedAt',
+        'quota'
     ];    
 }

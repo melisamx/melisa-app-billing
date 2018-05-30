@@ -28,7 +28,10 @@ class AccountsReceivableController extends CrudController
         'logic'=>'ReportLogic',
     ];
     
-    public function charged(ChargedRequest $request, ChargedLogic $logic)
+    public function charged(
+        ChargedRequest $request, 
+        ChargedLogic $logic
+    )
     {
         return response()->data($logic->init($request->allValid()));
     }

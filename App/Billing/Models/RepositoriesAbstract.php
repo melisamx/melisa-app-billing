@@ -22,6 +22,8 @@ abstract class RepositoriesAbstract extends BaseUuid
         'active',
         'createdAt',
         'idIdentityUpdated',
-        'updatedAt'
+        'updatedAt',
+        'allowChangeQuota',
+        'quota'
     ];    
 }

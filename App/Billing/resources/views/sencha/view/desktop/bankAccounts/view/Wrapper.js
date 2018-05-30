@@ -1,56 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.bankAccounts.view.Wrapper', {
-    extend: 'Melisa.view.desktop.wrapper.panel.View',
-    
-    requires: [
-        'Melisa.view.desktop.wrapper.panel.View',
-        'Melisa.billing.view.desktop.bankAccounts.view.Grid',
-        'Melisa.billing.view.desktop.bankAccounts.view.WrapperController',
-        'Melisa.billing.view.universal.bankAccounts.view.WrapperModel'
-    ],
-    
-    iconCls: 'x-fa fa-credit-card',
-    cls: 'billing-bankAccounts-view',
-    controller: 'billingBankAccountsView',
-    viewModel: {
-        type: 'billingBankAccountsView'
-    },
-    items: [
-        {
-            xtype: 'billingBankAccountsViewGrid',
-            region: 'center',
-            listeners: {
-                itemdblclick: 'onShowItemReport'
-            },
-            plugins: [
-                {
-                    ptype: 'autofilters',
-                    filters: {
-                        key: {
-                            operator: 'like',
-                            minChars: 1
-                        },
-                        shortname: {
-                            operator: 'like'
-                        },
-                        name: {
-                            operator: 'like'
-                        }
-                    }
-                },
-                {
-                    ptype: 'floatingbutton',
-                    configButton: {
-                        handler: 'moduleRun',
-                        iconCls: 'x-fa fa-plus',
-                        scale: 'large',
-                        tooltip: 'Agregar cuenta bancaria',
-                        bind: {
-                            melisa: '{modules.add}',
-                            hidden: '{!modules.add.allowed}'
-                        }
-                    }
-                }
-            ]
-        }
-    ]
-});
+/*!
+ * Melisa Tasks 1.0.0
+ * Copyright (c) 2014-2017 Melisa
+ * 2018-04-04 04:04:41
+ */
+Ext.define("Melisa.billing.view.desktop.bankAccounts.view.Wrapper",{extend:"Melisa.view.desktop.wrapper.panel.View",requires:["Melisa.view.desktop.wrapper.panel.View","Melisa.billing.view.desktop.bankAccounts.view.Grid","Melisa.billing.view.desktop.bankAccounts.view.WrapperController","Melisa.billing.view.universal.bankAccounts.view.WrapperModel"],iconCls:"x-fa fa-credit-card",cls:"billing-bankAccounts-view",controller:"billingBankAccountsView",viewModel:{type:"billingBankAccountsView"},items:[{xtype:"billingBankAccountsViewGrid",region:"center",listeners:{itemdblclick:"onShowItemReport"},plugins:[{ptype:"autofilters",filters:{key:{operator:"like",minChars:1},shortname:{operator:"like"},name:{operator:"like"}}},{ptype:"floatingbutton",configButton:{handler:"moduleRun",iconCls:"x-fa fa-plus",scale:"large",tooltip:"Agregar cuenta bancaria",bind:{melisa:"{modules.add}",hidden:"{!modules.add.allowed}"}}}]}]});

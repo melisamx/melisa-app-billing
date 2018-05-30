@@ -37,21 +37,21 @@ class AutoRegisterLogic
         
         $document = $this->getDocument($input['idDocument']);
         
-        if( !$document) {
+        if (!$document) {
             return $this->repoAccRec->rollback();
         }
         
-        if( !$this->isValid($document)) {
+        if (!$this->isValid($document)) {
             return $this->repoAccRec->rollback();
         }
         
-        if( !$this->generatePdf($document)) {
+        if (!$this->generatePdf($document)) {
             return $this->repoAccRec->rollback();
         }
         
         $idAccRec = $this->createAccountReceivable($document);
         
-        if( !$idAccRec) {
+        if (!$idAccRec) {
             return false;
         }
         
@@ -60,7 +60,7 @@ class AutoRegisterLogic
             'idDocument'=>$document->id
         ];
         
-        if( !$this->fireEvent($event)) {
+        if (!$this->fireEvent($event)) {
             return $this->repoAccRec->rollback();
         }
         
@@ -70,19 +70,19 @@ class AutoRegisterLogic
     
     public function generatePdf(&$documents)
     {
-        if( !empty($documents->idFilePdf)) {
+        if (!empty($documents->idFilePdf)) {
             return true;
         }
         
         $idFile = app(GeneratePdfLogic::class)->init($documents);
         
-        if( !$idFile) {
+        if (!$idFile) {
             return $this->error('Imposible generar archivo PDF del documento {d}', [
                 'd'=>$documents->id
             ]);
         }
         
-        if( !app(DocumentsRepository::class)->update([
+        if (!app(DocumentsRepository::class)->update([
             'idFilePdf'=>$idFile
         ], $documents->id)) {
             return $this->error('Imposible asignar archivo {f} PDF de la factura {i}', [
@@ -95,22 +95,28 @@ class AutoRegisterLogic
         return true;
     }
     
-    public function isValid(&$documents)
+    public function isValid(&$document)
     {
-        if( empty($documents->uuid)) {
+        if (empty($document->uuid)) {
             return $this->error('No se ha generado el CFDI');
         }
         
-        return true;
+        $old = $this->repoAccRec->getByIdDocument($document->id);
+        
+        if (!$old->count()) {
+            return true;
+        }
+        
+        return $this->error('Ya se registro la cuenta por cobrar de la factura');
     }
     
     public function getExpirationDays(&$document)
     {
-        if( !is_null($document->customer_address->expirationDays)) {
+        if (!is_null($document->customer_address->expirationDays)) {
             return $document->customer_address->expirationDays;
         }
         
-        if( !is_null($document->customer->expirationDays)) {
+        if (!is_null($document->customer->expirationDays)) {
             return $document->customer->expirationDays;
         }
         
@@ -133,7 +139,7 @@ class AutoRegisterLogic
             'dueDate'=>$dateVoucher->addDays($expirationDays),
         ]);
         
-        if( $result) {
+        if ($result) {
             return $result;
         }
         
@@ -147,7 +153,7 @@ class AutoRegisterLogic
     {
         $result = $this->logicDocument->init($id);
         
-        if( $result) {
+        if ($result) {
             return $result;
         }
         

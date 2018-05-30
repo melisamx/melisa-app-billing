@@ -1,34 +1,6 @@
-Ext.define('Melisa.billing.view.desktop.csd.add.WrapperController', {
-    extend: 'Melisa.controller.Create',
-    alias: 'controller.billingCsdAdd',
-    
-    eventSuccess: 'event.billing.csd.create.success',
-    
-    listeners: {
-        selectedfilecer: 'onSelectedFileCer',
-        selectedfilekey: 'onSelectedFileKey'
-    },
-    
-    onSelectedFileKey: function(sel) {
-        var me = this,
-            txtFileKey = me.getView().down('#txtFileKey');
-    
-        txtFileKey.setValue(sel[0].get('id'));
-    },
-    
-    onSelectedFileCer: function(sel) {
-        var me = this,
-            txtFileCer = me.getView().down('#txtFileCer');
-    
-        txtFileCer.setValue(sel[0].get('id'));
-    },
-    
-    onLoadedModuleSelectFileCer: function(module, options) {        
-        module.fireEvent('loaddata', this, 'selectedfilecer', {}, options.launcher);        
-    },
-    
-    onLoadedModuleSelectFileKey: function(module, options) {        
-        module.fireEvent('loaddata', this, 'selectedfilekey', {}, options.launcher);        
-    }
-    
-});
+/*!
+ * Melisa Tasks 1.0.0
+ * Copyright (c) 2014-2017 Melisa
+ * 2018-04-04 04:04:41
+ */
+Ext.define("Melisa.billing.view.desktop.csd.add.WrapperController",{extend:"Melisa.controller.Create",alias:"controller.billingCsdAdd",eventSuccess:"event.billing.csd.create.success",listeners:{selectedfilecer:"onSelectedFileCer",selectedfilekey:"onSelectedFileKey"},onSelectedFileKey:function(a){var b=this,c=b.getView().down("#txtFileKey");c.setValue(a[0].get("id"))},onSelectedFileCer:function(a){var b=this,c=b.getView().down("#txtFileCer");c.setValue(a[0].get("id"))},onLoadedModuleSelectFileCer:function(a,b){a.fireEvent("loaddata",this,"selectedfilecer",{},b.launcher)},onLoadedModuleSelectFileKey:function(a,b){a.fireEvent("loaddata",this,"selectedfilekey",{},b.launcher)}});

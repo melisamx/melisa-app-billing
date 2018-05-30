@@ -23,4 +23,11 @@ class AccountsReceivableRepository extends Repository
         return $this->create($input);
     }
     
+    public function getByIdDocument($idDocument)
+    {
+        return $this->getModel()
+            ->byIdDocument($idDocument)
+            ->get();
+    }
+    
 }

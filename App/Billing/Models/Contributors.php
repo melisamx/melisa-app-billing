@@ -13,7 +13,8 @@ class Contributors extends ContributorsAbstract
     use SaveAllUppercaseTrait;
     
     protected $noUppercase = [
-        'email'
+        'idIdentityCreated',
+        'email',
     ];
     
     public function setEmailAttribute($value)
@@ -29,6 +30,11 @@ class Contributors extends ContributorsAbstract
     public function addresses()
     {
         return $this->hasMany('App\Billing\Models\ContributorsAddresses', 'idContributor', 'id');
+    }
+    
+    public function address()
+    {
+        return $this->hasOne('App\Billing\Models\ContributorsAddresses', 'idContributor', 'id');
     }
     
 }

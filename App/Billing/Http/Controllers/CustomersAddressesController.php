@@ -58,7 +58,10 @@ class CustomersAddressesController extends CrudController
         return response()->data($logic->init($request->allValid()));
     }
     
-    public function report($id, $format = 'json')
+    public function report(
+        $id, 
+        $format = 'json'
+    )
     {
         return response()->data(app(ReportLogic::class)->init($id));
     }

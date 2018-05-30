@@ -2,6 +2,7 @@
 
 namespace App\Billing\Logics\Documents;
 
+use Melisa\core\LogicBusiness;
 use App\Drive\Logics\Files\StringCreateLogic;
 use App\Drive\Interfaces\FileContent;
 use App\Drive\Logics\Files\ReportLogic;
@@ -14,6 +15,7 @@ use App\Billing\Modules\Universal\Documents\ReportModule;
  */
 class GeneratePdfLogic
 {
+    use LogicBusiness;
     
     protected $reportModule;
     protected $filesCreate;
@@ -92,11 +94,13 @@ class GeneratePdfLogic
             '.pdf';
         
         $command = implode('', [
-            'wkhtmltopdf ',
-            '-s Letter --encoding "UTF-8" -L 0 -R 0 -T 0 -B 0 "file://',
+            'node ',
+            base_path() . '/htmlToPdf.js ',
+//            'wkhtmltopdf ',
+//            '-s Letter --encoding "UTF-8" -L 0 -R 0 -T 0 -B 0 "file://',
             $fileHtml->unit->source,
             $fileHtml->originalFilename,
-            '" ',
+            ' ',
             $nameOutput
         ]);
         
@@ -105,7 +109,7 @@ class GeneratePdfLogic
         
         if( $code !== 0) {
             return $this->error('Imposible generar factura {u} en formato PDF: {e}', [
-                'e'=>explode(PHP_EOL, $output),
+                'e'=>implode(PHP_EOL, $output),
                 'u'=>$documents->uuid
             ]);
         }

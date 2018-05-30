@@ -18,4 +18,9 @@ class TypesFactor extends TypesFactorAbstract
             ->first();
     }
     
+    public function scopeByName($query, $name)
+    {
+        return $query->where('name', $name);
+    }
+    
 }

@@ -16,4 +16,9 @@ class TaxesRepository extends Repository
         return 'App\Billing\Models\Taxes';        
     }
     
+    public function getByName($key)
+    {
+        return $this->getModel()->byName($key)->first();
+    }
+    
 }

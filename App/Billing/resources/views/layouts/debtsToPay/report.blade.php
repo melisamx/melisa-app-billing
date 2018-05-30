@@ -38,7 +38,7 @@
                     <th>Monto a pagar</th>
                 </tr>
                 <tr>
-                    <td>{{ $report->account->name }}</td>
+                    <td>{{ $report->provider->name }}</td>
                     <td>${{ number_format($report->amountPayable, 2) }}</td>
                 </tr>
                 <tr>                    

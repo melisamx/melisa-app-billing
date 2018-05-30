@@ -21,6 +21,15 @@ class UpdateRequest extends CreateRequest
         $rules = parent::rules();
         $rules ['id']= 'required|max:36|xss|exists:billing.customers,id';        
         $rules ['idContributor']= 'required|max:36|xss|exists:billing.contributors,id';        
+        unset(
+            $rules['idCountry'],
+            $rules['idState'],
+            $rules['idMunicipality'],
+            $rules['postalCode'],
+            $rules['colony'],
+            $rules['address'],
+            $rules['exteriorNumber']
+        );
         return $rules;        
     }
     

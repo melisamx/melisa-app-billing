@@ -16,4 +16,9 @@ class TypesFactorRepository extends Repository
         return 'App\Billing\Models\TypesFactor';        
     }
     
+    public function getByName($key)
+    {
+        return $this->getModel()->byName($key)->first();
+    }
+    
 }
